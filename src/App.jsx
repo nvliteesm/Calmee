@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import logoCalmee from "./assets/logo-calmee.png";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import logoCalmee from "./assets/logo-calmee.png";
 
 const shopeeLink = "https://shopee.co.id/";
 const whatsappLink =
@@ -293,19 +293,29 @@ function AnimatedWords({ children, className = "" }) {
 }
 
 export default function App() {
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
+  const [titleNumber, setTitleNumber] = useState(0);
 
-    if (!window.location.hash || window.location.hash === "#home") {
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-      });
-    }
-  }, []);
+  const titles = useMemo(
+    () => [
+      "Bangun lebih siap.",
+      "Pikiran lebih rileks.",
+      "Malam lebih nyaman.",
+      "Hari lebih ringan.",
+    ],
+    []
+  );
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setTitleNumber((prev) =>
+        prev === titles.length - 1 ? 0 : prev + 1
+      );
+    }, 2200);
+
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
   return (
-    <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
+  <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap');
         :root {
@@ -364,6 +374,26 @@ export default function App() {
           html { scroll-behavior: auto; }
           .hero-dot { animation: none; }
         }
+          @keyframes calmPulse {
+            0%, 100% {
+              transform: scale(1);
+              box-shadow: 0 0 60px rgba(255,255,255,0.15);
+            }
+            50% {
+              transform: scale(1.04);
+              box-shadow: 0 0 100px rgba(255,255,255,0.28);
+            }
+          }
+
+          @keyframes slowSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+
+          @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
       `}</style>
 
       <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/90 backdrop-blur-xl">
@@ -417,7 +447,23 @@ export default function App() {
 
               <h1 className="font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
                 Tidur lebih tenang,
-                <span className="block italic text-[#C4ADDF]"><AnimatedWords>Bangun lebih siap.</AnimatedWords></span>
+                <span className="relative mt-2 block h-[1.15em] overflow-hidden italic text-[#CBB6E8]">
+                  {titles.map((title, index) => (
+                    <motion.span
+                      key={title}
+                      className="absolute left-0 top-0"
+                      initial={{ opacity: 0, y: 40 }}
+                      animate={
+                        titleNumber === index
+                          ? { opacity: 1, y: 0 }
+                          : { opacity: 0, y: titleNumber > index ? -40 : 40 }
+                      }
+                      transition={{ duration: 0.55, ease: "easeInOut" }}
+                    >
+                      {title}
+                    </motion.span>
+                  ))}
+                </span>
               </h1>
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-white/75 md:text-lg">
@@ -454,14 +500,14 @@ export default function App() {
               <span className="hero-dot hero-dot-9" />
               <span className="hero-dot hero-dot-10" />
               <div className="absolute h-80 w-80 rounded-full bg-[#C4ADDF]/20 blur-3xl md:h-[28rem] md:w-[28rem]" />
-              <div className="absolute h-64 w-64 rounded-full border border-white/10 md:h-96 md:w-96" />
-              <div className="absolute h-48 w-48 rounded-full bg-[#FDF9F0] shadow-[0_0_80px_rgba(253,249,240,0.34)] md:h-64 md:w-64" />
+              <div className="absolute h-64 w-64 rounded-full border border-white/10 md:h-96 md:w-96 animate-[slowSpin_30s_linear_infinite]" />
+              <div className="absolute h-48 w-48 rounded-full bg-[#FDF9F0] shadow-[0_0_80px_rgba(253,249,240,0.34)] md:h-64 md:w-64 animate-[calmPulse_4s_ease-in-out_infinite]" />
               <img
                 src={logoCalmee}
                 alt="Calmee calming milk powder"
                 className="relative z-10 w-40 md:w-56 lg:w-62 aspect-square rounded-full object-cover"
               />
-              <div className="absolute bottom-8 right-2 z-20 rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur md:right-0">
+              <div className="absolute bottom-5 right-0 translate-x-12 z-20 rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur md:right-0 animate-[cardFloat_4s_ease-in-out_infinite]">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   bedtime ritual
                 </p>
