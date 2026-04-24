@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import logoCalmee from "./assets/logo-calmee.png";
+import { motion } from "framer-motion";
+
 const shopeeLink = "https://shopee.co.id/";
 const whatsappLink =
   "https://wa.me/6280000000000?text=Halo%20Calmee%2C%20saya%20ingin%20tanya%20produk%20dan%20promo%20hari%20ini.";
@@ -264,8 +268,42 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
     </div>
   );
 }
+function AnimatedWords({ children, className = "" }) {
+  const words = children.split(" ");
+
+  return (
+    <span className={className}>
+      {words.map((word, index) => (
+        <motion.span
+          key={`${word}-${index}`}
+          className="inline-block mr-3"
+          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{
+            duration: 1.5,
+            // delay: index * 0.08,
+            ease: "easeOut",
+          }}
+        >
+          {word}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export default function App() {
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    if (!window.location.hash || window.location.hash === "#home") {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      });
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
       <style>{`
@@ -292,7 +330,11 @@ export default function App() {
         body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
         .font-display { font-family: 'Cormorant Garamond', serif; }
         .font-body { font-family: 'DM Sans', sans-serif; }
-        .snap-section { min-height: auto; }
+        .snap-section { 
+          min-height: 100svh;
+          scroll-margin-top: var(--nav-height);
+          display: flex;
+          align-items: center; }
         .hero-dot {
           position: absolute;
           z-index: 15;
@@ -301,27 +343,22 @@ export default function App() {
           opacity: 0.82;
           animation: calmee-float 5.5s ease-in-out infinite;
         }
-        .hero-dot-1 { top: 22%; right: 18%; width: 5px; height: 5px; background: white; }
+        .hero-dot-1 { top: 22%; right: 18%; width: 5px; height: 5px; background: var(--calmee-gold); }
         .hero-dot-2 { top: 35%; right: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); }
         .hero-dot-3 { top: 55%; right: 14%; width: 4px; height: 4px; background: white; }
-        .hero-dot-4 { top: 48%; right: 26%; width: 6px; height: 6px; background: var(--calmee-gold); }
-        .hero-dot-5 { top: 46%; right: 16%, width: 3px; height: 3px; background: var(--calmee-gold); }
+        .hero-dot-4 { top: 18%; right: 35%; width: 6px; height: 6px; background: var(--calmee-gold); }
+        .hero-dot-5 { top: 46%; right: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); }
+        .hero-dot-6 { top: 78%; left: 18%; width: 5px; height: 5px; background: var(--calmee-gold); }
+        .hero-dot-7 { top: 65%; left: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); }
+        .hero-dot-8 { top: 45%; left: 14%; width: 4px; height: 4px; background: white; }
+        .hero-dot-9 { top: 82%; left: 35%; width: 6px; height: 6px; background: var(--calmee-gold); }
+        .hero-dot-10 { top: 54%; left: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); }
         @keyframes calmee-float {
           0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
           50% { transform: translate3d(10px, -16px, 0) scale(1.25); }
         }
-        @media (min-width: 1024px) {
-          html, body {
-            scroll-padding-top: var(--nav-height);
-            scroll-snap-type: y mandatory;
-          }
-          .snap-section {
-            min-height: var(--section-min);
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
-            display: flex;
-            align-items: center;
-          }
+        .snap-section {
+          scroll-margin-top: var(--nav-height);
         }
         @media (prefers-reduced-motion: reduce) {
           html { scroll-behavior: auto; }
@@ -355,7 +392,7 @@ export default function App() {
             href={shopeeLink}
             target="_blank"
             rel="noreferrer"
-            className="hidden rounded-full bg-[#2D1B6B] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#6B4FA0] sm:inline-flex"
+            className="hidden items-center justify-center rounded-full bg-[#2D1B6B] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_10px_30px_rgba(45,27,107,0.25)] transition-all duration-500 ease-out hover:scale-105 hover:bg-[var(--calmee-purple-light)] hover:text-[#2D1B6B] sm:inline-flex"
           >
             Beli Sekarang
           </a>
@@ -373,14 +410,14 @@ export default function App() {
 
           <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold uppercase tracking-[0.2em] text-[#C4ADDF]">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#C4ADDF]">
                 <SparkleIcon className="h-3.5 w-3.5" />
                 #TidurNyenyakDenganCalmee
               </div>
 
               <h1 className="font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
                 Tidur lebih tenang,
-                <span className="block italic text-[#C4ADDF]">Bangun lebih siap.</span>
+                <span className="block italic text-[#C4ADDF]"><AnimatedWords>Bangun lebih siap.</AnimatedWords></span>
               </h1>
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-white/75 md:text-lg">
@@ -411,13 +448,18 @@ export default function App() {
               <span className="hero-dot hero-dot-3" />
               <span className="hero-dot hero-dot-4" />
               <span className="hero-dot hero-dot-5" />
+              <span className="hero-dot hero-dot-6" />
+              <span className="hero-dot hero-dot-7" />
+              <span className="hero-dot hero-dot-8" />
+              <span className="hero-dot hero-dot-9" />
+              <span className="hero-dot hero-dot-10" />
               <div className="absolute h-80 w-80 rounded-full bg-[#C4ADDF]/20 blur-3xl md:h-[28rem] md:w-[28rem]" />
               <div className="absolute h-64 w-64 rounded-full border border-white/10 md:h-96 md:w-96" />
               <div className="absolute h-48 w-48 rounded-full bg-[#FDF9F0] shadow-[0_0_80px_rgba(253,249,240,0.34)] md:h-64 md:w-64" />
               <img
-                // src={}
+                src={logoCalmee}
                 alt="Calmee calming milk powder"
-                className="relative z-10 w-[82%] max-w-[28rem] object-contain drop-shadow-[0_35px_70px_rgba(0,0,0,0.45)]"
+                className="relative z-10 w-40 md:w-56 lg:w-62 aspect-square rounded-full object-cover"
               />
               <div className="absolute bottom-8 right-2 z-20 rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur md:right-0">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
@@ -429,24 +471,8 @@ export default function App() {
           </div>
         </section>
 
-        <section className="bg-[#2D1B6B] px-5 py-5 lg:px-8">
-          <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-10 gap-y-4">
-            {trustSignals.map((item) => (
-              <span
-                key={item}
-                className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-white/80"
-              >
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white/[0.12] text-[#D4A843]">
-                  <CheckIcon />
-                </span>
-                {item}
-              </span>
-            ))}
-          </div>
-        </section>
-
-        <section id="tentang-kami" className="sectionClass">
-          <div className="sectionInnerClass">
+        <section id="tentang-kami" className={sectionClass}>
+          <div className={sectionInnerClass}>
             <SectionHeading
               eyebrow="Cocok Untuk"
               title="Malam yang terlalu ramai di kepala."
@@ -475,7 +501,7 @@ export default function App() {
           id="cara-konsumsi"
           className={`${sectionClass} bg-[var(--calmee-cream-alt)]`}
         >
-          <div className="sectionInnerClass">
+          <div className={sectionInnerClass}>
             <SectionHeading
               eyebrow="Cara Konsumsi"
               title="Ritual malam sederhana untuk menutup hari."
@@ -700,6 +726,7 @@ export default function App() {
                   className="group rounded-2xl bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.07)]"
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[1.35rem] font-bold text-[#2D1B6B]">
+                    <span>{faq.question}</span>
                     <span className="text-[#D4A843] transition group-open:rotate-45">+</span>
                   </summary>
                   <p className="mt-4 leading-7 text-[#594878]">{faq.answer}</p>
