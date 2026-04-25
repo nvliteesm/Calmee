@@ -25,9 +25,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 .font-body { font-family: 'DM Sans', sans-serif; }
 .snap-section { 
     min-height: 100svh;
-    scroll-margin-top: var(--nav-height);
     display: flex;
-    align-items: center; }
+    align-items: center; 
+    } 
 .hero-dot {
     position: absolute;
     z-index: 15;
@@ -50,9 +50,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
     0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
     50% { transform: translate3d(10px, -16px, 0) scale(1.25); }
 }
-.snap-section {
-    scroll-margin-top: var(--nav-height);
-}
+
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero-dot { animation: none; }

@@ -16,11 +16,9 @@ const moonImageUrl =
 
 const navItems = [
   { label: "Tentang Kami", href: "#tentang-kami" },
-  { label: "Cara Konsumsi", href: "#cara-konsumsi" },
-  { label: "Kandungan", href: "#kandungan" },
+  { label: "Produk", href: "#produk" },
   { label: "Manfaat", href: "#manfaat" },
   { label: "Paket", href: "#paket" },
-  { label: "Ulasan", href: "#reviews" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -47,34 +45,35 @@ const heroFloatingCards = [
 
 
 const problems = [
-  "Pikiran masih aktif saat mau tidur",
+  "Pikiran masih aktif saat tubuh sudah lelah",
   "Sulit merasa rileks setelah hari yang panjang",
-  "Kualitas tidur terasa kurang memulihkan",
-  "Sering gelisah dan butuh rutinitas malam yang lebih tenang",
-  "Ingin alternatif wellness yang lembut, bukan obat tidur",
-  "Butuh minuman malam yang hangat, praktis, dan nyaman diminum",
+  "Malam terasa panjang karena overthinking",
+  "Tidur terasa kurang dalam dan kurang memulihkan",
+  "Butuh rutinitas malam yang lebih lembut",
+  "Ingin pilihan hangat yang bukan obat tidur",
 ];
 
-const steps = [
+const sleepInsightCards = [
   {
-    number: "01",
-    title: "Seduh satu sachet",
-    desc: "Campurkan Calmee dengan air hangat agar teksturnya creamy dan aromanya terasa lembut.",
+    icon: "☾",
+    label: "Background",
+    title: "Pikiran yang aktif sering membuat tubuh sulit masuk mode istirahat.",
+    desc:
+      "Stres, kekhawatiran, dan rutinitas tidur yang terganggu dapat membuat malam terasa lebih panjang.",
   },
   {
-    number: "02",
-    title: "Nikmati perlahan",
-    desc: "Minum saat suasana mulai tenang sebagai bagian dari ritual malam sebelum tidur.",
+    icon: "✦",
+    label: "Dampak Harian",
+    title: "Kurang tidur bukan cuma soal mengantuk.",
+    desc:
+      "Tidur yang terganggu dapat berhubungan dengan suasana hati, fokus, energi, dan kualitas hidup sehari-hari.",
   },
   {
-    number: "03",
-    title: "Kurangi stimulasi",
-    desc: "Redupkan lampu, jauhkan layar, dan beri tubuh sinyal bahwa waktunya beristirahat.",
-  },
-  {
-    number: "04",
-    title: "Bangun lebih siap",
-    desc: "Dengan rutinitas tidur yang lebih konsisten, tubuh punya ruang untuk pulih lebih baik.",
+    icon: "◐",
+    label: "Bukan solusi instan",
+    title: "Calmee hadir bukan sebagai obat tidur.",
+    desc:
+      "Calmee diposisikan sebagai teman ritual malam yang hangat, creamy, dan menenangkan.",
   },
 ];
 
@@ -369,7 +368,7 @@ export default function App() {
       <main>
         <section
           id="home"
-          className="snap-section relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_20%_45%,#4A2E8A_0%,#2D1B6B_42%,#160A35_100%)] px-5 pb-14 pt-28 text-white md:pt-32 lg:px-8 lg:pb-0 lg:pt-[var(--nav-height)]"
+          className="snap-section relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_20%_45%,#4A2E8A_0%,#2D1B6B_42%,#160A35_100%)] px-5 pb-14 pt-28 text-white md:pt-32 lg:px-8 lg:pb-0"
         >
           <div className="absolute inset-0 -z-10 pointer-events-none">
           </div>
@@ -466,77 +465,127 @@ export default function App() {
           </div>
         </section>
 
-        <section id="tentang-kami" className={sectionClass}>
-          <div className={sectionInnerClass}>
-            <SectionHeading
-              eyebrow="Cocok Untuk"
-              title="Malam yang terlalu ramai di kepala."
-            >
-              Calmee dibuat untuk kamu yang ingin membangun rutinitas tidur lebih tenang,
-              terutama saat tubuh lelah tetapi pikiran masih terus berjalan.
-            </SectionHeading>
-
-            <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {problems.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-[#E6DDF6] bg-white p-5 shadow-[0_16px_50px_rgba(45,27,107,0.07)]"
-                >
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#F0EAFF] text-[#6B4FA0]">
-                    <MoonIcon />
-                  </div>
-                  <p className="text-base font-semibold leading-7 text-[#2D1B6B]">{item}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section
-          id="cara-konsumsi"
-          className={`${sectionClass} bg-[var(--calmee-cream-alt)]`}
+          id="tentang-kami"
+          className={`${sectionClass} relative isolate overflow-hidden bg-[var(--calmee-cream)]`}
         >
-          <div className={sectionInnerClass}>
-            <SectionHeading
-              eyebrow="Cara Konsumsi"
-              title="Ritual malam sederhana untuk menutup hari."
-            >
-              Bukan sekadar minuman, Calmee membantu membentuk momen transisi yang
-              lebih nyaman dari aktivitas menuju istirahat.
-            </SectionHeading>
+          <div className="absolute left-[-12rem] top-[-10rem] -z-10 h-[30rem] w-[30rem] rounded-full bg-[#E8DEFF]/60 blur-3xl" />
+          <div className="absolute right-[-10rem] bottom-[-12rem] -z-10 h-[32rem] w-[32rem] rounded-full bg-[#C4ADDF]/35 blur-3xl" />
 
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-              {steps.map((step) => (
-                <div
-                  key={step.number}
-                  className="rounded-2xl bg-white p-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)]"
-                >
-                  <p className="font-display text-4xl font-bold text-[#E8DEFF]">
-                    {step.number}
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl font-bold text-[#2D1B6B]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-[#594878]">{step.desc}</p>
+          <div className={`${sectionInnerClass} grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]`}>
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#8A6FC2]">
+                Tentang Kami
+              </p>
+
+              <h2 className="font-display text-4xl font-bold leading-[1.02] text-[#2D1B6B] md:text-5xl lg:text-6xl">
+                Saat tubuh lelah,
+                <span className="mt-2 block text-[#D4A843]">
+                  Tapi pikiran belum mau berhenti.
+                </span>
+              </h2>
+
+              <p className="mt-7 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
+                Banyak orang tidak benar-benar tidak mau tidur. Kadang, tubuh sudah
+                lelah — tetapi pikiran masih aktif, suasana hati belum tenang, dan malam
+                terasa lebih panjang dari yang seharusnya.
+              </p>
+
+              <p className="mt-5 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
+                Dari pemahaman itulah <span className="font-bold text-[#2D1B6B]">Calmee</span>{" "}
+                hadir. Bukan sebagai solusi instan, melainkan sebagai teman ritual malam
+                yang hangat, lembut, dan menenangkan.
+              </p>
+
+              <div className="mt-8 border-l-4 border-[#D4A843] pl-5">
+                <p className="font-display text-xl italic leading-8 text-[#2D1B6B]">
+                  “Kami percaya tidur yang baik bukan kemewahan — melainkan bagian dari
+                  tubuh yang diberi ruang untuk pulih.”
+                </p>
+              </div>
+            </div>
+
+            <div className="grid gap-4">
+              <div className="rounded-[2rem] border border-[#E6DDF6] bg-white/85 p-6 shadow-[0_24px_70px_rgba(45,27,107,0.08)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.12)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F0EAFF] text-2xl text-[#D4A843]">
+                  ☾
                 </div>
-              ))}
+
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8A6FC2]">
+                  Latar Belakang
+                </p>
+
+                <h3 className="mt-3 font-display text-3xl font-bold leading-tight text-[#2D1B6B]">
+                  33,3% orang Indonesia usia 15+ menunjukkan gejala{" "}
+                  <span className="inline bg-[#EEE7FA] px-2">
+                    insomnia ringan.
+                  </span>
+                </h3>
+
+                <p className="mt-4 leading-7 text-[#594878]">
+                  Dalam studi populasi Indonesia, sebagian responden menunjukkan gejala insomnia 
+                  ringan — tanda bahwa masalah tidur bukan hal yang jarang terjadi.
+                </p>
+
+                <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-[#D4A843]">
+                  BERDASARKAN STUDI POPULASI INDONESIA · 2019
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {sleepInsightCards.slice(1).map((card) => (
+                  <div
+                    key={card.title}
+                    className="rounded-[1.5rem] border border-[#E6DDF6] bg-white/80 p-5 shadow-[0_18px_55px_rgba(45,27,107,0.07)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.12)]"
+                  >
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F0EAFF] text-xl text-[#D4A843]">
+                      {card.icon}
+                    </div>
+
+                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-[#8A6FC2]">
+                      {card.label}
+                    </p>
+
+                    <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-[#2D1B6B]">
+                      {card.label === "Dampak Harian" ? (
+                        <>
+                          <span className="inline bg-[#EEE7FA] px-2">Kurang tidur</span>{" "}
+                          bukan cuma soal mengantuk.
+                        </>
+                      ) : card.label === "Bukan solusi instan" ? (
+                        <>
+                          Calmee hadir bukan sebagai{" "}
+                          <span className="inline bg-[#EEE7FA] px-2">obat tidur</span>.
+                        </>
+                      ) : (
+                        card.title
+                      )}
+                    </h3>
+
+                    <p className="mt-3 text-sm leading-7 text-[#594878]">
+                      {card.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         <section
-          id="kandungan"
+          id="produk"
           className={`${sectionClass} relative isolate overflow-hidden bg-[linear-gradient(150deg,#2D1B6B_0%,#4A2E8A_52%,#241256_100%)]`}
         >
           <div className="absolute right-[-7rem] top-[-8rem] -z-10 h-96 w-96 rounded-full bg-[#9B7CC8]/20 blur-3xl" />
           <div className={sectionInnerClass}>
             <SectionHeading
-              eyebrow="Kandungan Utama"
-              title="Formula lembut dengan rasa premium."
+              eyebrow="Produk Calmee"
+              title="Minuman susu herbal untuk ritual malam yang lebih tenang."
               light
             >
-              Setiap bahan dipilih untuk mendukung pengalaman minum yang menenangkan,
-              creamy, dan nyaman sebagai bagian dari rutinitas tidur.
+              Calmee menggabungkan rasa susu yang creamy dengan kandungan pilihan seperti 
+              L-theanine, chamomile, susu + tryptophan, dan lemon untuk menemani momen
+              malam yang lebih hangat dan nyaman.
             </SectionHeading>
 
             <div className="mt-10 grid gap-5 md:grid-cols-2">
