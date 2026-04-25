@@ -435,23 +435,8 @@ export default function App() {
           className="snap-section relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_20%_45%,#4A2E8A_0%,#2D1B6B_42%,#160A35_100%)] px-5 pb-14 pt-28 text-white md:pt-32 lg:px-8 lg:pb-0"
         >
           <div className="absolute inset-0 -z-10 overflow-hidden">
-            {/* top left purple haze */}
-            <div className="absolute left-[-8rem] top-[8%] h-[24rem] w-[24rem] rounded-full bg-[#8E72D9]/18 blur-3xl" />
-
-            {/* big gold glow behind circle */}
-            <div className="absolute left-[16%] top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[#D4A843]/18 blur-[120px]" />
-
-            {/* soft cream glow around middle */}
-            <div className="absolute left-[28%] top-[54%] h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7EA]/14 blur-[90px]" />
-
-            {/* right side purple glow */}
-            <div className="absolute right-[8%] top-[22%] h-[22rem] w-[22rem] rounded-full bg-[#9B7CC8]/14 blur-[110px]" />
-
-            {/* bottom right gold haze */}
-            <div className="absolute right-[-6rem] bottom-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#D4A843]/10 blur-[120px]" />
-
-            {/* subtle bottom center mist */}
-            <div className="absolute bottom-[-8rem] left-1/2 h-[20rem] w-[32rem] -translate-x-1/2 rounded-full bg-white/6 blur-[120px]" />
+            <div className="absolute left-[-10rem] top-[10%] h-[26rem] w-[26rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
+            <div className="absolute right-[-8rem] bottom-[-8rem] h-[28rem] w-[28rem] rounded-full bg-[#D4A843]/10 blur-3xl" />
           </div>
           <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
             <div>
@@ -584,7 +569,7 @@ export default function App() {
             </div>
 
             <div className="grid gap-4">
-              <div className="rounded-[2rem] border border-[#E6DDF6] bg-white/85 p-6 shadow-[0_24px_70px_rgba(45,27,107,0.08)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.12)]">
+              <div className="rounded-[2rem] border border-[#E6DDF6] bg-white/85 p-6 shadow-[0_24px_70px_rgba(45,27,107,0.08)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.2)]">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F0EAFF] text-2xl text-[#D4A843]">
                   ☾
                 </div>
@@ -614,7 +599,7 @@ export default function App() {
                 {sleepInsightCards.slice(1).map((card) => (
                   <div
                     key={card.title}
-                    className="rounded-[1.5rem] border border-[#E6DDF6] bg-white/80 p-5 shadow-[0_18px_55px_rgba(45,27,107,0.07)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.12)]"
+                    className="rounded-[1.5rem] border border-[#E6DDF6] bg-white/80 p-5 shadow-[0_18px_55px_rgba(45,27,107,0.07)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.2)]"
                   >
                     <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F0EAFF] text-xl text-[#D4A843]">
                       {card.icon}
@@ -654,9 +639,24 @@ export default function App() {
           id="produk"
           className={`${sectionClass} relative isolate overflow-hidden bg-[linear-gradient(160deg,#2D1B6B_0%,#4A2E8A_55%,#241256_100%)] text-white`}
         >
-          <div className="absolute inset-0 -z-10">
-            <div className="absolute left-[-10rem] top-[10%] h-[26rem] w-[26rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
-            <div className="absolute right-[-8rem] bottom-[-8rem] h-[28rem] w-[28rem] rounded-full bg-[#D4A843]/10 blur-3xl" />
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            {/* top left purple haze */}
+            <div className="absolute left-[-8rem] top-[8%] h-[24rem] w-[24rem] rounded-full bg-[#8E72D9]/18 blur-3xl" />
+
+            {/* big gold glow behind circle */}
+            <div className="absolute left-[16%] top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[#D4A843]/18 blur-[120px]" />
+
+            {/* soft cream glow around middle */}
+            <div className="absolute left-[28%] top-[54%] h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7EA]/14 blur-[90px]" />
+
+            {/* right side purple glow */}
+            <div className="absolute right-[8%] top-[22%] h-[22rem] w-[22rem] rounded-full bg-[#9B7CC8]/14 blur-[110px]" />
+
+            {/* bottom right gold haze */}
+            <div className="absolute right-[-6rem] bottom-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#D4A843]/10 blur-[120px]" />
+
+            {/* subtle bottom center mist */}
+            <div className="absolute bottom-[-8rem] left-1/2 h-[20rem] w-[32rem] -translate-x-1/2 rounded-full bg-white/6 blur-[120px]" />
           </div>
 
           <div
