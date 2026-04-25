@@ -6,6 +6,7 @@ import ingredientMilk from "./assets/milk.png";
 import ingredientLemon from "./assets/lemon.png";
 import ingredientChamomile from "./assets/chamomile.png";
 import ingredientTheanine from "./assets/l-theanine.png";
+import susuCalmee from "./assets/susu-calmee.png";
 import productPreview from "./assets/preview-susu.png";
 import "./index.css";
 
@@ -368,6 +369,7 @@ function IngredientLabel({ item, active, className, lineClass }) {
     </>
   );
 }
+
 export default function App() {
   const [titleNumber, setTitleNumber] = useState(0);
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
@@ -394,7 +396,7 @@ export default function App() {
   return (
   <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
 
-      <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/90 backdrop-blur-xl">
+      <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/92 shadow-[0_10px_35px_rgba(45,27,107,0.2)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <a href="#home" className="flex items-center" aria-label="Calmee">
             <img
@@ -791,18 +793,50 @@ export default function App() {
 
         <section id="manfaat" className={sectionClass}>
           <div className={`${sectionInnerClass} grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]`}>
-            <div className="relative mx-auto flex h-[24rem] w-full max-w-md items-center justify-center">
-              <div className="absolute h-72 w-72 rounded-full bg-[radial-gradient(circle_at_35%_35%,#8A6FC2,#2D1B6B)] shadow-[0_30px_80px_rgba(45,27,107,0.28)]" />
-              <img
-                src={moonImageUrl}
-                alt=""
-                className="relative h-52 w-52 object-contain drop-shadow-[0_0_54px_rgba(253,249,240,0.36)]"
-              />
-              <div className="absolute left-2 top-8 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-[#2D1B6B] shadow-xl">
-                Pikiran lebih tenang
+            <div className="relative mx-auto flex h-[30rem] w-full max-w-[34rem] items-center justify-center">
+              {/* soft background glow */}
+              <div className="absolute h-[27rem] w-[27rem] rounded-full bg-[#C4ADDF]/45 blur-3xl" />
+              <div className="absolute h-[22rem] w-[22rem] rounded-full bg-[#D4A843]/10 blur-[90px]" />
+
+              {/* main circular product photo */}
+              <div className="relative h-[24rem] w-[24rem] overflow-hidden rounded-full border border-white/70 bg-[#E8DEFF] shadow-[0_30px_90px_rgba(45,27,107,0.18)] md:h-[27rem] md:w-[27rem]">
+                <img
+                  src={susuCalmee}
+                  alt="Calmee dengan susu hangat"
+                  className="h-full w-full object-cover"
+                />
+
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_45%,rgba(45,27,107,0.12)_100%)]" />
               </div>
-              <div className="absolute bottom-10 right-0 rounded-2xl bg-white px-4 py-3 text-sm font-bold text-[#2D1B6B] shadow-xl">
-                Rutinitas lebih lembut
+
+              {/* floating card 1 */}
+              <div className="absolute -left-20 top-14 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
+                  Mind Ease
+                </p>
+                <p className="mt-1 font-display text-xl font-bold">
+                  Pikiran lebih tenang.
+                </p>
+              </div>
+
+              {/* floating card 2 */}
+              <div className="absolute -right-0 top-[0%] rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftLeft_6s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
+                  Night Ritual
+                </p>
+                <p className="mt-1 font-display text-xl font-bold">
+                  Transisi lebih lembut.
+                </p>
+              </div>
+
+              {/* floating card 3 */}
+              <div className="absolute bottom-1 left-10 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_6.4s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+                <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
+                  Recovery
+                </p>
+                <p className="mt-1 font-display text-xl font-bold">
+                  Tidur lebih nyaman.
+                </p>
               </div>
             </div>
 
