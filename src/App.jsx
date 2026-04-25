@@ -2,6 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import logoCalmee from "./assets/logo-calmee.png";
 import logoCalmeeWord from "./assets/logo-calmee-type.png";
+import ingredientMilk from "./assets/milk.png";
+import ingredientLemon from "./assets/lemon.png";
+import ingredientChamomile from "./assets/chamomile.png";
+import ingredientTheanine from "./assets/l-theanine.png";
+import productPreview from "./assets/preview-susu.png";
 import "./index.css";
 
 const shopeeLink = "https://shopee.co.id/";
@@ -79,24 +84,44 @@ const sleepInsightCards = [
 
 const ingredients = [
   {
-    title: "Chamomile",
-    tag: "Calming botanical",
-    desc: "Bunga herbal yang umum digunakan dalam rutinitas malam untuk membantu tubuh terasa lebih tenang.",
-  },
-  {
-    title: "L-Theanine",
-    tag: "Relaxed focus",
-    desc: "Asam amino yang dikenal mendukung rasa rileks tanpa menjadikan rutinitas malam terasa berat.",
-  },
-  {
-    title: "Susu + Tryptophan",
+    key: "milk",
+    display: "Milk",
+    title: "Milk + Tryptophan",
     tag: "Comfort base",
-    desc: "Basis susu yang creamy dengan tryptophan, cocok untuk sensasi minuman hangat sebelum tidur.",
+    desc: "Basis susu yang creamy dengan tryptophan, memberi sensasi hangat dan nyaman untuk menemani ritual malam.",
+    image: ingredientMilk,
+    wrapClass: "left-0 top-8 items-start text-left",
+    lineClass: "left-[12.5rem] top-[8.5rem] w-[10rem] rotate-[28deg] origin-left",
   },
   {
+    key: "lemon",
+    display: "Lemon",
     title: "Lemon",
     tag: "Bright finish",
-    desc: "Memberi sentuhan rasa ringan dan segar agar minuman tetap nyaman dinikmati setiap malam.",
+    desc: "Memberi sentuhan rasa ringan dan segar agar Calmee tetap nyaman dinikmati pada malam hari.",
+    image: ingredientLemon,
+    wrapClass: "right-0 top-8 items-end text-right",
+    lineClass: "right-[12.5rem] top-[8.5rem] w-[10rem] -rotate-[28deg] origin-right",
+  },
+  {
+    key: "chamomile",
+    display: "Chamomile",
+    title: "Chamomile",
+    tag: "Calming botanical",
+    desc: "Bunga herbal yang umum digunakan dalam ritual malam untuk membantu tubuh terasa lebih rileks dan tenang.",
+    image: ingredientChamomile,
+    wrapClass: "left-0 bottom-8 items-start text-left",
+    lineClass: "left-[12.5rem] bottom-[8.5rem] w-[10rem] -rotate-[28deg] origin-left",
+  },
+  {
+    key: "theanine",
+    display: "L-Theanine",
+    title: "L-Theanine",
+    tag: "Relaxed focus",
+    desc: "Asam amino yang dikenal membantu rasa rileks, cocok untuk membantu pikiran pelan-pelan melambat sebelum tidur.",
+    image: ingredientTheanine,
+    wrapClass: "right-0 bottom-8 items-end text-right",
+    lineClass: "right-[12.5rem] bottom-[8.5rem] w-[10rem] rotate-[28deg] origin-right",
   },
 ];
 
@@ -306,9 +331,46 @@ function AnimatedWords({ children, className = "" }) {
     </span>
   );
 }
+function IngredientLabel({ item, active, className, lineClass }) {
+  return (
+    <>
+      <span
+        className={`absolute z-10 h-[2px] origin-center bg-white/30 transition-all duration-300 ${
+          lineClass
+        } ${active ? "bg-[#D4A843]" : ""}`}
+      />
 
+      <div
+        className={`absolute z-20 w-[19rem] transition-all duration-300 ${className} ${
+          active ? "scale-105" : "scale-100"
+        }`}
+      >
+        <h3 className="font-display text-3xl font-bold italic leading-none text-white underline decoration-[#D4A843]/70 underline-offset-4">
+          {item.display}
+        </h3>
+
+        <div
+          className={`mt-3 rounded-[1.2rem] border border-white/15 bg-white/[0.08] px-4 py-3 backdrop-blur transition-all duration-300 ${
+            active
+              ? "opacity-100 shadow-[0_18px_50px_rgba(0,0,0,0.22)]"
+              : "opacity-75"
+          }`}
+        >
+          <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-[#D4A843]">
+            {item.tag}
+          </p>
+
+          <p className="mt-2 text-sm leading-6 text-white/72">
+            {item.desc}
+          </p>
+        </div>
+      </div>
+    </>
+  );
+}
 export default function App() {
   const [titleNumber, setTitleNumber] = useState(0);
+  const [hoveredIngredient, setHoveredIngredient] = useState(null);
 
   const titles = useMemo(
     () => [
@@ -370,11 +432,25 @@ export default function App() {
           id="home"
           className="snap-section relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_20%_45%,#4A2E8A_0%,#2D1B6B_42%,#160A35_100%)] px-5 pb-14 pt-28 text-white md:pt-32 lg:px-8 lg:pb-0"
         >
-          <div className="absolute inset-0 -z-10 pointer-events-none">
-          </div>
-          <div className="absolute right-[-8rem] top-20 -z-10 h-[34rem] w-[34rem] rounded-full bg-[#9B7CC8]/20 blur-3xl" />
-          <div className="absolute left-[-10rem] bottom-[-8rem] -z-10 h-[28rem] w-[28rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
+          <div className="absolute inset-0 -z-10 overflow-hidden">
+            {/* top left purple haze */}
+            <div className="absolute left-[-8rem] top-[8%] h-[24rem] w-[24rem] rounded-full bg-[#8E72D9]/18 blur-3xl" />
 
+            {/* big gold glow behind circle */}
+            <div className="absolute left-[16%] top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[#D4A843]/18 blur-[120px]" />
+
+            {/* soft cream glow around middle */}
+            <div className="absolute left-[28%] top-[54%] h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7EA]/14 blur-[90px]" />
+
+            {/* right side purple glow */}
+            <div className="absolute right-[8%] top-[22%] h-[22rem] w-[22rem] rounded-full bg-[#9B7CC8]/14 blur-[110px]" />
+
+            {/* bottom right gold haze */}
+            <div className="absolute right-[-6rem] bottom-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#D4A843]/10 blur-[120px]" />
+
+            {/* subtle bottom center mist */}
+            <div className="absolute bottom-[-8rem] left-1/2 h-[20rem] w-[32rem] -translate-x-1/2 rounded-full bg-white/6 blur-[120px]" />
+          </div>
           <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
             <div>
               <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#C4ADDF] backdrop-blur transition-all duration-300 hover:border-white/50 hover:text-white">
@@ -517,7 +593,7 @@ export default function App() {
 
                 <h3 className="mt-3 font-display text-3xl font-bold leading-tight text-[#2D1B6B]">
                   33,3% orang Indonesia usia 15+ menunjukkan gejala{" "}
-                  <span className="inline bg-[#EEE7FA] px-2">
+                  <span className="inline bg-[#EEE7FA] px-1">
                     insomnia ringan.
                   </span>
                 </h3>
@@ -549,13 +625,13 @@ export default function App() {
                     <h3 className="mt-2 font-display text-2xl font-bold leading-tight text-[#2D1B6B]">
                       {card.label === "Dampak Harian" ? (
                         <>
-                          <span className="inline bg-[#EEE7FA] px-2">Kurang tidur</span>{" "}
+                          <span className="inline bg-[#EEE7FA] px-1">Kurang tidur</span>{" "}
                           bukan cuma soal mengantuk.
                         </>
                       ) : card.label === "Bukan solusi instan" ? (
                         <>
-                          Calmee hadir bukan sebagai{" "}
-                          <span className="inline bg-[#EEE7FA] px-2">obat tidur</span>.
+                          Calmee hadir <span className="inline bg-[#EEE7FA] px-1">bukan</span> sebagai{" "}
+                          <span className="inline bg-[#EEE7FA] px-1">obat tidur.</span>
                         </>
                       ) : (
                         card.title
@@ -574,36 +650,141 @@ export default function App() {
 
         <section
           id="produk"
-          className={`${sectionClass} relative isolate overflow-hidden bg-[linear-gradient(150deg,#2D1B6B_0%,#4A2E8A_52%,#241256_100%)]`}
+          className={`${sectionClass} relative isolate overflow-hidden bg-[linear-gradient(160deg,#2D1B6B_0%,#4A2E8A_55%,#241256_100%)] text-white`}
         >
-          <div className="absolute right-[-7rem] top-[-8rem] -z-10 h-96 w-96 rounded-full bg-[#9B7CC8]/20 blur-3xl" />
-          <div className={sectionInnerClass}>
-            <SectionHeading
-              eyebrow="Produk Calmee"
-              title="Minuman susu herbal untuk ritual malam yang lebih tenang."
-              light
-            >
-              Calmee menggabungkan rasa susu yang creamy dengan kandungan pilihan seperti 
-              L-theanine, chamomile, susu + tryptophan, dan lemon untuk menemani momen
-              malam yang lebih hangat dan nyaman.
-            </SectionHeading>
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute left-[-10rem] top-[10%] h-[26rem] w-[26rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
+            <div className="absolute right-[-8rem] bottom-[-8rem] h-[28rem] w-[28rem] rounded-full bg-[#D4A843]/10 blur-3xl" />
+          </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              {ingredients.map((item) => (
-                <div
-                  key={item.title}
-                className="rounded-2xl border border-white/[0.12] bg-white/[0.07] p-5 text-white backdrop-blur transition hover:-translate-y-1 hover:bg-white/[0.11]"
-                >
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#D4A843]/[0.18] text-[#D4A843]">
-                    <SparkleIcon />
-                  </div>
-                  <h3 className="font-display text-2xl font-bold">{item.title}</h3>
-                  <p className="mt-1 inline-flex rounded-full bg-[#D4A843]/[0.16] px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[#D4A843]">
-                    {item.tag}
-                  </p>
-                  <p className="mt-4 leading-7 text-white/70">{item.desc}</p>
+          <div
+            className={`${sectionInnerClass} grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]`}
+            onMouseLeave={() => setHoveredIngredient(null)}
+          >
+            <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-white/10 blur-3xl" />
+
+              <div className="relative h-[32rem] w-[32rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
+                <div className="grid h-full w-full grid-cols-2">
+                  {ingredients.map((item) => {
+                    const isActive = hoveredIngredient?.key === item.key;
+
+                    return (
+                      <button
+                        key={item.key}
+                        type="button"
+                        onMouseEnter={() => setHoveredIngredient(item)}
+                        onFocus={() => setHoveredIngredient(item)}
+                        onClick={() => setHoveredIngredient(item)}
+                        className={`relative overflow-hidden transition-all duration-500 ${
+                          isActive ? "z-10 scale-110" : "scale-100"
+                        }`}
+                      >
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="h-full w-full object-cover"
+                        />
+
+                        <div
+                          className={`absolute inset-0 transition-all duration-500 ${
+                            hoveredIngredient && !isActive
+                              ? "bg-[#160A35]/45"
+                              : "bg-[#160A35]/10"
+                          }`}
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
-              ))}
+              </div>
+
+              <div className="absolute z-20 flex h-[18rem] w-[18rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)]">
+                <img
+                  src={productPreview}
+                  alt="Calmee product"
+                  className="h-[14.5rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)]"
+                />
+              </div>
+
+              <div className="absolute bottom-[-0.8rem] left-1/2 z-30 w-max -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 px-7 py-3 text-center text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#2D1B6B] shadow-xl">
+                No Added Sugar · No Preservatives · Non Addictive Formula
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#C4ADDF]">
+                Produk Calmee
+              </p>
+
+              <h2 className="font-display text-4xl font-bold leading-[1.02] text-white md:text-5xl lg:text-6xl">
+                Satu sachet hangat,
+                <span className="mt-2 block text-[#D4A843]">
+                  Empat kandungan pilihan.
+                </span>
+              </h2>
+
+              <p className="mt-6 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
+                Calmee memadukan susu creamy dengan kandungan pilihan seperti chamomile,
+                L-theanine, lemon, dan tryptophan untuk menemani ritual malam yang lebih
+                tenang, lembut, dan nyaman.
+              </p>
+
+              <div className="mt-8 rounded-[1.6rem] border border-white/15 bg-white/[0.08] p-6 backdrop-blur transition-all duration-300">
+                {hoveredIngredient ? (
+                  <>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4A843]">
+                      {hoveredIngredient.tag}
+                    </p>
+
+                    <h3 className="mt-2 font-display text-3xl font-bold text-white">
+                      {hoveredIngredient.title}
+                    </h3>
+
+                    <p className="mt-3 leading-7 text-white/72">
+                      {hoveredIngredient.desc}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4A843]">
+                      Kandungan Calmee
+                    </p>
+
+                    <h3 className="mt-2 font-display text-3xl font-bold text-white">
+                      Arahkan ke salah satu kandungan
+                    </h3>
+
+                    <p className="mt-3 leading-7 text-white/72">
+                      Arahkan ke Milk, Lemon, Chamomile, atau L-Theanine untuk melihat
+                      peran masing-masing dalam ritual malam Calmee.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              <div className="mt-5 grid grid-cols-2 gap-3">
+                {ingredients.map((item) => {
+                  const isActive = hoveredIngredient?.key === item.key;
+
+                  return (
+                    <button
+                      key={item.key}
+                      type="button"
+                      onMouseEnter={() => setHoveredIngredient(item)}
+                      onFocus={() => setHoveredIngredient(item)}
+                      onClick={() => setHoveredIngredient(item)}
+                      className={`rounded-full border px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.14em] transition-all duration-300 ${
+                        isActive
+                          ? "border-[#D4A843]/60 bg-[#D4A843] text-[#241256]"
+                          : "border-white/15 bg-white/[0.06] text-white/65 hover:bg-white/[0.10] hover:text-white"
+                      }`}
+                    >
+                      {item.display}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
