@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import logoCalmee from "./assets/logo-calmee.png";
+import "./index.css";
 
 const shopeeLink = "https://shopee.co.id/";
 const whatsappLink =
@@ -316,85 +317,6 @@ export default function App() {
   }, [titleNumber, titles]);
   return (
   <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap');
-        :root {
-          --calmee-purple-deep: #2D1B6B;
-          --calmee-purple-mid: #6B4FA0;
-          --calmee-purple-soft: #9B7CC8;
-          --calmee-purple-light: #C4ADDF;
-          --calmee-lavender: #E8DEFF;
-          --calmee-cream: #FDF9F0;
-          --calmee-cream-alt: #F8F1E4;
-          --calmee-gold: #D4A843;
-          --calmee-text-dark: #1A0E3D;
-          --calmee-text: #4A3770;
-          --content-max: 80rem;
-          --nav-height: 72px;
-          --section-min: 100svh;
-        }
-        html {
-          scroll-behavior: smooth;
-          scroll-padding-top: var(--nav-height);
-        }
-        body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
-        .font-display { font-family: 'Cormorant Garamond', serif; }
-        .font-body { font-family: 'DM Sans', sans-serif; }
-        .snap-section { 
-          min-height: 100svh;
-          scroll-margin-top: var(--nav-height);
-          display: flex;
-          align-items: center; }
-        .hero-dot {
-          position: absolute;
-          z-index: 15;
-          display: block;
-          border-radius: 9999px;
-          opacity: 0.82;
-          animation: calmee-float 5.5s ease-in-out infinite;
-        }
-        .hero-dot-1 { top: 22%; right: 18%; width: 5px; height: 5px; background: var(--calmee-gold); }
-        .hero-dot-2 { top: 35%; right: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); }
-        .hero-dot-3 { top: 55%; right: 14%; width: 4px; height: 4px; background: white; }
-        .hero-dot-4 { top: 18%; right: 35%; width: 6px; height: 6px; background: var(--calmee-gold); }
-        .hero-dot-5 { top: 46%; right: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); }
-        .hero-dot-6 { top: 78%; left: 18%; width: 5px; height: 5px; background: var(--calmee-gold); }
-        .hero-dot-7 { top: 65%; left: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); }
-        .hero-dot-8 { top: 45%; left: 14%; width: 4px; height: 4px; background: white; }
-        .hero-dot-9 { top: 82%; left: 35%; width: 6px; height: 6px; background: var(--calmee-gold); }
-        .hero-dot-10 { top: 54%; left: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); }
-        @keyframes calmee-float {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-          50% { transform: translate3d(10px, -16px, 0) scale(1.25); }
-        }
-        .snap-section {
-          scroll-margin-top: var(--nav-height);
-        }
-        @media (prefers-reduced-motion: reduce) {
-          html { scroll-behavior: auto; }
-          .hero-dot { animation: none; }
-        }
-          @keyframes calmPulse {
-            0%, 100% {
-              transform: scale(1);
-              box-shadow: 0 0 60px rgba(255,255,255,0.15);
-            }
-            50% {
-              transform: scale(1.04);
-              box-shadow: 0 0 100px rgba(255,255,255,0.28);
-            }
-          }
-
-          @keyframes slowSpin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-
-          @keyframes cardFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-          }
-      `}</style>
 
       <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
