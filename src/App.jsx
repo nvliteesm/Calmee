@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import logoCalmee from "./assets/logo-calmee.png";
+import logoCalmeeWord from "./assets/logo-calmee-type.png";
 import "./index.css";
 
 const shopeeLink = "https://shopee.co.id/";
@@ -24,12 +25,26 @@ const navItems = [
 ];
 
 const trustSignals = [
-  "BPOM",
-  "Halal",
-  "Rasa creamy lembut",
-  "Tanpa klaim obat tidur",
-  "Dikonsumsi sebelum tidur",
+  "Terdaftar BPOM",
+  "100% Halal",
+  "Diproduksi dengan standar bermutu",
 ];
+
+const heroFloatingCards = [
+  {
+    label: "Night Ritual",
+    title: "Teman ritual malam.",
+    positionClass: "left-0 top-12 -translate-x-15",
+    motionClass: "animate-[cardDriftRight_5s_ease-in-out_infinite]",
+  },
+  {
+    label: "Creamy Comfort",
+    title: "Hangat. Creamy. Lembut.",
+    positionClass: "right-0 bottom-14 translate-x-30",
+    motionClass: "animate-[cardDriftLeft_5.8s_ease-in-out_infinite]",
+  },
+];
+
 
 const problems = [
   "Pikiran masih aktif saat mau tidur",
@@ -220,7 +235,7 @@ function CtaButtons({ align = "start", light = false }) {
         href={shopeeLink}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition hover:-translate-y-0.5 hover:bg-[#e3ba5c]"
+        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
         Beli Sekarang
       </a>
@@ -228,7 +243,7 @@ function CtaButtons({ align = "start", light = false }) {
         href={whatsappLink}
         target="_blank"
         rel="noreferrer"
-        className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition hover:-translate-y-0.5 ${
+        className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
           light
             ? "border-white/35 text-white hover:bg-white/10"
             : "border-[#6B4FA0]/25 bg-white text-[#2D1B6B] hover:bg-[#F0EAFF]"
@@ -320,12 +335,12 @@ export default function App() {
 
       <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
-          <a href="#home" className="flex items-center gap-3" aria-label="Calmee">
-            <img src={logoImageUrl} alt="" className="h-9 w-auto" />
-            <span className="sr-only">Calmee</span>
-            <span className="hidden font-display text-3xl font-bold leading-none text-[#2D1B6B] sm:inline">
-              Calmee
-            </span>
+          <a href="#home" className="flex items-center" aria-label="Calmee">
+            <img
+              src={logoCalmeeWord}
+              alt="Calmee"
+              className="h-8 w-auto md:h-10"
+            />
           </a>
 
           <div className="hidden items-center gap-6 lg:flex">
@@ -359,10 +374,11 @@ export default function App() {
           <div className="absolute inset-0 -z-10 pointer-events-none">
           </div>
           <div className="absolute right-[-8rem] top-20 -z-10 h-[34rem] w-[34rem] rounded-full bg-[#9B7CC8]/20 blur-3xl" />
+          <div className="absolute left-[-10rem] bottom-[-8rem] -z-10 h-[28rem] w-[28rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
 
           <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#C4ADDF]">
+              <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#C4ADDF] backdrop-blur transition-all duration-300 hover:border-white/50 hover:text-white">
                 <SparkleIcon className="h-3.5 w-3.5" />
                 #TidurNyenyakDenganCalmee
               </div>
@@ -429,12 +445,23 @@ export default function App() {
                 alt="Calmee calming milk powder"
                 className="relative z-10 w-40 md:w-56 lg:w-62 aspect-square rounded-full object-cover"
               />
-              <div className="absolute bottom-5 right-0 translate-x-12 z-20 rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur md:right-0 animate-[cardFloat_4s_ease-in-out_infinite]">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
-                  bedtime ritual
-                </p>
-                <p className="mt-1 font-display text-2xl font-bold">Hangat. Lembut. Tenang.</p>
-              </div>
+              {heroFloatingCards.map((card) => (
+                <div
+                  key={card.title}
+                  className={`absolute z-20 ${card.positionClass}`}
+                >
+                  <div
+                    className={`rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur ${card.motionClass}`}
+                  >
+                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
+                      {card.label}
+                    </p>
+                    <p className="mt-1 font-display text-xl font-bold md:text-2xl">
+                      {card.title}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>

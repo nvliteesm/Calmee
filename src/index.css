@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-    --calmee-purple-deep: #2D1B6B;
+    --calmee-purple-deep: #2a226d;
     --calmee-purple-mid: #6B4FA0;
     --calmee-purple-soft: #9B7CC8;
     --calmee-purple-light: #C4ADDF;
@@ -77,3 +77,41 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
     }
+
+.calmee-glass-pill {
+    position: relative;
+    overflow: hidden;
+}
+
+.calmee-glass-pill::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-120%);
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.35),
+        transparent
+    );
+    transition: transform 0.7s ease;
+}
+
+.calmee-glass-pill:hover::before {
+    transform: translateX(120%);
+}
+
+.calmee-glass-pill > * {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes cardDriftRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(14px); }
+}
+
+@keyframes cardDriftLeft {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-14px); }
+}
