@@ -325,6 +325,34 @@ function CtaButtons({ align = "start", light = false }) {
   );
 }
 
+function CtaButtons1({ align = "start", light = false }) {
+  const justify = align === "center" ? "justify-center" : "justify-start";
+  return (
+    <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
+      <a
+        href={paketLink}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
+      >
+        Beli Sekarang
+      </a>
+      <a
+        href={whatsappLink}
+        target="_blank"
+        rel="noreferrer"
+        className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
+          light
+            ? "border-white/35 text-white hover:bg-white/10"
+            : "border-[#6B4FA0]/25 bg-white text-[#2D1B6B] hover:bg-[#F0EAFF]"
+        }`}
+      >
+        Kontak Kami
+      </a>
+    </div>
+  );
+}
+
 function SectionHeading({ eyebrow, title, children, light = false, center = false }) {
   return (
     <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
