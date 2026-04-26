@@ -156,7 +156,7 @@ const packages = [
     highlight: false,
     badge: null,
     cta: "Beli Paket 1 Minggu",
-    href: shopeeLink,
+    href: shopeeLinkPaket1,
     perks: [
       "Isi 7 sachet untuk 7 malam",
       "Total berat 140gram",
@@ -172,7 +172,7 @@ const packages = [
     highlight: true,
     badge: "Direkomendasikan",
     cta: "Beli Paket 2 Minggu",
-    href: shopeeLink,
+    href: shopeeLinkPaket2,
     perks: [
       "Isi 14 sachet untuk 14 malam",
       "Total berat 280gram",
@@ -188,7 +188,7 @@ const packages = [
     highlight: false,
     badge: null,
     cta: "Beli Paket 1 Bulan",
-    href: shopeeLink,
+    href: shopeeLinkPaket3,
     perks: [
       "Isi 28 sachet untuk 28 malam",
       "Total berat 560gram",
