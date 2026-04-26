@@ -25,6 +25,7 @@ const navItems = [
   { label: "Produk", href: "#produk" },
   { label: "Manfaat", href: "#manfaat" },
   { label: "Paket", href: "#paket" },
+  { label: "Review", href: "#reviews" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -171,40 +172,57 @@ const packages = [
 
 const testimonials = [
   {
-    name: "Anisa R.",
-    meta: "Karyawan, Jakarta",
+    name: "Anonymous #1",
     quote:
-      "Aku suka karena rasanya lembut dan jadi punya ritual malam yang bikin lebih tenang sebelum tidur.",
+      "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks da tidur jadi lebih cepat. Rasanya juga enak dan tidak terlalu manis. Recommended buat yang punya masalah insomnia ringan.",
   },
   {
-    name: "Bagas D.",
-    meta: "Mahasiswa, Surabaya",
+    name: "Anonymous #2",
     quote:
-      "Biasanya malam masih kepikiran tugas. Sekarang minum Calmee jadi sinyal untuk pelan-pelan istirahat.",
+      "Lagi di fase stres kerjaan dan tidur berantakan banget. Sudah hampir seminggu rutin minum ini tiap malam. Biasanya aku bisa 1-2 jam baru ketiduran, sekarang jadi lebih cepat. Rasanya enak dan bikin badan jadi relax sebelum tidur. Ga langsung knockout, tapi tidurnya jadi lebih nyenyak dan ga kebangun terus.",
   },
   {
-    name: "Sari W.",
-    meta: "Ibu rumah tangga, Bandung",
+    name: "Anonymous #3",
     quote:
-      "Bukan tipe rasa herbal yang menusuk. Creamy, nyaman, dan cocok diminum saat rumah sudah mulai sepi.",
+      "Saya termasuk orang yang sering sulit tidur, jadi coba produk ini. Setelah rutin minum sebelum tidur lumayan membantu, membuat tidur lebih cepat dan nyaman. Worth to try!",
+  },
+  {
+    name: "Anonymous #4",
+    quote:
+      "Produk sesuai deskripsi, rasanya enak seperti susu biasa tapi efeknya bikin badan lebih tenang sebelum tidur. Cocok diminum pas malam setelah aktivitas seharian.",
+  },
+  {
+    name: "Anonymous #5",
+    quote:
+      "Jujur awalnya sempat ragu dan takut mau beli susu ini, tapi karena udah capek gabisa tidur mulu akhirnya nyobain deh beli Calmee. Rasanya creamy ga semanis itu dan enak banget, ga maksain tidur tapi berasa lebih ngantuk secara alami. Mamaku sampai ikutan minum juga karena suka banget sama formulanya.",
   },
 ];
 
 const faqs = [
+  {
+    question: "Apakah itu Calmee?",
+    answer:
+      "Calmee adalah minuman yang membantu merilekskan tubuh dan mendukung tidur yang lebih tenang dan nyenyak.",
+  },
   {
     question: "Apakah Calmee obat tidur?",
     answer:
       "Bukan. Calmee adalah minuman susu herbal untuk mendukung rutinitas relaksasi sebelum tidur, bukan obat atau pengganti saran medis.",
   },
   {
-    question: "Kapan sebaiknya diminum?",
+    question: "Kapan waktu terbaik konsumsi Calmee?",
     answer:
-      "Umumnya diminum pada malam hari sebelum tidur. Untuk pengalaman terbaik, nikmati bersama rutinitas yang tenang seperti lampu redup dan mengurangi layar.",
+      "Disarankan untuk diminum sekitar 30-60 menit sebelum tidur agar tubuh lebih siap untuk beristirahat.",
   },
   {
-    question: "Apakah aman dikonsumsi rutin?",
+    question: "Apakah aman dikonsumsi setiap hari?",
     answer:
-      "Calmee diposisikan sebagai minuman wellness. Jika sedang hamil, menyusui, punya kondisi medis, alergi susu, atau sedang mengonsumsi obat, konsultasikan dulu dengan tenaga kesehatan.",
+      "Ya, bisa diminum secara rutin sesuai anjuran untuk membantu kualitas tidur. Jika sedang hamil, menyusui, punya kondisi medis, alergi susu, atau sedang mengonsumsi obat, konsultasikan dulu dengan tenaga kesehatan.",
+  },
+  {
+    question: "Apakah Calmee dapat membuat ketergantungan?",
+    answer:
+      "Tidak. Calmee dibuat untuk membantu tubuh menjadi lebih rileks secara alami.",
   },
   {
     question: "Di mana bisa membeli Calmee?",
@@ -373,6 +391,7 @@ function IngredientLabel({ item, active, className, lineClass }) {
 export default function App() {
   const [titleNumber, setTitleNumber] = useState(0);
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   const titles = useMemo(
     () => [
@@ -810,7 +829,7 @@ export default function App() {
               </div>
 
               {/* floating card 1 */}
-              <div className="absolute -left-20 top-14 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+              <div className="absolute -left-20 top-14 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Mind Ease
                 </p>
@@ -820,7 +839,7 @@ export default function App() {
               </div>
 
               {/* floating card 2 */}
-              <div className="absolute -right-0 top-[0%] rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftLeft_6s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+              <div className="absolute -right-0 top-[0%] rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftLeft_6s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Night Ritual
                 </p>
@@ -830,7 +849,7 @@ export default function App() {
               </div>
 
               {/* floating card 3 */}
-              <div className="absolute bottom-1 left-10 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_6.4s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/70 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)]">
+              <div className="absolute bottom-1 left-10 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_6.4s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Recovery
                 </p>
@@ -937,78 +956,164 @@ export default function App() {
           </div>
         </section>
 
-        <section id="reviews" className={sectionClass}>
+        <section id="reviews" className={`${sectionClass} overflow-hidden`}>
           <div className={sectionInnerClass}>
-            <SectionHeading
-              eyebrow="Cerita Pengguna"
-              title="Malam yang lebih tenang, satu ritual kecil."
-              center
-            />
+            <div className="mx-auto max-w-[90rem] text-center">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#9B7CC8]">
+                Cerita Pengguna
+              </p>
 
-            <div className="mt-10 grid gap-5 lg:grid-cols-3">
-              {testimonials.map((item) => (
-                <figure
-                  key={item.name}
-                  className="rounded-2xl bg-white p-6 shadow-[0_18px_55px_rgba(45,27,107,0.08)]"
-                >
-                  <div className="mb-5 flex gap-1 text-[#D4A843]" aria-label="5 bintang">
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <SparkleIcon key={index} className="h-4 w-4" />
-                    ))}
+              <h2 className="mx-auto mt-4 max-w-5xl font-display text-[2.5rem] font-semibold leading-[1.16] text-[#2D1B6B] md:text-[3.5rem] lg:text-[4.3rem]">
+                Malam yang lebih{" "}
+                <span className="inline-block text-[#D4A843]">tenang</span>
+                <span className="block">
+                  dimulai dengan satu ritual{" "}
+                  <span className="inline-block text-[#D4A843]">kecil.</span>
+                </span>
+              </h2>
+
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#594878] md:text-lg">
+                Cerita kecil dari pengguna yang menjadikan Calmee bagian dari ritual malam mereka.
+              </p>
+            </div>
+
+            <div className="mt-12 relative">
+              <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[var(--calmee-cream)] to-transparent" />
+              <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[var(--calmee-cream)] to-transparent" />
+
+              <div className="reviews-marquee">
+                <div className="reviews-track">
+                  {[...testimonials, ...testimonials].map((item, index) => (
+                    <figure
+                      key={`${item.name}-${index}`}
+                      className="reviews-card flex h-[26rem] shrink-0 flex-col rounded-[1.75rem] border border-[#594878] bg-white/95 p-6 shadow-[0_10px_30px_rgba(45,27,107,0)] backdrop-blur transition-all duration-300 hover:border-[#D4A843]/90 hover:shadow-[0_16px_38px_rgba(212,168,67,0.10)]"
+                    >
+                      <div className="mb-5 flex gap-1 text-[#D4A843]" aria-label="5 bintang">
+                        {Array.from({ length: 5 }).map((_, starIndex) => (
+                          <SparkleIcon key={starIndex} className="h-4 w-4" />
+                        ))}
+                      </div>
+
+                      <blockquote className="flex-1 overflow-hidden text-left text-[1.02rem] italic leading-8 text-[#594878]">
+                        "{item.quote}"
+                      </blockquote>
+
+                      <figcaption className="mt-6 flex items-center gap-3">
+                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#6B4FA0] font-display text-xl font-bold text-white">
+                          {item.name.charAt(0)}
+                        </span>
+
+                        <span className="text-left">
+                          <span className="block font-bold text-[#2D1B6B]">{item.name}</span>
+                        </span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          id="faq"
+          className={`${sectionClass} relative isolate overflow-hidden bg-[var(--calmee-cream-alt)]`}
+        >
+          <div className="absolute left-[-10rem] top-[-8rem] -z-10 h-[28rem] w-[28rem] rounded-full bg-[#E8DEFF]/45 blur-3xl" />
+          <div className="absolute right-[-10rem] bottom-[-10rem] -z-10 h-[30rem] w-[30rem] rounded-full bg-[#E8DEFF]/30 blur-3xl" />
+
+          <div className={sectionInnerClass}>
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-xs font-bold uppercase tracking-[0.24em] text-[#8A6FC2]">
+                FAQ
+              </p>
+
+              <h2 className="mt-4 font-display text-4xl font-bold leading-[1.05] text-[#2D1B6B] md:text-5xl lg:text-6xl">
+                Frequently Asked
+                <span className="block text-[#D4A843]">Questions.</span>
+              </h2>
+
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#594878] md:text-lg">
+                Beberapa pertanyaan yang sering ditanyakan sebelum memulai ritual malam bersama Calmee.
+              </p>
+            </div>
+
+            <div className="mt-12 grid items-start gap-5 lg:grid-cols-2">
+              {faqs.map((faq, index) => {
+                const isOpen = openFaq === index;
+
+                return (
+                  <div
+                    key={faq.question}
+                    className={`self-startoverflow-hidden rounded-[1.5rem] border bg-white/90 shadow-[0_14px_44px_rgba(45,27,107,0.06)] backdrop-blur transition-all duration-300 ${
+                      isOpen
+                        ? "border-[#D4A843]/45 shadow-[0_20px_55px_rgba(212,168,67,0.12)]"
+                        : "border-[#E6DDF6] hover:border-[#C4ADDF]"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
+                      aria-expanded={isOpen}
+                    >
+                      <span className="font-display text-[1.35rem] font-bold leading-tight text-[#2D1B6B]">
+                        {faq.question}
+                      </span>
+
+                      <span
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E6DDF6] text-lg font-bold text-[#D4A843] transition-all duration-300 ${
+                          isOpen ? "rotate-45 bg-[#FDF9F0]" : "rotate-0 bg-white"
+                        }`}
+                      >
+                        +
+                      </span>
+                    </button>
+
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        height: isOpen ? "auto" : 0,
+                        opacity: isOpen ? 1 : 0,
+                      }}
+                      transition={{
+                        duration: 0.35,
+                        ease: "easeInOut",
+                      }}
+                      className="overflow-hidden"
+                    >
+                      <div className="border-t border-[#E6DDF6] px-6 pb-6 pt-5">
+                        <p className="text-base leading-8 text-[#594878]">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </motion.div>
                   </div>
-                  <blockquote className="text-base italic leading-7 text-[#594878]">
-                    "{item.quote}"
-                  </blockquote>
-                  <figcaption className="mt-6 flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6B4FA0] font-display text-xl font-bold text-white">
-                      {item.name.charAt(0)}
-                    </span>
-                    <span>
-                      <span className="block font-bold text-[#2D1B6B]">{item.name}</span>
-                      <span className="text-sm text-[#8A6FC2]">{item.meta}</span>
-                    </span>
-                  </figcaption>
-                </figure>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section id="faq" className={`${sectionClass} bg-[var(--calmee-cream-alt)]`}>
-          <div className={`${sectionInnerClass} grid gap-10 lg:grid-cols-[0.85fr_1.15fr]`}>
-            <SectionHeading eyebrow="FAQ" title="Pertanyaan sebelum mulai." />
+        <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-26 text-center text-white lg:px-8">
+          <div className="absolute left-1/2 top-1/2 -z-10 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/40 blur-3xl" />
+          <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/10 blur-2xl" />
+          <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/10 blur-2xl" />
 
-            <div className="space-y-4">
-              {faqs.map((faq) => (
-                <details
-                  key={faq.question}
-                  className="group rounded-2xl bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.07)]"
-                >
-                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-[1.35rem] font-bold text-[#2D1B6B]">
-                    <span>{faq.question}</span>
-                    <span className="text-[#D4A843] transition group-open:rotate-45">+</span>
-                  </summary>
-                  <p className="mt-4 leading-7 text-[#594878]">{faq.answer}</p>
-                </details>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className={`${sectionClass} relative isolate overflow-hidden bg-[#2D1B6B] text-center text-white`}>
-          <div className="absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/[0.34] blur-3xl" />
           <div className="mx-auto max-w-4xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
               Mulai Malam Ini
             </p>
-            <h2 className="font-display text-4xl font-bold leading-[1.02] md:text-6xl">
+
+            <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-6xl">
               Buat malam terasa lebih pelan.
             </h2>
-            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/70">
-              Jadikan Calmee bagian dari ritual tidur yang hangat, lembut, dan menenangkan.
-              Beli melalui Shopee atau tanyakan promo terbaru via WhatsApp.
+
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
+              Jadikan Calmee bagian dari ritual malam yang hangat, lembut, dan menenangkan.
             </p>
-            <div className="mt-9">
+
+            <div className="mt-8">
               <CtaButtons align="center" light />
             </div>
           </div>
