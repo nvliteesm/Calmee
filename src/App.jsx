@@ -148,25 +148,46 @@ const benefits = [
 
 const packages = [
   {
-    name: "Trial",
-    subtitle: "Untuk mulai coba",
-    price: "Mulai dari 1 box",
+    name: "Starter Pack",
+    subtitle: "Paket 1 Minggu",
+    price: "Rp 179.999",
     highlight: false,
-    perks: ["Cocok untuk pemula", "Praktis untuk rutinitas malam", "Bisa konsultasi via WhatsApp"],
+    badge: null,
+    cta: "Beli Paket 1 Minggu",
+    href: shopeeLink,
+    perks: [
+      "Isi 7 sachet untuk 7 malam",
+      "Total berat 140gram",
+      "Cocok untuk mulai mencoba ritual malam Calmee",
+    ],
   },
   {
-    name: "Sleep Routine",
-    subtitle: "Pilihan paling populer",
-    price: "Paket hemat bulanan",
+    name: "Calmee Routine",
+    subtitle: "Paket 2 Minggu",
+    price: "Rp 199.450",
     highlight: true,
-    perks: ["Untuk konsumsi rutin", "Lebih hemat dari pembelian satuan", "Prioritas info promo"],
+    badge: "Direkomendasikan",
+    cta: "Beli Paket 2 Minggu",
+    href: shopeeLink,
+    perks: [
+      "Isi 14 sachet untuk 14 malam",
+      "Total berat 280gram",
+      "Pilihan paling ideal untuk membangun rutinitas",
+    ],
   },
   {
-    name: "Family Pack",
-    subtitle: "Untuk stok di rumah",
-    price: "Paket keluarga",
+    name: "Monthly Ritual",
+    subtitle: "Paket 1 Bulan",
+    price: "Rp 369.458",
     highlight: false,
-    perks: ["Stok lebih panjang", "Cocok dibagi dengan keluarga", "Tanyakan bundle terbaru"],
+    badge: null,
+    cta: "Beli Paket 1 Bulan",
+    href: shopeeLink,
+    perks: [
+      "Isi 28 sachet untuk 28 malam",
+      "Total berat 560gram",
+      "Cocok untuk stok rutin di rumah",
+    ],
   },
 ];
 
@@ -891,28 +912,30 @@ export default function App() {
           <div className={sectionInnerClass}>
             <SectionHeading
               eyebrow="Paket Harga"
-              title="Pilih paket yang cocok untuk rutinitasmu."
+              title="Mulai dari ritual kecil, lanjutkan jadi kebiasaan."
               center
             >
-              Harga dan promo dapat berubah. Klik Shopee atau chat WhatsApp untuk melihat
-              penawaran terbaru Calmee.
+              Setiap sachet dibuat untuk menemani satu ritual malam. Pilih 1 minggu untuk
+              mulai mencoba, 2 minggu untuk rutinitas yang lebih konsisten, atau 1 bulan
+              untuk stok di rumah.
             </SectionHeading>
 
-            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
-                  className={`relative rounded-2xl p-6 shadow-[0_22px_65px_rgba(45,27,107,0.09)] ${
+                  className={`relative flex min-h-[27rem] border-3 border-[#E6DDF6] flex-col rounded-[2rem] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 ${
                     pkg.highlight
-                      ? "bg-[#2D1B6B] text-white ring-4 ring-[#D4A843]/[0.35]"
-                      : "bg-white text-[#2D1B6B]"
+                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20) hover:border-[#D4A843]/100]"
+                      : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
                   }`}
                 >
-                  {pkg.highlight ? (
-                    <span className="absolute right-5 top-5 rounded-full bg-[#D4A843] px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] text-[#241256]">
-                      Populer
+                  {pkg.badge ? (
+                    <span className="absolute right-5 top-5 rounded-full bg-[#D4A843] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#241256]">
+                      {pkg.badge}
                     </span>
                   ) : null}
+
                   <p
                     className={`text-xs font-bold uppercase tracking-[0.2em] ${
                       pkg.highlight ? "text-[#C4ADDF]" : "text-[#8A6FC2]"
@@ -920,7 +943,11 @@ export default function App() {
                   >
                     {pkg.subtitle}
                   </p>
-                  <h3 className="mt-3 font-display text-3xl font-bold">{pkg.name}</h3>
+
+                  <h3 className="mt-4 font-display text-4xl font-bold leading-tight">
+                    {pkg.name}
+                  </h3>
+
                   <p
                     className={`mt-3 text-lg font-bold ${
                       pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"
@@ -928,31 +955,46 @@ export default function App() {
                   >
                     {pkg.price}
                   </p>
-                  <ul className="mt-6 space-y-3">
+
+                  <ul className="mt-7 space-y-4">
                     {pkg.perks.map((perk) => (
                       <li key={perk} className="flex gap-3 text-sm leading-6">
                         <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[#D4A843]" />
-                        <span className={pkg.highlight ? "text-white/75" : "text-[#594878]"}>
+                        <span className={pkg.highlight ? "text-white/78" : "text-[#594878]"}>
                           {perk}
                         </span>
                       </li>
                     ))}
                   </ul>
+
                   <a
-                    href={pkg.highlight ? shopeeLink : whatsappLink}
+                    href={pkg.href}
                     target="_blank"
                     rel="noreferrer"
-                    className={`mt-8 inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition hover:-translate-y-0.5 ${
+                    className={`mt-auto inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] active:scale-95 ${
                       pkg.highlight
                         ? "bg-[#D4A843] text-[#241256] hover:bg-[#e3ba5c]"
                         : "bg-[#2D1B6B] text-white hover:bg-[#6B4FA0]"
                     }`}
                   >
-                    {pkg.highlight ? "Beli di Shopee" : "Tanya Paket"}
+                    {pkg.cta}
                   </a>
                 </div>
               ))}
             </div>
+
+            <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-7 text-[#594878]">
+              Ingin coba satuan dulu? Produk satuan tetap tersedia di{" "}
+              <a
+                href={shopeeLink}
+                target="_blank"
+                rel="noreferrer"
+                className="font-bold text-[#2D1B6B] underline decoration-[#D4A843]/70 underline-offset-4 transition hover:text-[#6B4FA0]"
+              >
+                Shopee Official Store
+              </a>
+              .
+            </p>
           </div>
         </section>
 
