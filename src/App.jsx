@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import logoCalmee from "./assets/logo-calmee.png";
 import logoCalmeeWord from "./assets/logo-calmee-type.png";
+import logoCalmeeWhite from "./assets/logo-calmee-white.png";
+import bgCalmee from "./assets/calmee-bg2.png";
 import ingredientMilk from "./assets/milk.png";
 import ingredientLemon from "./assets/lemon.png";
 import ingredientChamomile from "./assets/chamomile.png";
@@ -10,15 +12,13 @@ import susuCalmee from "./assets/susu-calmee.png";
 import productPreview from "./assets/preview-susu.png";
 import "./index.css";
 
-const shopeeLink = "https://shopee.co.id/";
+const shopeeLink = "https://id.shp.ee/uDja9WMf";
+const shopeeLinkPaket1 = "https://id.shp.ee/QacDzc3W";
+const shopeeLinkPaket2 = "https://id.shp.ee/hkh8fUof";
+const shopeeLinkPaket3 = "https://id.shp.ee/fAsj3RfL";
 const whatsappLink =
-  "https://wa.me/6280000000000?text=Halo%20Calmee%2C%20saya%20ingin%20tanya%20produk%20dan%20promo%20hari%20ini.";
-const logoImageUrl =
-  "https://leadpages.com/api/pages/6iiMfu2VLj/assets/ds79epg3l4pyyd6yxxe7w6ps";
-const productImageUrl =
-  "https://leadpages.com/api/pages/6iiMfu2VLj/assets/wejjf15rwhp6ax2du91hl65c";
-const moonImageUrl =
-  "https://leadpages.com/api/pages/6iiMfu2VLj/assets/l9wvwcqukd1bfjlp62r3pefa";
+  "https://wa.me/6285880877355?text=Halo%20Admin%20Calmee!%2C%20Saya%20ingin%20bertanya%20tentang%20produk%20Calmee.";
+const paketLink = "#paket";
 
 const navItems = [
   { label: "Tentang Kami", href: "#tentang-kami" },
@@ -46,7 +46,7 @@ const heroFloatingCards = [
     label: "Creamy Comfort",
     title: "Hangat. Creamy. Lembut.",
     positionClass: "right-0 bottom-14 translate-x-30",
-    motionClass: "animate-[cardDriftLeft_5.8s_ease-in-out_infinite]",
+    motionClass: "animate-[cardDriftLeft_6s_ease-in-out_infinite]",
   },
 ];
 
@@ -151,6 +151,8 @@ const packages = [
     name: "Starter Pack",
     subtitle: "Paket 1 Minggu",
     price: "Rp 179.999",
+    originalPrice: "Rp 229.999",
+    discount: "22%",
     highlight: false,
     badge: null,
     cta: "Beli Paket 1 Minggu",
@@ -165,6 +167,8 @@ const packages = [
     name: "Calmee Routine",
     subtitle: "Paket 2 Minggu",
     price: "Rp 199.450",
+    originalPrice: "Rp 259.999",
+    discount: "23%",
     highlight: true,
     badge: "Direkomendasikan",
     cta: "Beli Paket 2 Minggu",
@@ -179,6 +183,8 @@ const packages = [
     name: "Monthly Ritual",
     subtitle: "Paket 1 Bulan",
     price: "Rp 369.458",
+    originalPrice: "Rp 499.999",
+    discount: "26%",
     highlight: false,
     badge: null,
     cta: "Beli Paket 1 Bulan",
@@ -313,7 +319,7 @@ function CtaButtons({ align = "start", light = false }) {
             : "border-[#6B4FA0]/25 bg-white text-[#2D1B6B] hover:bg-[#F0EAFF]"
         }`}
       >
-        Chat WhatsApp
+        Kontak Kami
       </a>
     </div>
   );
@@ -706,7 +712,7 @@ export default function App() {
             <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] items-center justify-center">
               <div className="absolute inset-0 rounded-full bg-white/10 blur-3xl" />
 
-              <div className="relative h-[32rem] w-[32rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
+              <div className="relative h-[31rem] w-[31rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
                 <div className="grid h-full w-full grid-cols-2">
                   {ingredients.map((item) => {
                     const isActive = hoveredIngredient?.key === item.key;
@@ -926,7 +932,7 @@ export default function App() {
                   key={pkg.name}
                   className={`relative flex min-h-[27rem] border-3 border-[#E6DDF6] flex-col rounded-[2rem] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 ${
                     pkg.highlight
-                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20) hover:border-[#D4A843]/100]"
+                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100]"
                       : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
                   }`}
                 >
@@ -948,13 +954,33 @@ export default function App() {
                     {pkg.name}
                   </h3>
 
-                  <p
-                    className={`mt-3 text-lg font-bold ${
-                      pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"
-                    }`}
-                  >
-                    {pkg.price}
-                  </p>
+                  <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+                    <span
+                      className={`text-2xl font-bold ${
+                        pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"
+                      }`}
+                    >
+                      {pkg.price}
+                    </span>
+
+                    <span
+                      className={`text-sm font-bold line-through ${
+                        pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"
+                      }`}
+                    >
+                      {pkg.originalPrice}
+                    </span>
+
+                    <span
+                      className={`rounded-md px-2 py-1 text-xs font-bold ${
+                        pkg.highlight
+                          ? "bg-white/10 text-[#D4A843]"
+                          : "bg-[#FFF1EC] text-[#F04A2A]"
+                      }`}
+                    >
+                      {pkg.discount}
+                    </span>
+                  </div>
 
                   <ul className="mt-7 space-y-4">
                     {pkg.perks.map((perk) => (
@@ -1087,7 +1113,7 @@ export default function App() {
                 return (
                   <div
                     key={faq.question}
-                    className={`self-startoverflow-hidden rounded-[1.5rem] border bg-white/90 shadow-[0_14px_44px_rgba(45,27,107,0.06)] backdrop-blur transition-all duration-300 ${
+                    className={`self-start overflow-hidden rounded-[1.5rem] border bg-white/90 shadow-[0_14px_44px_rgba(45,27,107,0.06)] backdrop-blur transition-all duration-300 ${
                       isOpen
                         ? "border-[#D4A843]/45 shadow-[0_20px_55px_rgba(212,168,67,0.12)]"
                         : "border-[#E6DDF6] hover:border-[#C4ADDF]"
@@ -1138,11 +1164,23 @@ export default function App() {
         </section>
 
         <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-26 text-center text-white lg:px-8">
-          <div className="absolute left-1/2 top-1/2 -z-10 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/40 blur-3xl" />
-          <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/10 blur-2xl" />
-          <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/10 blur-2xl" />
+          {/* background product image */}
+          <img
+            src={bgCalmee}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-30 h-full w-full object-cover"
+          />
 
-          <div className="mx-auto max-w-4xl">
+          {/* purple shade overlay */}
+          <div className="absolute inset-0 -z-20 bg-[#2D1B6B]/92" />
+
+          {/* extra center glow so it still feels premium */}
+          <div className="absolute left-1/2 top-1/2 -z-10 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/35 blur-3xl" />
+          <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/12 blur-2xl" />
+          <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
+
+          <div className="relative z-10 mx-auto max-w-4xl">
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
               Mulai Malam Ini
             </p>
@@ -1165,8 +1203,8 @@ export default function App() {
       <footer className="bg-[#12092E] px-5 py-10 text-white lg:snap-start lg:px-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <a href="#home" className="flex items-center gap-3">
-            <img src={logoImageUrl} alt="" className="h-8 w-auto opacity-90" />
-            <span className="font-display text-3xl font-bold">Calmee</span>
+            <img src={logoCalmeeWhite} alt="Calmee" className="h-8 w-auto opacity-90" />
+            
           </a>
 
           <div className="flex flex-wrap gap-x-6 gap-y-3">
@@ -1182,7 +1220,7 @@ export default function App() {
           </div>
         </div>
         <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/40 md:flex-row md:items-center md:justify-between">
-          <p>&copy; 2026 Calmee Indonesia. Seluruh hak cipta dilindungi.</p>
+          <p>&copy; 2026 Calmee Store Indonesia. Seluruh hak cipta dilindungi.</p>
           <p>Minuman wellness. Bukan obat atau pengganti konsultasi medis.</p>
         </div>
       </footer>
