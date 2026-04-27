@@ -10,6 +10,10 @@ import ingredientChamomile from "./assets/chamomile.png";
 import ingredientTheanine from "./assets/l-theanine.png";
 import susuCalmee from "./assets/susu-calmee.png";
 import productPreview from "./assets/preview-susu.png";
+import badanPom from "./assets/badan-pom.png";
+import gmp from "./assets/gmp.png";
+import haccp from "./assets/logo-haccp.png";
+import halalIndo from "./assets/halal-Indo.png";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
@@ -28,11 +32,29 @@ const navItems = [
   { label: "Review", href: "#reviews" },
   { label: "FAQ", href: "#faq" },
 ];
-
 const trustSignals = [
   "Terdaftar BPOM",
-  "100% Halal",
-  "Diproduksi dengan standar bermutu",
+  "Halal Indonesia",
+  "GMP",
+  "HACCP",
+];
+const trustLogos = [
+  {
+    name: "BPOM",
+    image: badanPom,
+  },
+  {
+    name: "Halal Indonesia",
+    image: halalIndo,
+  },
+  {
+    name: "GMP",
+    image: gmp,
+  },
+  {
+    name: "HACCP",
+    image: haccp,
+  },
 ];
 
 const heroFloatingCards = [
@@ -331,8 +353,7 @@ function CtaButtons1({ align = "start", light = false }) {
     <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
       <a
         href={paketLink}
-        target="_blank"
-        rel="noreferrer"
+        
         className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
         Beli Sekarang
@@ -355,7 +376,7 @@ function CtaButtons1({ align = "start", light = false }) {
 
 function SectionHeading({ eyebrow, title, children, light = false, center = false }) {
   return (
-    <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div className={center ? "mx-auto max-w-6xl text-center" : "max-w-3xl"}>
       <p
         className={`mb-3 text-[0.7rem] font-bold uppercase tracking-[0.22em] ${
           light ? "text-[#C4ADDF]" : "text-[#8A6FC2]"
@@ -546,7 +567,7 @@ export default function App() {
               </p>
 
               <div className="mt-8">
-                <CtaButtons light />
+                <CtaButtons1 light />
               </div>
 
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
@@ -946,7 +967,18 @@ export default function App() {
           <div className={sectionInnerClass}>
             <SectionHeading
               eyebrow="Paket Harga"
-              title="Mulai dari ritual kecil, lanjutkan jadi kebiasaan."
+              title={
+                <>
+                  Mulai dari ritual{" "}
+                  <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
+                    kecil
+                  </span>
+                  , lanjutkan jadi{" "}
+                  <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
+                    kebiasaan.
+                  </span>
+                </>
+              }
               center
             >
               Setiap sachet dibuat untuk menemani satu ritual malam. Pilih 1 minggu untuk
@@ -954,7 +986,28 @@ export default function App() {
               untuk stok di rumah.
             </SectionHeading>
 
-            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+            <div className="mx-auto mt-8 max-w-xl rounded-[1.75rem] border border-[#E6DDF6] bg-white/80 px-6 py-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)] backdrop-blur">
+              <p className="mb-4 text-center text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#8A6FC2]">
+                Terdaftar & Diproduksi Dengan Standar Terpercaya
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
+                {trustLogos.map((logo) => (
+                  <div
+                    key={logo.name}
+                    className="flex h-14 items-center justify-center rounded-2xl bg-white px-4 shadow-[0_10px_28px_rgba(45,27,107,0.06)]"
+                  >
+                    <img
+                      src={logo.image}
+                      alt={logo.name}
+                      className="max-h-10 w-auto object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 grid gap-5 lg:grid-cols-3">
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
