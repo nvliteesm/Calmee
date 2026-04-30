@@ -44,7 +44,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 .hero-dot-6 { top: 78%; left: 18%; width: 5px; height: 5px; background: var(--calmee-gold); animation-delay: -0.2s; }
 .hero-dot-7 { top: 65%; left: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); animation-delay: -0.6s; }
 .hero-dot-8 { top: 45%; left: 14%; width: 4px; height: 4px; background: white; animation-delay: -1s; }
-.hero-dot-9 { top: 82%; left: 35%; width: 6px; height: 6px; background: var(--calmee-gold); animation-delay: -1.4s; }
+.hero-dot-9 { top: 82%; left: 7%; width: 6px; height: 6px; background: var(--calmee-gold); animation-delay: -1.4s; }
 .hero-dot-10 { top: 54%; left: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); animation-delay: -1.8s; }
 @keyframes calmee-float {
     0%, 100% { transform: translate3d(0, 0, 0) scale(1); }

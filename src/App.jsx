@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import logoCalmee from "./assets/logo-calmee.png";
 import logoCalmeeWord from "./assets/logo-calmee-type.png";
 import logoCalmeeWhite from "./assets/logo-calmee-white.png";
-import bgCalmee from "./assets/calmee-bg2.png";
+import bgCalmeeFirst from "./assets/bg-calmee-left-right.png";
+import bgCalmeeLast from "./assets/bg-malam-unedited.png";
 import ingredientMilk from "./assets/milk.png";
 import ingredientLemon from "./assets/lemon.png";
 import ingredientChamomile from "./assets/chamomile.png";
@@ -68,7 +69,7 @@ const heroFloatingCards = [
     label: "Creamy Comfort",
     title: "Hangat. Creamy. Lembut.",
     positionClass: "right-0 bottom-14 translate-x-30",
-    motionClass: "animate-[cardDriftLeft_6s_ease-in-out_infinite]",
+    motionClass: "animate-[cardDriftLeft_7s_ease-in-out_infinite]",
   },
 ];
 
@@ -177,7 +178,7 @@ const packages = [
     discount: "22%",
     highlight: false,
     badge: null,
-    cta: "Beli Paket 1 Minggu",
+    cta: "Pilih Paket Pemula",
     href: shopeeLinkPaket1,
     perks: [
       "Isi 7 sachet untuk 7 malam",
@@ -193,7 +194,7 @@ const packages = [
     discount: "23%",
     highlight: true,
     badge: "Direkomendasikan",
-    cta: "Beli Paket 2 Minggu",
+    cta: "Pilih Paket Rutin",
     href: shopeeLinkPaket2,
     perks: [
       "Isi 14 sachet untuk 14 malam",
@@ -209,7 +210,7 @@ const packages = [
     discount: "26%",
     highlight: false,
     badge: null,
-    cta: "Beli Paket 1 Bulan",
+    cta: "Pilih Paket Bulanan",
     href: shopeeLinkPaket3,
     perks: [
       "Isi 28 sachet untuk 28 malam",
@@ -356,7 +357,7 @@ function CtaButtons1({ align = "start", light = false }) {
         
         className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
-        Beli Sekarang
+        Lihat Paket
       </a>
       <a
         href={whatsappLink}
@@ -471,10 +472,10 @@ export default function App() {
 
   const titles = useMemo(
     () => [
-      "Bangun lebih siap.",
-      "Pikiran lebih rileks.",
-      "Malam lebih nyaman.",
-      "Hari lebih ringan.",
+      "bangun lebih siap.",
+      "pikiran lebih rileks.",
+      "malam lebih nyaman.",
+      "hari lebih ringan.",
     ],
     []
   );
@@ -527,98 +528,101 @@ export default function App() {
       <main>
         <section
           id="home"
-          className="snap-section relative isolate overflow-hidden bg-[radial-gradient(ellipse_at_20%_45%,#4A2E8A_0%,#2D1B6B_42%,#160A35_100%)] px-5 pb-14 pt-28 text-white md:pt-32 lg:px-8 lg:pb-0"
+          className="snap-section relative isolate overflow-hidden px-5 pb-16 pt-28 text-white md:pt-32 lg:px-8"
         >
-          <div className="absolute inset-0 -z-10 overflow-hidden">
-            <div className="absolute left-[-10rem] top-[10%] h-[26rem] w-[26rem] rounded-full bg-[#C4ADDF]/10 blur-3xl" />
-            <div className="absolute right-[-8rem] bottom-[-8rem] h-[28rem] w-[28rem] rounded-full bg-[#D4A843]/10 blur-3xl" />
-          </div>
-          <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
-            <div>
-              <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-[#C4ADDF]/35 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#C4ADDF] backdrop-blur transition-all duration-300 hover:border-white/50 hover:text-white">
-                <SparkleIcon className="h-3.5 w-3.5" />
-                #TidurNyenyakDenganCalmee
-              </div>
+          {/* background product image */}
+          <img
+            src={bgCalmeeFirst}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 -z-30 h-full w-full object-cover"
+          />
 
-              <h1 className="font-display text-5xl font-bold leading-[0.98] md:text-6xl lg:text-7xl">
-                Tidur lebih tenang,
-                <span className="relative mt-2 block h-[1.15em] overflow-hidden italic text-[#CBB6E8]">
-                  {titles.map((title, index) => (
-                    <motion.span
-                      key={title}
-                      className="absolute left-0 top-0"
-                      initial={{ opacity: 0, y: 40 }}
-                      animate={
-                        titleNumber === index
-                          ? { opacity: 1, y: 0 }
-                          : { opacity: 0, y: titleNumber > index ? -40 : 40 }
-                      }
-                      transition={{ duration: 0.55, ease: "easeInOut" }}
-                    >
-                      {title}
-                    </motion.span>
-                  ))}
-                </span>
-              </h1>
+          {/* main purple overlay */}
+          <div className="absolute inset-0 -z-20 bg-[#160A35]/72" />
 
-              <p className="mt-6 max-w-2xl text-base leading-8 text-white/75 md:text-lg">
-                Calmee membantu tubuh lebih rileks, menenangkan pikiran, dan mendukung tidur
-                lebih nyenyak secara alami lewat minuman susu herbal yang lembut dan premium.
-              </p>
+          {/* center readability glow */}
+          <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_center,rgba(45,27,107,0.58)_0%,rgba(22,10,53,0.68)_42%,rgba(22,10,53,0.84)_100%)]" />
 
-              <div className="mt-8">
-                <CtaButtons1 light />
-              </div>
+          {/* soft premium glows */}
+          <div className="absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/28 blur-3xl" />
+          <div className="absolute left-[14%] bottom-[18%] -z-10 h-28 w-28 rounded-full bg-[#D4A843]/12 blur-2xl" />
+          <div className="absolute right-[14%] top-[20%] -z-10 h-28 w-28 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
 
-              <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-                {trustSignals.slice(0, 4).map((item) => (
-                  <span
-                    key={item}
-                    className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-white/60"
-                  >
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#D4A843]" />
-                    {item}
-                  </span>
-                ))}
-              </div>
+          {/* subtle hero dots */}
+          <span className="hero-dot hero-dot-1" />
+          <span className="hero-dot hero-dot-2" />
+          <span className="hero-dot hero-dot-3" />
+          <span className="hero-dot hero-dot-4" />
+          <span className="hero-dot hero-dot-5" />
+          <span className="hero-dot hero-dot-6" />
+          <span className="hero-dot hero-dot-7" />
+          <span className="hero-dot hero-dot-8" />
+          <span className="hero-dot hero-dot-9" />
+          <span className="hero-dot hero-dot-10" />
+
+          <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-center text-center">
+            <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
+              <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
+              #TidurNyenyakDenganCalmee
             </div>
 
-            <div className="relative mx-auto flex min-h-[26rem] w-full max-w-lg items-center justify-center lg:min-h-[32rem]">
-              <span className="hero-dot hero-dot-1" />
-              <span className="hero-dot hero-dot-2" />
-              <span className="hero-dot hero-dot-3" />
-              <span className="hero-dot hero-dot-4" />
-              <span className="hero-dot hero-dot-5" />
-              <span className="hero-dot hero-dot-6" />
-              <span className="hero-dot hero-dot-7" />
-              <span className="hero-dot hero-dot-8" />
-              <span className="hero-dot hero-dot-9" />
-              <span className="hero-dot hero-dot-10" />
-              <div className="absolute h-80 w-80 rounded-full bg-[#C4ADDF]/20 blur-3xl md:h-[28rem] md:w-[28rem]" />
-              <div className="absolute h-64 w-64 rounded-full border border-white/10 md:h-96 md:w-96 animate-[slowSpin_30s_linear_infinite]" />
-              <div className="absolute h-48 w-48 rounded-full bg-[#FDF9F0] shadow-[0_0_80px_rgba(253,249,240,0.34)] md:h-64 md:w-64 animate-[calmPulse_4s_ease-in-out_infinite]" />
-              <img
-                src={logoCalmee}
-                alt="Calmee calming milk powder"
-                className="relative z-10 w-40 md:w-56 lg:w-62 aspect-square rounded-full object-cover"
-              />
-              {heroFloatingCards.map((card) => (
-                <div
-                  key={card.title}
-                  className={`absolute z-20 ${card.positionClass}`}
+            <h1 className="mx-auto max-w-[86rem] text-center font-display text-[3rem] font-bold leading-[0.95] md:text-[4.2rem] lg:text-[4.15rem] xl:text-[4.4rem]">
+              <span className="inline-block">
+                Tidur lebih tenang,{" "}
+                <span className="italic text-[#D8C4F2]">
+                  pikiran lebih rileks.
+                </span>
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/76 md:text-lg">
+              Calmee adalah minuman susu herbal hangat untuk menemani tubuh dan pikiran
+              masuk ke suasana istirahat dengan lebih lembut.
+            </p>
+
+            <div className="mt-8">
+              <CtaButtons1 align="center" light />
+            </div>
+
+            {/* clean benefit signals */}
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+              {[
+                "Hangat & creamy",
+                "Bukan obat tidur",
+                "Teman ritual malam",
+                "Rasa lembut sebelum tidur",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.15em] text-white/64"
                 >
-                  <div
-                    className={`rounded-2xl border border-white/45 bg-white/90 px-5 py-4 text-[#2D1B6B] shadow-xl backdrop-blur ${card.motionClass}`}
-                  >
-                    <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
-                      {card.label}
-                    </p>
-                    <p className="mt-1 font-display text-xl font-bold md:text-2xl">
-                      {card.title}
-                    </p>
-                  </div>
-                </div>
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#D4A843]" />
+                  {item}
+                </span>
               ))}
+            </div>
+
+            {/* trust logos */}
+            <div className="mt-9 rounded-[1.5rem] border border-white/14 bg-white/[0.09] px-5 py-4 shadow-[0_18px_55px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+              <p className="mb-4 text-center text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white/48">
+                Terdaftar & Diproduksi dengan Standar Terpercaya
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
+                {trustLogos.map((logo) => (
+                  <div
+                    key={logo.name}
+                    className="flex h-12 min-w-20 items-center justify-center rounded-2xl bg-white/92 px-3 shadow-[0_10px_26px_rgba(0,0,0,0.12)]"
+                  >
+                    <img
+                      src={logo.image}
+                      alt={logo.name}
+                      className="max-h-8 w-auto object-contain"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -761,7 +765,7 @@ export default function App() {
             <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] items-center justify-center">
               <div className="absolute inset-0 rounded-full bg-white/10 blur-3xl" />
 
-              <div className="relative h-[31rem] w-[31rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
+              <div className="relative h-[30rem] w-[30rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
                 <div className="grid h-full w-full grid-cols-2">
                   {ingredients.map((item) => {
                     const isActive = hoveredIngredient?.key === item.key;
@@ -1247,7 +1251,7 @@ export default function App() {
         <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-26 text-center text-white lg:px-8">
           {/* background product image */}
           <img
-            src={bgCalmee}
+            src={bgCalmeeLast}
             alt=""
             aria-hidden="true"
             className="absolute inset-0 -z-30 h-full w-full object-cover"
