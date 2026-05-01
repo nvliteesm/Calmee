@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import logoCalmee from "./assets/logo-calmee.png";
 import logoCalmeeWord from "./assets/logo-calmee-type.png";
 import logoCalmeeWhite from "./assets/logo-calmee-white.png";
 import bgCalmeeFirst from "./assets/bg-calmee-left-right.png";
@@ -33,12 +32,7 @@ const navItems = [
   { label: "Review", href: "#reviews" },
   { label: "FAQ", href: "#faq" },
 ];
-const trustSignals = [
-  "Terdaftar BPOM",
-  "Halal Indonesia",
-  "GMP",
-  "HACCP",
-];
+
 const trustLogos = [
   {
     name: "BPOM",
@@ -58,39 +52,8 @@ const trustLogos = [
   },
 ];
 
-const heroFloatingCards = [
-  {
-    label: "Night Ritual",
-    title: "Teman ritual malam.",
-    positionClass: "left-0 top-12 -translate-x-15",
-    motionClass: "animate-[cardDriftRight_5s_ease-in-out_infinite]",
-  },
-  {
-    label: "Creamy Comfort",
-    title: "Hangat. Creamy. Lembut.",
-    positionClass: "right-0 bottom-14 translate-x-30",
-    motionClass: "animate-[cardDriftLeft_7s_ease-in-out_infinite]",
-  },
-];
-
-
-const problems = [
-  "Pikiran masih aktif saat tubuh sudah lelah",
-  "Sulit merasa rileks setelah hari yang panjang",
-  "Malam terasa panjang karena overthinking",
-  "Tidur terasa kurang dalam dan kurang memulihkan",
-  "Butuh rutinitas malam yang lebih lembut",
-  "Ingin pilihan hangat yang bukan obat tidur",
-];
-
 const sleepInsightCards = [
-  {
-    icon: "☾",
-    label: "Background",
-    title: "Pikiran yang aktif sering membuat tubuh sulit masuk mode istirahat.",
-    desc:
-      "Stres, kekhawatiran, dan rutinitas tidur yang terganggu dapat membuat malam terasa lebih panjang.",
-  },
+
   {
     icon: "✦",
     label: "Dampak Harian",
@@ -224,7 +187,7 @@ const testimonials = [
   {
     name: "Anonymous #1",
     quote:
-      "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks da tidur jadi lebih cepat. Rasanya juga enak dan tidak terlalu manis. Recommended buat yang punya masalah insomnia ringan.",
+      "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks dan tidur jadi lebih cepat. Rasanya juga enak dan tidak terlalu manis. Recommended buat yang punya masalah insomnia ringan.",
   },
   {
     name: "Anonymous #2",
@@ -283,17 +246,6 @@ const faqs = [
 
 const sectionClass = "snap-section px-5 py-16 lg:px-8";
 const sectionInnerClass = "mx-auto w-full max-w-[var(--content-max)]";
-
-function MoonIcon({ className = "h-5 w-5" }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M20.2 15.7A8.4 8.4 0 0 1 8.3 3.8 8.5 8.5 0 1 0 20.2 15.7Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
 
 function SparkleIcon({ className = "h-5 w-5" }) {
   return (
@@ -404,91 +356,12 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
     </div>
   );
 }
-function AnimatedWords({ children, className = "" }) {
-  const words = children.split(" ");
-
-  return (
-    <span className={className}>
-      {words.map((word, index) => (
-        <motion.span
-          key={`${word}-${index}`}
-          className="inline-block mr-3"
-          initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{
-            duration: 1.5,
-            // delay: index * 0.08,
-            ease: "easeOut",
-          }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </span>
-  );
-}
-function IngredientLabel({ item, active, className, lineClass }) {
-  return (
-    <>
-      <span
-        className={`absolute z-10 h-[2px] origin-center bg-white/30 transition-all duration-300 ${
-          lineClass
-        } ${active ? "bg-[#D4A843]" : ""}`}
-      />
-
-      <div
-        className={`absolute z-20 w-[19rem] transition-all duration-300 ${className} ${
-          active ? "scale-105" : "scale-100"
-        }`}
-      >
-        <h3 className="font-display text-3xl font-bold italic leading-none text-white underline decoration-[#D4A843]/70 underline-offset-4">
-          {item.display}
-        </h3>
-
-        <div
-          className={`mt-3 rounded-[1.2rem] border border-white/15 bg-white/[0.08] px-4 py-3 backdrop-blur transition-all duration-300 ${
-            active
-              ? "opacity-100 shadow-[0_18px_50px_rgba(0,0,0,0.22)]"
-              : "opacity-75"
-          }`}
-        >
-          <p className="text-[0.65rem] font-bold uppercase tracking-[0.18em] text-[#D4A843]">
-            {item.tag}
-          </p>
-
-          <p className="mt-2 text-sm leading-6 text-white/72">
-            {item.desc}
-          </p>
-        </div>
-      </div>
-    </>
-  );
-}
 
 export default function App() {
-  const [titleNumber, setTitleNumber] = useState(0);
+  
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const titles = useMemo(
-    () => [
-      "bangun lebih siap.",
-      "pikiran lebih rileks.",
-      "malam lebih nyaman.",
-      "hari lebih ringan.",
-    ],
-    []
-  );
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setTitleNumber((prev) =>
-        prev === titles.length - 1 ? 0 : prev + 1
-      );
-    }, 2200);
-
-    return () => clearTimeout(timeoutId);
-  }, [titleNumber, titles]);
   return (
   <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
 
@@ -695,7 +568,7 @@ export default function App() {
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                {sleepInsightCards.slice(1).map((card) => (
+                {sleepInsightCards.map((card) => (
                   <div
                     key={card.title}
                     className="rounded-[1.5rem] border border-[#E6DDF6] bg-white/80 p-5 shadow-[0_18px_55px_rgba(45,27,107,0.07)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.2)]"
@@ -1017,7 +890,7 @@ export default function App() {
                   key={pkg.name}
                   className={`relative flex min-h-[27rem] border-3 border-[#E6DDF6] flex-col rounded-[2rem] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 ${
                     pkg.highlight
-                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100]"
+                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100"
                       : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
                   }`}
                 >

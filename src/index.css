@@ -18,7 +18,6 @@
 }
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: var(--nav-height);
 }
 body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 .font-display { font-family: 'Cormorant Garamond', serif; }
@@ -27,7 +26,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
     min-height: 100svh;
     display: flex;
     align-items: center; 
-    } 
+} 
 .hero-dot {
     position: absolute;
     z-index: 15;
@@ -46,6 +45,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 .hero-dot-8 { top: 45%; left: 14%; width: 4px; height: 4px; background: white; animation-delay: -1s; }
 .hero-dot-9 { top: 82%; left: 7%; width: 6px; height: 6px; background: var(--calmee-gold); animation-delay: -1.4s; }
 .hero-dot-10 { top: 54%; left: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); animation-delay: -1.8s; }
+
 @keyframes calmee-float {
     0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
     50% { transform: translate3d(10px, -16px, 0) scale(1.25); }
@@ -55,26 +55,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
     html { scroll-behavior: auto; }
     .hero-dot { animation: none; }
 }
-    @keyframes calmPulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 60px rgba(255,255,255,0.15);
-    }
-    50% {
-        transform: scale(1.04);
-        box-shadow: 0 0 100px rgba(255,255,255,0.28);
-    }
-    }
-
-    @keyframes slowSpin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-    }
-
-    @keyframes cardFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    }
 
 .calmee-glass-pill {
     position: relative;
