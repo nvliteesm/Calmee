@@ -13,7 +13,7 @@ import productPreview from "./assets/preview-susu.png";
 import badanPom from "./assets/badan-pom.png";
 import gmp from "./assets/gmp.png";
 import haccp from "./assets/logo-haccp.png";
-import halalIndo from "./assets/halal-Indo.png";
+import halalIndo from "./assets/halal-indo.png";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
