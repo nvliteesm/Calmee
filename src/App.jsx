@@ -568,7 +568,7 @@ export default function App() {
                           <span className="inline bg-[#EEE7FA] px-1">Kurang tidur</span>{" "}
                           bukan cuma soal mengantuk.
                         </>
-                      ) : card.label === "Teman Ritual Malam" ? (
+                      ) : card.label === "Temen Ritual Malam" ? (
                         <>
                           Calmee hadir <span className="inline bg-[#EEE7FA] px-1">bukan</span>{" "}
                           sebagai <span className="inline bg-[#EEE7FA] px-1">obat tidur.</span>
