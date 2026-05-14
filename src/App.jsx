@@ -25,7 +25,6 @@ const whatsappLink =
 const paketLink = "#paket";
 
 const navItems = [
-  { label: "Tentang Kami", href: "#tentang-kami" },
   { label: "Produk", href: "#produk" },
   { label: "Manfaat", href: "#manfaat" },
   { label: "Paket", href: "#paket" },
@@ -53,7 +52,6 @@ const trustLogos = [
 ];
 
 const sleepInsightCards = [
-
   {
     icon: "✦",
     label: "Dampak Harian",
@@ -63,20 +61,21 @@ const sleepInsightCards = [
   },
   {
     icon: "◐",
-    label: "Bukan solusi instan",
+    label: "Temen Ritual Malam",
     title: "Calmee hadir bukan sebagai obat tidur.",
     desc:
-      "Calmee diposisikan sebagai teman ritual malam yang hangat, creamy, dan menenangkan.",
+      "Calmee akan menimbulkan rasa ngantuk secara alami dan pelan-pelan memperbaiki jam tidur.",
   },
 ];
 
 const ingredients = [
   {
     key: "milk",
-    display: "Milk",
-    title: "Milk + Tryptophan",
+    display: "Susu",
+    title: "Susu",
     tag: "Comfort base",
-    desc: "Basis susu yang creamy dengan tryptophan, memberi sensasi hangat dan nyaman untuk menemani ritual malam.",
+    desc:
+      "Diperkaya tryptophan dan magnesium untuk memberi rasa hangat, nyaman, dan membantu tubuh terasa lebih rileks sebelum tidur.",
     image: ingredientMilk,
     wrapClass: "left-0 top-8 items-start text-left",
     lineClass: "left-[12.5rem] top-[8.5rem] w-[10rem] rotate-[28deg] origin-left",
@@ -86,7 +85,8 @@ const ingredients = [
     display: "Lemon",
     title: "Lemon",
     tag: "Bright finish",
-    desc: "Memberi sentuhan rasa ringan dan segar agar Calmee tetap nyaman dinikmati pada malam hari.",
+    desc:
+      "Memberi sentuhan rasa ringan dan segar, dengan vitamin C serta antioksidan untuk melengkapi ritual malam yang lebih nyaman.",
     image: ingredientLemon,
     wrapClass: "right-0 top-8 items-end text-right",
     lineClass: "right-[12.5rem] top-[8.5rem] w-[10rem] -rotate-[28deg] origin-right",
@@ -96,7 +96,8 @@ const ingredients = [
     display: "Chamomile",
     title: "Chamomile",
     tag: "Calming botanical",
-    desc: "Bunga herbal yang umum digunakan dalam ritual malam untuk membantu tubuh terasa lebih rileks dan tenang.",
+    desc:
+      "Bunga herbal yang dikenal dalam rutinitas relaksasi, membantu tubuh terasa lebih tenang dan nyaman sebelum waktu istirahat.",
     image: ingredientChamomile,
     wrapClass: "left-0 bottom-8 items-start text-left",
     lineClass: "left-[12.5rem] bottom-[8.5rem] w-[10rem] -rotate-[28deg] origin-left",
@@ -106,7 +107,8 @@ const ingredients = [
     display: "L-Theanine",
     title: "L-Theanine",
     tag: "Relaxed focus",
-    desc: "Asam amino yang dikenal membantu rasa rileks, cocok untuk membantu pikiran pelan-pelan melambat sebelum tidur.",
+    desc:
+      "Asam amino alami yang membantu mendukung rasa rileks, agar pikiran terasa lebih tenang dan pelan sebelum tidur.",
     image: ingredientTheanine,
     wrapClass: "right-0 bottom-8 items-end text-right",
     lineClass: "right-[12.5rem] bottom-[8.5rem] w-[10rem] rotate-[28deg] origin-right",
@@ -115,20 +117,24 @@ const ingredients = [
 
 const benefits = [
   {
-    title: "Membantu tubuh lebih rileks",
-    desc: "Cocok untuk menutup hari dengan ritme yang lebih pelan dan suasana yang lebih nyaman.",
+    title: "Bantu tubuh terasa lebih santai",
+    desc:
+      "Cocok diminum saat kamu ingin menutup hari dengan ritme yang lebih pelan dan suasana yang lebih nyaman.",
   },
   {
-    title: "Menenangkan pikiran sebelum tidur",
-    desc: "Mendukung transisi dari mode sibuk ke mode istirahat lewat ritual malam yang konsisten.",
+    title: "Bantu pikiran pelan-pelan turun tempo",
+    desc:
+      "Untuk malam ketika badan sudah capek, tapi pikiran masih sibuk memikirkan banyak hal.",
   },
   {
-    title: "Mendukung tidur lebih nyenyak",
-    desc: "Dirancang sebagai bagian dari kebiasaan tidur yang lebih lembut, hangat, dan mindful.",
+    title: "Jadi bagian dari rutinitas tidur yang lebih lembut",
+    desc:
+      "Satu sachet hangat sebelum tidur bisa menjadi sinyal kecil bahwa hari ini sudah cukup.",
   },
   {
-    title: "Tanpa ketergantungan",
-    desc: "Calmee bukan obat tidur dan tidak diposisikan sebagai produk yang memaksa tubuh tertidur.",
+    title: "Bukan obat tidur",
+    desc:
+      "Calmee tidak dibuat untuk memaksa tubuh tertidur, melainkan menemani proses tubuh masuk ke mode istirahat.",
   },
 ];
 
@@ -185,27 +191,27 @@ const packages = [
 
 const testimonials = [
   {
-    name: "Anonymous #1",
+    name: "Kelvin, 28, Jakarta",
     quote:
       "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks dan tidur jadi lebih cepat. Rasanya juga enak dan tidak terlalu manis. Recommended buat yang punya masalah insomnia ringan.",
   },
   {
-    name: "Anonymous #2",
+    name: "Susilawati, 50, Pontianak",
     quote:
       "Lagi di fase stres kerjaan dan tidur berantakan banget. Sudah hampir seminggu rutin minum ini tiap malam. Biasanya aku bisa 1-2 jam baru ketiduran, sekarang jadi lebih cepat. Rasanya enak dan bikin badan jadi relax sebelum tidur. Ga langsung knockout, tapi tidurnya jadi lebih nyenyak dan ga kebangun terus.",
   },
   {
-    name: "Anonymous #3",
+    name: "Steven, 21, Tangerang",
     quote:
       "Saya termasuk orang yang sering sulit tidur, jadi coba produk ini. Setelah rutin minum sebelum tidur lumayan membantu, membuat tidur lebih cepat dan nyaman. Worth to try!",
   },
   {
-    name: "Anonymous #4",
+    name: "Juli, 33, Pontianak",
     quote:
       "Produk sesuai deskripsi, rasanya enak seperti susu biasa tapi efeknya bikin badan lebih tenang sebelum tidur. Cocok diminum pas malam setelah aktivitas seharian.",
   },
   {
-    name: "Anonymous #5",
+    name: "Cynthia, 20, Bandung",
     quote:
       "Jujur awalnya sempat ragu dan takut mau beli susu ini, tapi karena udah capek gabisa tidur mulu akhirnya nyobain deh beli Calmee. Rasanya creamy ga semanis itu dan enak banget, ga maksain tidur tapi berasa lebih ngantuk secara alami. Mamaku sampai ikutan minum juga karena suka banget sama formulanya.",
   },
@@ -274,6 +280,7 @@ function CheckIcon({ className = "h-4 w-4" }) {
 
 function CtaButtons({ align = "start", light = false }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
+
   return (
     <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
       <a
@@ -302,11 +309,11 @@ function CtaButtons({ align = "start", light = false }) {
 
 function CtaButtons1({ align = "start", light = false }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
+
   return (
     <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
       <a
         href={paketLink}
-        
         className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
         Lihat Paket
@@ -345,11 +352,7 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
         {title}
       </h2>
       {children ? (
-        <p
-          className={`mt-4 text-base leading-7 ${
-            light ? "text-white/70" : "text-[#594878]"
-          }`}
-        >
+        <p className={`mt-4 text-base leading-7 ${light ? "text-white/70" : "text-[#594878]"}`}>
           {children}
         </p>
       ) : null}
@@ -358,21 +361,15 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
 }
 
 export default function App() {
-  
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
   return (
-  <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
-
+    <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
       <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/92 shadow-[0_10px_35px_rgba(45,27,107,0.17)] backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
           <a href="#home" className="flex items-center" aria-label="Calmee">
-            <img
-              src={logoCalmeeWord}
-              alt="Calmee"
-              className="h-8 w-auto md:h-10"
-            />
+            <img src={logoCalmeeWord} alt="Calmee" className="h-8 w-auto md:h-10" />
           </a>
 
           <div className="hidden items-center gap-6 lg:flex">
@@ -403,7 +400,6 @@ export default function App() {
           id="home"
           className="snap-section relative isolate overflow-hidden px-5 pb-16 pt-28 text-white md:pt-32 lg:px-8"
         >
-          {/* background product image */}
           <img
             src={bgCalmeeFirst}
             alt=""
@@ -411,18 +407,13 @@ export default function App() {
             className="absolute inset-0 -z-30 h-full w-full object-cover"
           />
 
-          {/* main purple overlay */}
-          <div className="absolute inset-0 -z-20 bg-[#160A35]/72" />
-
-          {/* center readability glow */}
+          <div className="absolute inset-0 -z-20 bg-[#160A35]/60" />
           <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_center,rgba(45,27,107,0.58)_0%,rgba(22,10,53,0.68)_42%,rgba(22,10,53,0.84)_100%)]" />
 
-          {/* soft premium glows */}
           <div className="absolute left-1/2 top-1/2 -z-10 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/28 blur-3xl" />
           <div className="absolute left-[14%] bottom-[18%] -z-10 h-28 w-28 rounded-full bg-[#D4A843]/12 blur-2xl" />
           <div className="absolute right-[14%] top-[20%] -z-10 h-28 w-28 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
 
-          {/* subtle hero dots */}
           <span className="hero-dot hero-dot-1" />
           <span className="hero-dot hero-dot-2" />
           <span className="hero-dot hero-dot-3" />
@@ -434,37 +425,35 @@ export default function App() {
           <span className="hero-dot hero-dot-9" />
           <span className="hero-dot hero-dot-10" />
 
-          <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-center text-center">
+          <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-center py-8 text-center md:py-0">
             <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
               <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
               #TidurNyenyakDenganCalmee
             </div>
 
-            <h1 className="mx-auto max-w-[86rem] text-center font-display text-[3rem] font-bold leading-[0.95] md:text-[4.2rem] lg:text-[4.15rem] xl:text-[4.4rem]">
+            <h1 className="mx-auto max-w-[86rem] text-center font-display text-[2.65rem] font-bold leading-[0.95] sm:text-[3rem] md:text-[4.2rem] lg:text-[4.15rem] xl:text-[4.4rem]">
               <span className="inline-block">
-                Tidur lebih tenang,{" "}
-                <span className="italic text-[#D8C4F2]">
-                  pikiran lebih rileks.
-                </span>
+                Malam lebih tenang,{" "}
+                <span className="italic text-[#D4A843]"> tidur lebih nyenyak.</span>
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-white/76 md:text-lg">
-              Calmee adalah minuman susu herbal hangat untuk menemani tubuh dan pikiran
-              masuk ke suasana istirahat dengan lebih lembut.
+            <p className="mx-auto mt-6 max-w-5xl text-base leading-8 text-white/76 md:text-lg">
+              Calmee adalah minuman susu bubuk yang diformulasikan untuk mengatasi
+              insomnia ringan, dan membantu tidur menjadi lebih mudah dan nyenyak, serta
+              meningkatkan kualitas tidur sehingga bangun menjadi lebih segar.
             </p>
 
             <div className="mt-8">
               <CtaButtons1 align="center" light />
             </div>
 
-            {/* clean benefit signals */}
             <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
               {[
-                "Hangat & creamy",
-                "Bukan obat tidur",
-                "Teman ritual malam",
-                "Rasa lembut sebelum tidur",
+                "Tidak mengandung obat",
+                "bebas gula",
+                "tidak menyebabkan ketergantungan",
+                "Membuat rasa ngantuk secara alami",
               ].map((item) => (
                 <span
                   key={item}
@@ -476,7 +465,6 @@ export default function App() {
               ))}
             </div>
 
-            {/* trust logos */}
             <div className="mt-9 rounded-[1.5rem] border border-white/14 bg-white/[0.09] px-5 py-4 shadow-[0_18px_55px_rgba(0,0,0,0.18)] backdrop-blur-xl">
               <p className="mb-4 text-center text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white/48">
                 Terdaftar & Diproduksi dengan Standar Terpercaya
@@ -488,11 +476,7 @@ export default function App() {
                     key={logo.name}
                     className="flex h-12 min-w-20 items-center justify-center rounded-2xl bg-white/92 px-3 shadow-[0_10px_26px_rgba(0,0,0,0.12)]"
                   >
-                    <img
-                      src={logo.image}
-                      alt={logo.name}
-                      className="max-h-8 w-auto object-contain"
-                    />
+                    <img src={logo.image} alt={logo.name} className="max-h-8 w-auto object-contain" />
                   </div>
                 ))}
               </div>
@@ -515,15 +499,13 @@ export default function App() {
 
               <h2 className="font-display text-4xl font-bold leading-[1.02] text-[#2D1B6B] md:text-5xl lg:text-6xl">
                 Saat tubuh lelah,
-                <span className="mt-2 block text-[#D4A843]">
-                  Tapi pikiran belum mau berhenti.
-                </span>
+                <span className="mt-2 block text-[#D4A843]">Tapi pikiran masih ramai.</span>
               </h2>
 
               <p className="mt-7 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
-                Banyak orang tidak benar-benar tidak mau tidur. Kadang, tubuh sudah
-                lelah — tetapi pikiran masih aktif, suasana hati belum tenang, dan malam
-                terasa lebih panjang dari yang seharusnya.
+                Ada malam ketika tubuh sebenarnya sudah ingin istirahat, tapi kepala masih
+                berjalan ke mana-mana. Memikirkan pekerjaan, keluarga, rencana besok, atau
+                hal kecil yang tiba-tiba terasa besar.
               </p>
 
               <p className="mt-5 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
@@ -534,8 +516,8 @@ export default function App() {
 
               <div className="mt-8 border-l-4 border-[#D4A843] pl-5">
                 <p className="font-display text-xl italic leading-8 text-[#2D1B6B]">
-                  “Kami percaya tidur yang baik bukan kemewahan — melainkan bagian dari
-                  tubuh yang diberi ruang untuk pulih.”
+                  “Kami percaya malam tidak perlu selalu dilawan. Kadang, tubuh hanya butuh
+                  tirual kecil yang memberi tanda bahwa hari ini sudah cukup.”
                 </p>
               </div>
             </div>
@@ -551,19 +533,18 @@ export default function App() {
                 </p>
 
                 <h3 className="mt-3 font-display text-3xl font-bold leading-tight text-[#2D1B6B]">
-                  33,3% orang Indonesia usia 15+ menunjukkan gejala{" "}
-                  <span className="inline bg-[#EEE7FA] px-1">
-                    insomnia ringan.
-                  </span>
+                  Beberapa studi menyebut prevalensi insomnia di Indonesia dapat mencapai{" "}
+                  <span className="inline bg-[#EEE7FA] px-1">sekitar 67%.</span>
                 </h3>
 
                 <p className="mt-4 leading-7 text-[#594878]">
-                  Dalam studi populasi Indonesia, sebagian responden menunjukkan gejala insomnia 
-                  ringan — tanda bahwa masalah tidur bukan hal yang jarang terjadi.
+                  Angka ini menunjukkan bahwa sulit tidur bukan pengalaman yang langka.
+                  Banyak orang masih terjaga saat malam, bukan karena tidak ingin tidur,
+                  tapi karena tubuh dan pikiran belum benar-benar tenang.
                 </p>
 
                 <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-[#D4A843]">
-                  BERDASARKAN STUDI POPULASI INDONESIA · 2019
+                  JURNAL ILMIAH KESEHATAN · UNIVERSITAS SYIAH KUALA
                 </p>
               </div>
 
@@ -589,17 +570,15 @@ export default function App() {
                         </>
                       ) : card.label === "Bukan solusi instan" ? (
                         <>
-                          Calmee hadir <span className="inline bg-[#EEE7FA] px-1">bukan</span> sebagai{" "}
-                          <span className="inline bg-[#EEE7FA] px-1">obat tidur.</span>
+                          Calmee hadir <span className="inline bg-[#EEE7FA] px-1">bukan</span>{" "}
+                          sebagai <span className="inline bg-[#EEE7FA] px-1">obat tidur.</span>
                         </>
                       ) : (
                         card.title
                       )}
                     </h3>
 
-                    <p className="mt-3 text-sm leading-7 text-[#594878]">
-                      {card.desc}
-                    </p>
+                    <p className="mt-3 text-sm leading-7 text-[#594878]">{card.desc}</p>
                   </div>
                 ))}
               </div>
@@ -612,22 +591,11 @@ export default function App() {
           className={`${sectionClass} relative isolate overflow-hidden bg-[linear-gradient(160deg,#2D1B6B_0%,#4A2E8A_55%,#241256_100%)] text-white`}
         >
           <div className="absolute inset-0 -z-10 overflow-hidden">
-            {/* top left purple haze */}
             <div className="absolute left-[-8rem] top-[8%] h-[24rem] w-[24rem] rounded-full bg-[#8E72D9]/18 blur-3xl" />
-
-            {/* big gold glow behind circle */}
             <div className="absolute left-[16%] top-1/2 h-[26rem] w-[26rem] -translate-y-1/2 rounded-full bg-[#D4A843]/18 blur-[120px]" />
-
-            {/* soft cream glow around middle */}
             <div className="absolute left-[28%] top-[54%] h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#FFF7EA]/14 blur-[90px]" />
-
-            {/* right side purple glow */}
             <div className="absolute right-[8%] top-[22%] h-[22rem] w-[22rem] rounded-full bg-[#9B7CC8]/14 blur-[110px]" />
-
-            {/* bottom right gold haze */}
             <div className="absolute right-[-6rem] bottom-[-6rem] h-[24rem] w-[24rem] rounded-full bg-[#D4A843]/10 blur-[120px]" />
-
-            {/* subtle bottom center mist */}
             <div className="absolute bottom-[-8rem] left-1/2 h-[20rem] w-[32rem] -translate-x-1/2 rounded-full bg-white/6 blur-[120px]" />
           </div>
 
@@ -635,10 +603,10 @@ export default function App() {
             className={`${sectionInnerClass} grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]`}
             onMouseLeave={() => setHoveredIngredient(null)}
           >
-            <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] items-center justify-center">
+            <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] -translate-y-4 items-center justify-center lg:-translate-y-8">
               <div className="absolute inset-0 rounded-full bg-white/10 blur-3xl" />
 
-              <div className="relative h-[30rem] w-[30rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
+              <div className="relative h-[min(21rem,calc(100vw-3rem))] w-[min(21rem,calc(100vw-3rem))] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)] sm:h-[26rem] sm:w-[26rem] lg:h-[31rem] lg:w-[31rem]">
                 <div className="grid h-full w-full grid-cols-2">
                   {ingredients.map((item) => {
                     const isActive = hoveredIngredient?.key === item.key;
@@ -654,17 +622,11 @@ export default function App() {
                           isActive ? "z-10 scale-110" : "scale-100"
                         }`}
                       >
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="h-full w-full object-cover"
-                        />
+                        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
 
                         <div
                           className={`absolute inset-0 transition-all duration-500 ${
-                            hoveredIngredient && !isActive
-                              ? "bg-[#160A35]/45"
-                              : "bg-[#160A35]/10"
+                            hoveredIngredient && !isActive ? "bg-[#160A35]/45" : "bg-[#160A35]/10"
                           }`}
                         />
                       </button>
@@ -673,16 +635,16 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="absolute z-20 flex h-[18rem] w-[18rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)]">
+              <div className="absolute z-20 flex h-[10.8rem] w-[10.8rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)] min-[380px]:h-[12.5rem] min-[380px]:w-[12.5rem] sm:h-[15rem] sm:w-[15rem] lg:h-[18rem] lg:w-[18rem]">
                 <img
                   src={productPreview}
                   alt="Calmee product"
-                  className="h-[14.5rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)]"
+                  className="h-[8.8rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)] min-[380px]:h-[10rem] sm:h-[12rem] lg:h-[14.5rem]"
                 />
               </div>
 
-              <div className="absolute bottom-[-0.8rem] left-1/2 z-30 w-max -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 px-7 py-3 text-center text-[0.62rem] font-bold uppercase tracking-[0.16em] text-[#2D1B6B] shadow-xl">
-                No Added Sugar · No Preservatives · Non Addictive Formula
+              <div className="absolute bottom-[-2rem] left-1/2 z-30 w-[calc(100vw-4rem)] max-w-[20rem] -translate-x-1/2 rounded-full bg-white/95 px-4 py-3 text-center text-[0.55rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] shadow-xl sm:w-auto sm:max-w-none sm:whitespace-nowrap sm:px-7 sm:text-[0.62rem]">
+                Tanpa Gula Tambahan · Tanpa Pengawet · Non-Adiktif
               </div>
             </div>
 
@@ -691,20 +653,17 @@ export default function App() {
                 Produk Calmee
               </p>
 
-              <h2 className="font-display text-4xl font-bold leading-[1.02] text-white md:text-5xl lg:text-6xl">
+              <h2 className="font-display text-[2.55rem] font-bold leading-[1.02] text-white sm:text-4xl md:text-5xl lg:text-6xl">
                 Satu sachet hangat,
-                <span className="mt-2 block text-[#D4A843]">
-                  Empat kandungan pilihan.
-                </span>
+                <span className="mt-2 block text-[#D4A843]">Empat kandungan pilihan.</span>
               </h2>
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
                 Calmee memadukan susu creamy dengan kandungan pilihan seperti chamomile,
-                L-theanine, lemon, dan tryptophan untuk menemani ritual malam yang lebih
-                tenang, lembut, dan nyaman.
+                L-theanine, lemon, dan tryptophan.
               </p>
 
-              <div className="mt-8 rounded-[1.6rem] border border-white/15 bg-white/[0.08] p-6 backdrop-blur transition-all duration-300">
+              <div className="mt-8 min-h-[10rem] rounded-[1.6rem] border border-white/15 bg-white/[0.08] p-6 backdrop-blur transition-all duration-300">
                 {hoveredIngredient ? (
                   <>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4A843]">
@@ -715,9 +674,7 @@ export default function App() {
                       {hoveredIngredient.title}
                     </h3>
 
-                    <p className="mt-3 leading-7 text-white/72">
-                      {hoveredIngredient.desc}
-                    </p>
+                    <p className="mt-3 leading-7 text-white/72">{hoveredIngredient.desc}</p>
                   </>
                 ) : (
                   <>
@@ -726,18 +683,18 @@ export default function App() {
                     </p>
 
                     <h3 className="mt-2 font-display text-3xl font-bold text-white">
-                      Arahkan ke salah satu kandungan
+                      Kenali isi di balik satu sachet Calmee
                     </h3>
 
                     <p className="mt-3 leading-7 text-white/72">
-                      Arahkan ke Milk, Lemon, Chamomile, atau L-Theanine untuk melihat
-                      peran masing-masing dalam ritual malam Calmee.
+                      Arahkan ke Susu, Lemon, Chamomile, atau L-Theanine untuk melihat peran
+                      masing-masing dalam ritual malam Calmee.
                     </p>
                   </>
                 )}
               </div>
 
-              <div className="mt-5 grid grid-cols-2 gap-3">
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
                 {ingredients.map((item) => {
                   const isActive = hoveredIngredient?.key === item.key;
 
@@ -765,60 +722,42 @@ export default function App() {
 
         <section id="manfaat" className={sectionClass}>
           <div className={`${sectionInnerClass} grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr]`}>
-            <div className="relative mx-auto flex h-[30rem] w-full max-w-[34rem] items-center justify-center">
-              {/* soft background glow */}
+            <div className="relative mx-auto flex h-[25rem] w-full max-w-[34rem] items-center justify-center sm:h-[30rem]">
               <div className="absolute h-[27rem] w-[27rem] rounded-full bg-[#C4ADDF]/45 blur-3xl" />
               <div className="absolute h-[22rem] w-[22rem] rounded-full bg-[#D4A843]/10 blur-[90px]" />
 
-              {/* main circular product photo */}
-              <div className="relative h-[24rem] w-[24rem] overflow-hidden rounded-full border border-white/70 bg-[#E8DEFF] shadow-[0_30px_90px_rgba(45,27,107,0.18)] md:h-[27rem] md:w-[27rem]">
-                <img
-                  src={susuCalmee}
-                  alt="Calmee dengan susu hangat"
-                  className="h-full w-full object-cover"
-                />
+              <div className="relative h-[19rem] w-[19rem] overflow-hidden rounded-full border border-white/70 bg-[#E8DEFF] shadow-[0_30px_90px_rgba(45,27,107,0.18)] sm:h-[24rem] sm:w-[24rem] md:h-[27rem] md:w-[27rem]">
+                <img src={susuCalmee} alt="Calmee dengan susu hangat" className="h-full w-full object-cover" />
 
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_45%,rgba(45,27,107,0.12)_100%)]" />
               </div>
 
-              {/* floating card 1 */}
-              <div className="absolute -left-20 top-14 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
+              <div className="absolute -left-20 top-14 hidden rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843] sm:block">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Mind Ease
                 </p>
-                <p className="mt-1 font-display text-xl font-bold">
-                  Pikiran lebih tenang.
-                </p>
+                <p className="mt-1 font-display text-xl font-bold">Pikiran lebih tenang.</p>
               </div>
 
-              {/* floating card 2 */}
-              <div className="absolute -right-0 top-[0%] rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftLeft_6s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
+              <div className="absolute -right-0 top-[0%] hidden rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftLeft_6s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843] sm:block">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Night Ritual
                 </p>
-                <p className="mt-1 font-display text-xl font-bold">
-                  Transisi lebih lembut.
-                </p>
+                <p className="mt-1 font-display text-xl font-bold">Transisi lebih lembut.</p>
               </div>
 
-              {/* floating card 3 */}
-              <div className="absolute bottom-1 left-10 rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_6.4s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843]">
+              <div className="absolute bottom-1 left-10 hidden rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_6.4s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843] sm:block">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Recovery
                 </p>
-                <p className="mt-1 font-display text-xl font-bold">
-                  Tidur lebih nyaman.
-                </p>
+                <p className="mt-1 font-display text-xl font-bold">Tidur lebih nyaman.</p>
               </div>
             </div>
 
             <div>
-              <SectionHeading
-                eyebrow="Manfaat"
-                title="Lebih dari tidur, ini tentang pemulihan."
-              >
-                Calmee mendukung kebiasaan malam yang lebih tenang sehingga tubuh lebih
-                siap untuk masuk ke fase istirahat.
+              <SectionHeading eyebrow="Manfaat" title="Lebih dari tidur, ini tentang pemulihan.">
+                Calmee mendukung kebiasaan malam yang lebih tenang sehingga tubuh lebih siap untuk
+                masuk ke fase istirahat.
               </SectionHeading>
 
               <div className="mt-8 space-y-4">
@@ -858,39 +797,33 @@ export default function App() {
               }
               center
             >
-              Setiap sachet dibuat untuk menemani satu ritual malam. Pilih 1 minggu untuk
-              mulai mencoba, 2 minggu untuk rutinitas yang lebih konsisten, atau 1 bulan
-              untuk stok di rumah.
+              Setiap sachet dibuat untuk satu malam yang lebih pelan. Mulai dari paket coba,
+              lanjut ke rutinitas dua minggu, atau siapkan stok bulanan untuk rumah.
             </SectionHeading>
 
-            <div className="mx-auto mt-8 max-w-xl rounded-[1.75rem] border border-[#E6DDF6] bg-white/80 px-6 py-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)] backdrop-blur">
+            <div className="mx-auto mt-8 max-w-lg rounded-[1.75rem] border border-[#E6DDF6] bg-white/80 px-6 py-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)] backdrop-blur">
               <p className="mb-4 text-center text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#8A6FC2]">
                 Terdaftar & Diproduksi Dengan Standar Terpercaya
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-5">
+              <div className="flex flex-wrap items-center justify-center gap-x-9 gap-y-5">
                 {trustLogos.map((logo) => (
                   <div
                     key={logo.name}
-                    className="flex h-14 items-center justify-center rounded-2xl bg-white px-4 shadow-[0_10px_28px_rgba(45,27,107,0.06)]"
                   >
-                    <img
-                      src={logo.image}
-                      alt={logo.name}
-                      className="max-h-10 w-auto object-contain"
-                    />
+                    <img src={logo.image} alt={logo.name} className="max-h-10 w-auto object-contain" />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {packages.map((pkg) => (
                 <div
                   key={pkg.name}
                   className={`relative flex min-h-[27rem] border-3 border-[#E6DDF6] flex-col rounded-[2rem] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 ${
                     pkg.highlight
-                      ? "scale-[1.02] bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100"
+                      ? "bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100 lg:scale-[1.02]"
                       : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
                   }`}
                 >
@@ -908,32 +841,20 @@ export default function App() {
                     {pkg.subtitle}
                   </p>
 
-                  <h3 className="mt-4 font-display text-4xl font-bold leading-tight">
-                    {pkg.name}
-                  </h3>
+                  <h3 className="mt-4 font-display text-4xl font-bold leading-tight">{pkg.name}</h3>
 
                   <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-                    <span
-                      className={`text-2xl font-bold ${
-                        pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"
-                      }`}
-                    >
+                    <span className={`text-2xl font-bold ${pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"}`}>
                       {pkg.price}
                     </span>
 
-                    <span
-                      className={`text-sm font-bold line-through ${
-                        pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"
-                      }`}
-                    >
+                    <span className={`text-sm font-bold line-through ${pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"}`}>
                       {pkg.originalPrice}
                     </span>
 
                     <span
                       className={`rounded-md px-2 py-1 text-xs font-bold ${
-                        pkg.highlight
-                          ? "bg-white/10 text-[#D4A843]"
-                          : "bg-[#FFF1EC] text-[#F04A2A]"
+                        pkg.highlight ? "bg-white/10 text-[#D4A843]" : "bg-[#FFF1EC] text-[#F04A2A]"
                       }`}
                     >
                       {pkg.discount}
@@ -990,15 +911,14 @@ export default function App() {
               </p>
 
               <h2 className="mx-auto mt-4 max-w-5xl font-display text-[2.5rem] font-semibold leading-[1.16] text-[#2D1B6B] md:text-[3.5rem] lg:text-[4.3rem]">
-                Malam yang lebih{" "}
-                <span className="inline-block text-[#D4A843]">tenang</span>
+                Malam yang lebih <span className="inline-block text-[#D4A843]">tenang</span>
                 <span className="block">
                   dimulai dengan satu ritual{" "}
                   <span className="inline-block text-[#D4A843]">kecil.</span>
                 </span>
               </h2>
 
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#594878] md:text-lg">
+              <p className="mx-auto mt-5 max-w-3xl text-base leading-7 text-[#594878] md:text-lg">
                 Cerita kecil dari pengguna yang menjadikan Calmee bagian dari ritual malam mereka.
               </p>
             </div>
@@ -1037,6 +957,10 @@ export default function App() {
                   ))}
                 </div>
               </div>
+
+              <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-7 text-[#594878]">
+                Cerita ditulis dengan ijin pembeli. Hasil dapat berbeda untuk tiap orang.
+              </p>
             </div>
           </div>
         </section>
@@ -1054,7 +978,7 @@ export default function App() {
                 FAQ
               </p>
 
-              <h2 className="mt-4 font-display text-4xl font-bold leading-[1.05] text-[#2D1B6B] md:text-5xl lg:text-6xl">
+              <h2 className="mt-4 font-display text-[2.6rem] font-bold leading-[1.05] text-[#2D1B6B] sm:text-4xl md:text-5xl lg:text-6xl">
                 Frequently Asked
                 <span className="block text-[#D4A843]">Questions.</span>
               </h2>
@@ -1109,9 +1033,7 @@ export default function App() {
                       className="overflow-hidden"
                     >
                       <div className="border-t border-[#E6DDF6] px-6 pb-6 pt-5">
-                        <p className="text-base leading-8 text-[#594878]">
-                          {faq.answer}
-                        </p>
+                        <p className="text-base leading-8 text-[#594878]">{faq.answer}</p>
                       </div>
                     </motion.div>
                   </div>
@@ -1121,8 +1043,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-26 text-center text-white lg:px-8">
-          {/* background product image */}
+        <section className="relative isolate flex min-h-[78svh] items-center overflow-hidden bg-[#2D1B6B] px-5 py-24 text-center text-white lg:min-h-screen lg:px-8">
           <img
             src={bgCalmeeLast}
             alt=""
@@ -1130,10 +1051,7 @@ export default function App() {
             className="absolute inset-0 -z-30 h-full w-full object-cover"
           />
 
-          {/* purple shade overlay */}
-          <div className="absolute inset-0 -z-20 bg-[#2D1B6B]/92" />
-
-          {/* extra center glow so it still feels premium */}
+          <div className="absolute inset-0 -z-20 bg-[#2D1B6B]/90" />
           <div className="absolute left-1/2 top-1/2 -z-10 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6B4FA0]/35 blur-3xl" />
           <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/12 blur-2xl" />
           <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
@@ -1144,11 +1062,13 @@ export default function App() {
             </p>
 
             <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-6xl">
-              Buat malam terasa lebih pelan.
+              Satu sachet kecil,
+              <span className="block text-[#D4A843]">buat tidur terasa lebih nyenyak.</span>
             </h2>
 
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
-              Jadikan Calmee bagian dari ritual malam yang hangat, lembut, dan menenangkan.
+              Calmee dibuat untuk menemani rutinitas sebelum tidur. Hangat, creamy, dan nyaman
+              diminum saat tubuh mulai minta istirahat.
             </p>
 
             <div className="mt-8">
@@ -1162,7 +1082,6 @@ export default function App() {
         <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <a href="#home" className="flex items-center gap-3">
             <img src={logoCalmeeWhite} alt="Calmee" className="h-8 w-auto opacity-90" />
-            
           </a>
 
           <div className="flex flex-wrap gap-x-6 gap-y-3">
@@ -1177,9 +1096,27 @@ export default function App() {
             ))}
           </div>
         </div>
-        <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/40 md:flex-row md:items-center md:justify-between">
-          <p>&copy; 2026 Calmee Store Indonesia. Seluruh hak cipta dilindungi.</p>
-          <p>Minuman wellness. Bukan obat atau pengganti konsultasi medis.</p>
+
+        <div className="mx-auto mt-8 flex max-w-7xl flex-col gap-5 border-t border-white/10 pt-6 text-sm text-white/40 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-2">
+            <p>&copy; 2026 Calmee Store Indonesia. Seluruh hak cipta dilindungi.</p>
+            <p>Susu herbal untuk ritual malam. Bukan obat atau pengganti saran medis.</p>
+          </div>
+
+          <div className="flex flex-wrap items-center">
+            <div className="flex w-fit max-w-full items-center justify-center rounded-xl bg-white/95 px-4 py-3 shadow-[0_10px_24px_rgba(0,0,0,0.10)]">
+              <div className="flex flex-wrap items-center justify-center gap-4 sm:flex-nowrap sm:gap-5">
+                {trustLogos.map((logo) => (
+                  <img
+                    key={logo.name}
+                    src={logo.image}
+                    alt={logo.name}
+                    className="max-h-6 w-auto object-contain sm:max-h-7"
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
     </div>

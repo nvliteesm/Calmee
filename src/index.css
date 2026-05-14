@@ -16,17 +16,47 @@
     --nav-height: 72px;
     --section-min: 100svh;
 }
+
+* {
+    box-sizing: border-box;
+}
+
 html {
     scroll-behavior: smooth;
 }
-body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
-.font-display { font-family: 'Cormorant Garamond', serif; }
-.font-body { font-family: 'DM Sans', sans-serif; }
-.snap-section { 
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--calmee-cream);
+}
+
+.font-display {
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.font-body {
+    font-family: 'DM Sans', sans-serif;
+}
+
+.snap-section {
     min-height: 100svh;
     display: flex;
-    align-items: center; 
-} 
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .snap-section {
+        min-height: auto;
+        display: flex;
+        align-items: flex-start;
+    }
+}
+
 .hero-dot {
     position: absolute;
     z-index: 15;
@@ -35,25 +65,105 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
     opacity: 0.82;
     animation: calmee-float 5.5s ease-in-out infinite;
 }
-.hero-dot-1 { top: 22%; right: 18%; width: 5px; height: 5px; background: var(--calmee-gold); animation-delay: 0s; }
-.hero-dot-2 { top: 35%; right: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); animation-delay: -0.4s; }
-.hero-dot-3 { top: 55%; right: 14%; width: 4px; height: 4px; background: white; animation-delay: -0.8s; }
-.hero-dot-4 { top: 18%; right: 35%; width: 6px; height: 6px; background: var(--calmee-gold); animation-delay: -1.2s; }
-.hero-dot-5 { top: 46%; right: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); animation-delay: -1.6s; }
-.hero-dot-6 { top: 78%; left: 18%; width: 5px; height: 5px; background: var(--calmee-gold); animation-delay: -0.2s; }
-.hero-dot-7 { top: 65%; left: 10%; width: 4px; height: 4px; background: var(--calmee-purple-light); animation-delay: -0.6s; }
-.hero-dot-8 { top: 45%; left: 14%; width: 4px; height: 4px; background: white; animation-delay: -1s; }
-.hero-dot-9 { top: 82%; left: 7%; width: 6px; height: 6px; background: var(--calmee-gold); animation-delay: -1.4s; }
-.hero-dot-10 { top: 54%; left: 16%; width: 5px; height: 5px; background: var(--calmee-purple-light); animation-delay: -1.8s; }
 
-@keyframes calmee-float {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    50% { transform: translate3d(10px, -16px, 0) scale(1.25); }
+.hero-dot-1 {
+    top: 22%;
+    right: 18%;
+    width: 5px;
+    height: 5px;
+    background: var(--calmee-purple-light);
+    animation-delay: 0s;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .hero-dot { animation: none; }
+.hero-dot-2 {
+    top: 35%;
+    right: 3%;
+    width: 4px;
+    height: 4px;
+    background: var(--calmee-purple-light);
+    animation-delay: -0.4s;
+}
+
+.hero-dot-3 {
+    top: 55%;
+    right: 14%;
+    width: 4px;
+    height: 4px;
+    background: white;
+    animation-delay: -0.8s;
+}
+
+.hero-dot-4 {
+    top: 18%;
+    right: 35%;
+    width: 6px;
+    height: 6px;
+    background: white;
+    animation-delay: -1.2s;
+}
+
+.hero-dot-5 {
+    top: 46%;
+    right: 7%;
+    width: 5px;
+    height: 5px;
+    background: var(--calmee-purple-light);
+    animation-delay: -1.6s;
+}
+
+.hero-dot-6 {
+    top: 78%;
+    left: 18%;
+    width: 5px;
+    height: 5px;
+    background: var(--calmee-purple-light);
+    animation-delay: -0.2s;
+}
+
+.hero-dot-7 {
+    top: 65%;
+    left: 10%;
+    width: 4px;
+    height: 4px;
+    background: var(--calmee-purple-light);
+    animation-delay: -0.6s;
+}
+
+.hero-dot-8 {
+    top: 50%;
+    left: 14%;
+    width: 4px;
+    height: 4px;
+    background: white;
+    animation-delay: -1s;
+}
+
+.hero-dot-9 {
+    top: 82%;
+    left: 7%;
+    width: 6px;
+    height: 6px;
+    background: white;
+    animation-delay: -1.4s;
+}
+
+.hero-dot-10 {
+    top: 54%;
+    left: 4%;
+    width: 5px;
+    height: 5px;
+    background: var(--calmee-purple-light);
+    animation-delay: -1.8s;
+}
+
+@keyframes calmee-float {
+    0%, 100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(10px, -16px, 0) scale(1.25);
+    }
 }
 
 .calmee-glass-pill {
@@ -85,18 +195,30 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 }
 
 @keyframes cardDriftRight {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(14px); }
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(14px);
+    }
 }
 
 @keyframes cardDriftLeft {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-14px); }
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-14px);
+    }
 }
+
 @keyframes reviewsMarquee {
     from {
         transform: translateX(0);
     }
+
     to {
         transform: translateX(-50%);
     }
@@ -125,7 +247,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 
 @media (max-width: 768px) {
     .reviews-card {
-        width: 19.5rem;
+        width: min(19.5rem, calc(100vw - 3rem));
     }
 
     .reviews-track {
@@ -134,6 +256,14 @@ body { font-family: 'DM Sans', sans-serif; background: var(--calmee-cream); }
 }
 
 @media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .hero-dot {
+        animation: none;
+    }
+
     .reviews-track {
         animation: none;
     }
