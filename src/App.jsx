@@ -75,7 +75,7 @@ const ingredients = [
     title: "Susu",
     tag: "Comfort base",
     desc:
-      "Diperkaya tryptophan dan magnesium untuk memberi rasa hangat, nyaman, dan membantu tubuh terasa lebih rileks sebelum tidur.",
+      "Sumber tryptophan dan magnesium yang mendukung rasa nyaman sebelum tidur. Memberi tekstur creamy dan hangat, sehingga cocok sebagai minuman ritual malam untuk membantu tubuh lebih rileks.",
     image: ingredientMilk,
     wrapClass: "left-0 top-8 items-start text-left",
     lineClass: "left-[12.5rem] top-[8.5rem] w-[10rem] rotate-[28deg] origin-left",
@@ -84,9 +84,9 @@ const ingredients = [
     key: "lemon",
     display: "Lemon",
     title: "Lemon",
-    tag: "Bright finish",
+    tag: "Fresh antioxidant",
     desc:
-      "Memberi sentuhan rasa ringan dan segar, dengan vitamin C serta antioksidan untuk melengkapi ritual malam yang lebih nyaman.",
+      "Memberi sentuhan rasa segar yang ringan dan membantu menyeimbangkan rasa susu. Kandungan vitamin C dan antioksidan membuat formula terasa lebih lengkap untuk konsumsi harian.",
     image: ingredientLemon,
     wrapClass: "right-0 top-8 items-end text-right",
     lineClass: "right-[12.5rem] top-[8.5rem] w-[10rem] -rotate-[28deg] origin-right",
@@ -97,7 +97,7 @@ const ingredients = [
     title: "Chamomile",
     tag: "Calming botanical",
     desc:
-      "Bunga herbal yang dikenal dalam rutinitas relaksasi, membantu tubuh terasa lebih tenang dan nyaman sebelum waktu istirahat.",
+      "Herbal yang dikenal luas dalam minuman relaksasi malam. Membantu menciptakan rasa tenang dan nyaman sebelum tidur, tanpa memposisikan Calmee sebagai obat tidur.",
     image: ingredientChamomile,
     wrapClass: "left-0 bottom-8 items-start text-left",
     lineClass: "left-[12.5rem] bottom-[8.5rem] w-[10rem] -rotate-[28deg] origin-left",
@@ -108,7 +108,7 @@ const ingredients = [
     title: "L-Theanine",
     tag: "Relaxed focus",
     desc:
-      "Asam amino alami yang membantu mendukung rasa rileks, agar pikiran terasa lebih tenang dan pelan sebelum tidur.",
+      "Asam amino alami yang dikenal mendukung aktivitas relaksasi. Membantu pikiran terasa lebih tenang, sehingga tubuh lebih siap masuk ke rutinitas istirahat malam.",
     image: ingredientTheanine,
     wrapClass: "right-0 bottom-8 items-end text-right",
     lineClass: "right-[12.5rem] bottom-[8.5rem] w-[10rem] rotate-[28deg] origin-right",
@@ -231,7 +231,7 @@ const faqs = [
   {
     question: "Kapan waktu terbaik konsumsi Calmee?",
     answer:
-      "Disarankan untuk diminum sekitar 30-60 menit sebelum tidur agar tubuh lebih siap untuk beristirahat.",
+      "Disarankan untuk diminum sekitar 1-2 jam sebelum tidur agar tubuh lebih siap untuk beristirahat.",
   },
   {
     question: "Apakah aman dikonsumsi setiap hari?",
@@ -428,7 +428,7 @@ export default function App() {
           <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-center py-8 text-center md:py-0">
             <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
               <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
-              #TidurNyenyakDenganCalmee
+              Solusi Insomnia Terbaik di Indonesia
             </div>
 
             <h1 className="mx-auto max-w-[86rem] text-center font-display text-[2.65rem] font-bold leading-[0.95] sm:text-[3rem] md:text-[4.2rem] lg:text-[4.15rem] xl:text-[4.4rem]">
@@ -438,10 +438,10 @@ export default function App() {
               </span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-5xl text-base leading-8 text-white/76 md:text-lg">
-              Calmee adalah minuman susu bubuk yang diformulasikan untuk mengatasi
-              insomnia ringan, dan membantu tidur menjadi lebih mudah dan nyenyak, serta
-              meningkatkan kualitas tidur sehingga bangun menjadi lebih segar.
+            <p className="mx-auto mt-6 max-w-6xl text-base leading-8 text-white/76 md:text-md">
+              Calmee adalah minuman susu bubuk Insomnia pertama di Indonesia yang diformulasikan untuk mengatasi
+              insomnia ringan, membantu tidur menjadi lebih mudah dan nyenyak, dan dapat dikonsumsi oleh berbagai kalangan usia,
+              serta meningkatkan kualitas tidur sehingga bangun menjadi lebih segar.
             </p>
 
             <div className="mt-8">
@@ -499,13 +499,13 @@ export default function App() {
 
               <h2 className="font-display text-4xl font-bold leading-[1.02] text-[#2D1B6B] md:text-5xl lg:text-6xl">
                 Saat tubuh lelah,
-                <span className="mt-2 block text-[#D4A843]">Tapi pikiran masih ramai.</span>
+                <span className="mt-2 block text-[#D4A843]">Tapi pikiran masih aktif.</span>
               </h2>
 
               <p className="mt-7 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
                 Ada malam ketika tubuh sebenarnya sudah ingin istirahat, tapi kepala masih
-                berjalan ke mana-mana. Memikirkan pekerjaan, keluarga, rencana besok, atau
-                hal kecil yang tiba-tiba terasa besar.
+                berjalan ke mana-mana. Saat kepala terasa penuh tanpa jeda, tubuh pun menjadi lebih sulit benar-benar tenang. 
+                Dari malam-malam seperti inilah, <span className="font-bold text-[#2D1B6B]">insomnia</span>{" "}sering muncul perlahan tanpa disadari.
               </p>
 
               <p className="mt-5 max-w-2xl text-base leading-8 text-[#594878] md:text-lg">
@@ -522,8 +522,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid gap-4">
-              <div className="rounded-[2rem] border border-[#E6DDF6] bg-white/85 p-6 shadow-[0_24px_70px_rgba(45,27,107,0.08)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.2)]">
+            <div className="grid gap-3">
+              <div className="rounded-[2rem] border border-[#E6DDF6] bg-white/85 p-5 shadow-[0_24px_70px_rgba(45,27,107,0.08)] backdrop-blur transition hover:shadow-[0_22px_65px_rgba(45,27,107,0.2)]">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F0EAFF] text-2xl text-[#D4A843]">
                   ☾
                 </div>
@@ -548,7 +548,7 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-2">
                 {sleepInsightCards.map((card) => (
                   <div
                     key={card.title}
@@ -732,7 +732,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_45%,rgba(45,27,107,0.12)_100%)]" />
               </div>
 
-              <div className="absolute -left-20 top-14 hidden rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843] sm:block">
+              <div className="absolute left-0 top-4 hidden rounded-2xl border border-[#E6DDF6] bg-white/95 px-5 py-4 text-[#2D1B6B] shadow-[0_18px_45px_rgba(45,27,107,0.12)] backdrop-blur animate-[cardDriftRight_5.5s_ease-in-out_infinite] transition-all duration-300 hover:border-[#D4A843]/100 hover:bg-white hover:shadow-[0_22px_55px_rgba(212,168,67,0.18)] hover:text-[#D4A843] sm:block">
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-[#8A6FC2]">
                   Mind Ease
                 </p>
@@ -789,9 +789,9 @@ export default function App() {
                   <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
                     kecil
                   </span>
-                  , lanjutkan jadi{" "}
+                  , perlahan jadi{" "}
                   <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
-                    kebiasaan.
+                    rutinitas malam.
                   </span>
                 </>
               }
