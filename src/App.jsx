@@ -1,19 +1,23 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import logoCalmeeWord from "./assets/logo-calmee-type.png";
 import logoCalmeeWhite from "./assets/logo-calmee-white.png";
 import bgCalmeeFirst from "./assets/bg-calmee-left-right.png";
+import bgMobile from "./assets/bg-mobile.png";
 import bgCalmeeLast from "./assets/bg-malam-unedited.png";
+import calmeeIntro from "./assets/calmee-intro.png";
 import ingredientMilk from "./assets/milk.png";
 import ingredientLemon from "./assets/lemon.png";
 import ingredientChamomile from "./assets/chamomile.png";
 import ingredientTheanine from "./assets/l-theanine.png";
 import susuCalmee from "./assets/susu-calmee.png";
 import productPreview from "./assets/preview-susu.png";
+import mobilePreview from "./assets/mobilepreview.png";
 import badanPom from "./assets/badan-pom.png";
 import gmp from "./assets/gmp.png";
 import haccp from "./assets/logo-haccp.png";
 import halalIndo from "./assets/halal-indo.png";
+import whatsapp from "./assets/whatsapp.png";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
@@ -363,13 +367,39 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
 export default function App() {
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [showStickyCta, setShowStickyCta] = useState(false);
+  const [openPackage, setOpenPackage] = useState(null);
+
+  useEffect(() => {
+    if (mobileNavOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileNavOpen]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setShowStickyCta(window.scrollY > 500);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[var(--calmee-cream)] font-body text-[var(--calmee-text)] antialiased">
       <nav className="fixed inset-x-0 top-0 z-50 h-[var(--nav-height)] border-b border-[var(--calmee-purple-light)]/20 bg-[var(--calmee-cream)]/92 shadow-[0_10px_35px_rgba(45,27,107,0.17)] backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 lg:px-8 lg:py-4">
           <a href="#home" className="flex items-center" aria-label="Calmee">
-            <img src={logoCalmeeWord} alt="Calmee" className="h-8 w-auto md:h-10" />
+            <img src={logoCalmeeWord} alt="Calmee" className="h-7 w-auto md:h-10" />
           </a>
 
           <div className="hidden items-center gap-6 lg:flex">
@@ -384,28 +414,147 @@ export default function App() {
             ))}
           </div>
 
-          <a
-            href={shopeeLink}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden items-center justify-center rounded-full bg-[#2D1B6B] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_10px_30px_rgba(45,27,107,0.25)] transition-all duration-500 ease-out hover:scale-105 hover:bg-[var(--calmee-purple-light)] hover:text-[#2D1B6B] sm:inline-flex"
-          >
-            Beli Sekarang
-          </a>
+          <div className="flex items-center gap-2">
+            <a
+              href={shopeeLink}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden items-center justify-center rounded-full bg-[#2D1B6B] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_10px_30px_rgba(45,27,107,0.25)] transition-all duration-500 ease-out hover:scale-105 hover:bg-[var(--calmee-purple-light)] hover:text-[#2D1B6B] lg:inline-flex"
+            >
+              Beli Sekarang
+            </a>
+
+            <a
+              href={shopeeLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-[#2D1B6B] px-4 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white shadow-[0_8px_20px_rgba(45,27,107,0.25)] transition active:scale-95 lg:hidden"
+            >
+              Beli
+            </a>
+
+            <button
+              type="button"
+              aria-label="Buka menu"
+              aria-expanded={mobileNavOpen}
+              onClick={() => setMobileNavOpen(true)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#2D1B6B]/15 bg-white/80 text-[#2D1B6B] backdrop-blur transition active:scale-95 lg:hidden"
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+                <path
+                  d="M4 7h16M4 12h16M4 17h16"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {mobileNavOpen ? (
+          <motion.div
+            key="mobile-drawer"
+            className="fixed inset-0 z-[60] lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <button
+              type="button"
+              aria-label="Tutup menu"
+              onClick={() => setMobileNavOpen(false)}
+              className="absolute inset-0 bg-[#12092E]/55 backdrop-blur-sm"
+            />
+
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "tween", ease: [0.22, 1, 0.36, 1], duration: 0.35 }}
+              className="absolute right-0 top-0 flex h-full w-[82%] max-w-sm flex-col bg-[var(--calmee-cream)] shadow-[0_0_60px_rgba(45,27,107,0.35)]"
+            >
+              <div className="flex items-center justify-between px-6 pb-4 pt-6">
+                <img src={logoCalmeeWord} alt="Calmee" className="h-8 w-auto" />
+
+                <button
+                  type="button"
+                  aria-label="Tutup menu"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#2D1B6B]/15 bg-white text-[#2D1B6B] transition active:scale-95"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+                    <path
+                      d="M6 6l12 12M18 6 6 18"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="flex flex-col px-3 pt-4">
+                {navItems.map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileNavOpen(false)}
+                    className="flex items-center justify-between rounded-2xl px-4 py-4 font-display text-xl font-bold text-[#2D1B6B] transition active:bg-[#F0EAFF]"
+                  >
+                    <span>{item.label}</span>
+                    <span className="text-[#D4A843]">→</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="mt-auto space-y-3 px-6 pb-8">
+                <a
+                  href={shopeeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#D4A843] px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#241256] shadow-[0_10px_30px_rgba(212,168,67,0.32)] transition active:scale-[0.98]"
+                >
+                  Beli di Shopee
+                </a>
+
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#2D1B6B]/20 bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition active:scale-[0.98]"
+                >
+                  Chat WhatsApp
+                </a>
+
+                <p className="pt-2 text-center text-[0.65rem] uppercase tracking-[0.16em] text-[#8A6FC2]">
+                  Ritual malam yang lebih tenang
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>  
 
       <main>
         <section
           id="home"
-          className="snap-section relative isolate overflow-hidden px-5 pb-16 pt-28 text-white md:pt-32 lg:px-8"
+          className="snap-section relative isolate overflow-hidden px-5 pb-12 pt-28 text-white md:pb-16 md:pt-32 lg:px-8"
         >
-          <img
-            src={bgCalmeeFirst}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 -z-30 h-full w-full object-cover"
-          />
+          <picture className="absolute inset-0 -z-30">
+            <source media="(max-width: 767px)" srcSet={bgMobile} />
+            <img
+              src={bgCalmeeFirst}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover"
+            />
+          </picture>
 
           <div className="absolute inset-0 -z-20 bg-[#160A35]/60" />
           <div className="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_center,rgba(45,27,107,0.58)_0%,rgba(22,10,53,0.68)_42%,rgba(22,10,53,0.84)_100%)]" />
@@ -425,62 +574,183 @@ export default function App() {
           <span className="hero-dot hero-dot-9" />
           <span className="hero-dot hero-dot-10" />
 
-          <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-center py-8 text-center md:py-0">
-            <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
+          <div className="absolute inset-x-0 top-[calc(var(--nav-height)+1.5rem)] z-20 flex justify-center md:hidden">
+            <div className="calmee-glass-pill inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/[0.08] px-3.5 py-1.5 text-[0.6rem] font-bold tracking-[0.15em] text-[#E8DEFF] backdrop-blur">
               <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
               Solusi Insomnia Terbaik di Indonesia
             </div>
+          </div>
 
-            <h1 className="mx-auto max-w-[86rem] text-center font-display text-[2.65rem] font-bold leading-[0.95] sm:text-[3rem] md:text-[4.2rem] lg:text-[4.15rem] xl:text-[4.4rem]">
-              <span className="inline-block">
-                Malam lebih tenang,{" "}
-                <span className="italic text-[#D4A843]"> tidur lebih nyenyak.</span>
-              </span>
-            </h1>
+          <div className="mx-auto flex min-h-[calc(100svh-var(--nav-height))] max-w-6xl flex-col items-center justify-start pt-100 pb-10 text-center md:justify-center md:py-0">
+            {/* Mobile hero */}
+            <div className="w-full md:hidden">
+              <div className="absolute inset-x-0 top-[17%] flex justify-center">
+                <div className="relative">
+                  <div className="relative h-[19rem] w-[19rem] overflow-hidden rounded-full border border-white/70 bg-[#E8DEFF] shadow-[0_30px_90px_rgba(45,27,107,0.18)] sm:h-[24rem] sm:w-[24rem] md:h-[27rem] md:w-[27rem]">
+                    <img src={mobilePreview} alt="Calmee dengan susu hangat" className="h-full w-full object-cover" />
 
-            <p className="mx-auto mt-6 max-w-6xl text-base leading-8 text-white/76 md:text-md">
-              Calmee adalah minuman susu bubuk Insomnia pertama di Indonesia yang diformulasikan untuk mengatasi
-              insomnia ringan, membantu tidur menjadi lebih mudah dan nyenyak, dan dapat dikonsumsi oleh berbagai kalangan usia,
-              serta meningkatkan kualitas tidur sehingga bangun menjadi lebih segar.
-            </p>
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_45%,rgba(45,27,107,0.12)_100%)]" />
+                  </div>
+                </div>
+              </div>
+              
+              <h1 className="mx-auto mt-2 max-w-sm font-display text-[2.5rem] font-bold leading-[1.02] text-white">
+                Malam lebih tenang,
+                <span className="block italic text-[#D4A843]">tidur lebih nyenyak.</span>
+              </h1>
 
-            <div className="mt-8">
-              <CtaButtons1 align="center" light />
-            </div>
-
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
-              {[
-                "Tidak mengandung obat",
-                "bebas gula",
-                "tidak menyebabkan ketergantungan",
-                "Membuat rasa ngantuk secara alami",
-              ].map((item) => (
-                <span
-                  key={item}
-                  className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.15em] text-white/64"
-                >
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#D4A843]" />
-                  {item}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-9 rounded-[1.5rem] border border-white/14 bg-white/[0.09] px-5 py-4 shadow-[0_18px_55px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-              <p className="mb-4 text-center text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white/48">
-                Terdaftar & Diproduksi dengan Standar Terpercaya
-              </p>
-
-              <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
-                {trustLogos.map((logo) => (
+              <div className="mx-auto mt-7 max-w-xs space-y-3 text-left">
+                {[
+                  "Tidak mengandung obat",
+                  "bebas gula",
+                  "tidak menyebabkan ketergantungan",
+                  "Membuat rasa ngantuk secara alami",
+                ].map((item) => (
                   <div
-                    key={logo.name}
-                    className="flex h-12 min-w-20 items-center justify-center rounded-2xl bg-white/92 px-3 shadow-[0_10px_26px_rgba(0,0,0,0.12)]"
+                    key={item}
+                    className="flex items-center gap-3 text-[0.66rem] font-bold uppercase tracking-[0.12em] text-white/66"
                   >
-                    <img src={logo.image} alt={logo.name} className="max-h-8 w-auto object-contain" />
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[#D4A843]" />
+                    <span>{item}</span>
                   </div>
                 ))}
               </div>
+
+              <div className="mx-auto mt-6 grid max-w-sm grid-cols-2 gap-3">
+                <a
+                  href={paketLink}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95"
+                >
+                  Lihat Paket
+                </a>
+
+                <a
+                  href={whatsappLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-white transition active:scale-95"
+                >
+                  Kontak Kami
+                </a>
+              </div>
+
+              <div className="mx-auto mt-6 max-w-[20rem] rounded-[1.15rem] border border-white/12 bg-white/[0.08] px-4 py-3 backdrop-blur">
+                <div className="grid grid-cols-4 items-center justify-center gap-2">
+                  {trustLogos.map((logo) => (
+                    <div
+                      key={logo.name}
+                      className="flex h-8 items-center justify-center rounded-lg bg-white/92 px-1.5 shadow-[0_8px_16px_rgba(0,0,0,0.10)]"
+                    >
+                      <img
+                        src={logo.image}
+                        alt={logo.name}
+                        className="max-h-4.5 w-auto object-contain"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            {/* Desktop hero */}
+            <div className="hidden w-full flex-col items-center text-center md:flex">
+              <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
+                <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
+                Solusi Insomnia Terbaik di Indonesia
+              </div>
+
+              <h1 className="mx-auto max-w-[86rem] text-center font-display text-[4.2rem] font-bold leading-[0.95] lg:text-[4.15rem] xl:text-[4.4rem]">
+                <span className="inline-block">
+                  Malam lebih tenang,{" "}
+                  <span className="italic text-[#D4A843]"> tidur lebih nyenyak.</span>
+                </span>
+              </h1>
+
+              <p className="mx-auto mt-6 max-w-6xl text-base leading-8 text-white/76 md:text-md">
+                Calmee adalah minuman susu bubuk Insomnia pertama di Indonesia yang diformulasikan untuk mengatasi
+                insomnia ringan, membantu tidur menjadi lebih mudah dan nyenyak, dan dapat dikonsumsi oleh berbagai kalangan usia,
+                serta meningkatkan kualitas tidur sehingga bangun menjadi lebih segar.
+              </p>
+
+              <div className="mt-8">
+                <CtaButtons1 align="center" light />
+              </div>
+
+              <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+                {[
+                  "Tidak mengandung obat",
+                  "bebas gula",
+                  "tidak menyebabkan ketergantungan",
+                  "Membuat rasa ngantuk secara alami",
+                ].map((item) => (
+                  <span
+                    key={item}
+                    className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.15em] text-white/64"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#D4A843]" />
+                    {item}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-9 rounded-[1.5rem] border border-white/14 bg-white/[0.09] px-5 py-4 shadow-[0_18px_55px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                <p className="mb-4 text-center text-[0.62rem] font-bold uppercase tracking-[0.2em] text-white/48">
+                  Terdaftar & Diproduksi dengan Standar Terpercaya
+                </p>
+
+                <div className="flex flex-wrap items-center justify-center gap-5">
+                  {trustLogos.map((logo) => (
+                    <div
+                      key={logo.name}
+                      className="flex h-12 min-w-20 items-center justify-center rounded-2xl bg-white/92 px-3 shadow-[0_10px_26px_rgba(0,0,0,0.12)]"
+                    >
+                      <img src={logo.image} alt={logo.name} className="max-h-8 w-auto object-contain" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[var(--calmee-cream)] px-5 pb-16 pt-7 md:hidden">
+          <div className="mx-auto max-w-sm">
+            <p className="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-[#8A6FC2]">
+              Apa itu Calmee?
+            </p>
+
+            <h2 className="font-display text-[1.95rem] font-bold leading-[1.12] text-[#2D1B6B]">
+              Teman ritual malam yang{" "}
+              <span className="text-[#D4A843] px-1">
+                hangat
+              </span>{" "}
+              dan{" "}
+              <span className="text-[#D4A843] px-1">
+              menenangkan.
+              </span>
+            </h2>
+
+            <div className="mt-5 overflow-hidden rounded-[1.5rem] border border-[#E6DDF6] bg-white shadow-[0_18px_45px_rgba(45,27,107,0.10)]">
+              <img
+                src={calmeeIntro}
+                alt="Calmee dengan susu hangat"
+                className="aspect-[4/2] w-full object-cover"
+              />
+            </div>
+
+            <p className="mt-5 text-[0.92rem] leading-7 text-[#594878] text-justify">
+              Calmee adalah minuman susu bubuk Insomnia pertama di Indonesia yang
+              diformulasikan untuk{" "}
+              <span className="font-bold text-[#2D1B6B]">
+                mengatasi insomnia ringan
+              </span>
+              , membantu tidur menjadi lebih mudah dan nyenyak, dan dapat dikonsumsi
+              oleh berbagai kalangan usia, serta{" "}
+              <span className="font-bold text-[#2D1B6B]">
+                meningkatkan kualitas tidur
+              </span>{" "}
+              sehingga bangun menjadi lebih segar.
+            </p>
           </div>
         </section>
 
@@ -603,10 +873,11 @@ export default function App() {
             className={`${sectionInnerClass} grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr]`}
             onMouseLeave={() => setHoveredIngredient(null)}
           >
-            <div className="relative mx-auto flex aspect-square w-full max-w-[40rem] -translate-y-4 items-center justify-center lg:-translate-y-8">
+            {/* Desktop interactive visual only */}
+            <div className="relative mx-auto hidden aspect-square w-full max-w-[40rem] -translate-y-4 items-center justify-center lg:flex lg:-translate-y-8">
               <div className="absolute inset-0 rounded-full bg-white/10 blur-3xl" />
 
-              <div className="relative h-[min(21rem,calc(100vw-3rem))] w-[min(21rem,calc(100vw-3rem))] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)] sm:h-[26rem] sm:w-[26rem] lg:h-[31rem] lg:w-[31rem]">
+              <div className="relative h-[31rem] w-[31rem] overflow-hidden rounded-full border border-white/20 shadow-[0_30px_90px_rgba(18,9,46,0.32)]">
                 <div className="grid h-full w-full grid-cols-2">
                   {ingredients.map((item) => {
                     const isActive = hoveredIngredient?.key === item.key;
@@ -635,15 +906,15 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="absolute z-20 flex h-[10.8rem] w-[10.8rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)] min-[380px]:h-[12.5rem] min-[380px]:w-[12.5rem] sm:h-[15rem] sm:w-[15rem] lg:h-[18rem] lg:w-[18rem]">
+              <div className="absolute z-20 flex h-[18rem] w-[18rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)]">
                 <img
                   src={productPreview}
                   alt="Calmee product"
-                  className="h-[8.8rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)] min-[380px]:h-[10rem] sm:h-[12rem] lg:h-[14.5rem]"
+                  className="h-[14.5rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)]"
                 />
               </div>
 
-              <div className="absolute bottom-[-2rem] left-1/2 z-30 w-[calc(100vw-4rem)] max-w-[20rem] -translate-x-1/2 rounded-full bg-white/95 px-4 py-3 text-center text-[0.55rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] shadow-xl sm:w-auto sm:max-w-none sm:whitespace-nowrap sm:px-7 sm:text-[0.62rem]">
+              <div className="absolute bottom-[-2rem] left-1/2 z-30 w-auto max-w-none -translate-x-1/2 whitespace-nowrap rounded-full bg-white/95 px-7 py-3 text-center text-[0.62rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] shadow-xl">
                 Tanpa Gula Tambahan · Tanpa Pengawet · Non-Adiktif
               </div>
             </div>
@@ -660,10 +931,49 @@ export default function App() {
 
               <p className="mt-6 max-w-2xl text-base leading-8 text-white/72 md:text-lg">
                 Calmee memadukan susu creamy dengan kandungan pilihan seperti chamomile,
-                L-theanine, lemon, dan tryptophan.
+                L-theanine, dan lemon.
               </p>
 
-              <div className="mt-8 min-h-[10rem] rounded-[1.6rem] border border-white/15 bg-white/[0.08] p-6 backdrop-blur transition-all duration-300">
+              {/* Mobile + tablet simple cards */}
+              <div className="mt-7 grid gap-3 lg:hidden">
+                {ingredients.map((item) => (
+                  <div
+                    key={item.key}
+                    className="rounded-[1.25rem] border border-white/15 bg-white/[0.08] p-4 backdrop-blur"
+                  >
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-12 w-12 rounded-2xl object-cover"
+                      />
+
+                      <div>
+                        <p className="text-[0.62rem] font-bold uppercase tracking-[0.14em] text-[#D4A843]">
+                          {item.tag}
+                        </p>
+                        <h3 className="font-display text-xl font-bold text-white">
+                          {item.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <p className="mt-3 text-sm leading-6 text-white/72">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+
+                <div className="mt-1 flex justify-center">
+                  <p className="inline-flex w-fit items-center gap-2 rounded-full bg-white/[0.08] px-4 py-2 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white/72">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#D4A843]" />
+                    Tanpa Gula · Tanpa Pengawet · Non-Adiktif
+                  </p>
+                </div>
+              </div>
+
+              {/* Desktop hover detail card only */}
+              <div className="mt-8 hidden min-h-[10rem] rounded-[1.6rem] border border-white/15 bg-white/[0.08] p-6 backdrop-blur transition-all duration-300 lg:block">
                 {hoveredIngredient ? (
                   <>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#D4A843]">
@@ -694,7 +1004,8 @@ export default function App() {
                 )}
               </div>
 
-              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {/* Desktop hover buttons only */}
+              <div className="mt-5 hidden grid-cols-2 gap-3 lg:grid">
                 {ingredients.map((item) => {
                   const isActive = hoveredIngredient?.key === item.key;
 
@@ -786,11 +1097,11 @@ export default function App() {
               title={
                 <>
                   Mulai dari ritual{" "}
-                  <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
+                  <span className="inline box-decoration-clone bg-white/90 px-2 py-0.5 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)] md:py-0">
                     kecil
                   </span>
                   , perlahan jadi{" "}
-                  <span className="inline bg-white/80 px-2 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)]">
+                  <span className="inline box-decoration-clone bg-white/90 px-2 py-0.5 text-[#2D1B6B] shadow-[0_8px_24px_rgba(45,27,107,0.08)] md:py-0">
                     rutinitas malam.
                   </span>
                 </>
@@ -801,91 +1112,159 @@ export default function App() {
               lanjut ke rutinitas dua minggu, atau siapkan stok bulanan untuk rumah.
             </SectionHeading>
 
-            <div className="mx-auto mt-8 max-w-lg rounded-[1.75rem] border border-[#E6DDF6] bg-white/80 px-6 py-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)] backdrop-blur">
+            <div className="mx-auto mt-6 max-w-lg rounded-[1.75rem] border border-[#E6DDF6] bg-white/80 px-6 py-5 shadow-[0_18px_55px_rgba(45,27,107,0.08)] backdrop-blur md:mt-8">
               <p className="mb-4 text-center text-[0.68rem] font-bold uppercase tracking-[0.2em] text-[#8A6FC2]">
                 Terdaftar & Diproduksi Dengan Standar Terpercaya
               </p>
 
               <div className="flex flex-wrap items-center justify-center gap-x-9 gap-y-5">
                 {trustLogos.map((logo) => (
-                  <div
-                    key={logo.name}
-                  >
-                    <img src={logo.image} alt={logo.name} className="max-h-10 w-auto object-contain" />
+                  <div key={logo.name}>
+                    <img
+                      src={logo.image}
+                      alt={logo.name}
+                      className="max-h-10 w-auto object-contain"
+                    />
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {packages.map((pkg) => (
-                <div
-                  key={pkg.name}
-                  className={`relative flex min-h-[27rem] border-3 border-[#E6DDF6] flex-col rounded-[2rem] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 ${
-                    pkg.highlight
-                      ? "bg-[#2D1B6B] text-white hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] hover:border-[#D4A843]/100 lg:scale-[1.02]"
-                      : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
-                  }`}
-                >
-                  {pkg.badge ? (
-                    <span className="absolute right-5 top-5 rounded-full bg-[#D4A843] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#241256]">
-                      {pkg.badge}
-                    </span>
-                  ) : null}
-
-                  <p
-                    className={`text-xs font-bold uppercase tracking-[0.2em] ${
-                      pkg.highlight ? "text-[#C4ADDF]" : "text-[#8A6FC2]"
+            <div className="mt-6 grid gap-5 md:mt-10 md:grid-cols-2 lg:grid-cols-3">
+              {packages.map((pkg, index) => {
+                const isPackageOpen = openPackage === index;
+                const packageLayoutClass =
+                  pkg.name === "Starter Pack"
+                    ? "md:order-1 lg:order-1"
+                    : pkg.name === "Monthly Ritual"
+                      ? "md:order-2 lg:order-3"
+                      : pkg.name === "Calmee Routine"
+                        ? "md:order-3 md:col-span-2 md:mx-auto md:w-[calc(50%-0.625rem)] lg:order-2 lg:col-span-1 lg:mx-0 lg:w-auto"
+                        : "";
+                return (
+                  <div
+                    key={pkg.name}
+                    className={`relative flex flex-col rounded-[2rem] border-3 border-[#E6DDF6] p-7 shadow-[0_22px_65px_rgba(45,27,107,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-[#D4A843]/100 md:min-h-[27rem] ${packageLayoutClass} ${
+                      pkg.highlight
+                        ? "bg-[#2D1B6B] text-white hover:border-[#D4A843]/100 hover:shadow-[0_26px_80px_rgba(45,27,107,0.20)] lg:scale-[1.02]"
+                        : "bg-white text-[#2D1B6B] hover:shadow-[0_26px_75px_rgba(45,27,107,0.13)]"
                     }`}
                   >
-                    {pkg.subtitle}
-                  </p>
+                    {pkg.badge ? (
+                      <span className="absolute right-5 top-5 rounded-full bg-[#D4A843] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#241256]">
+                        {pkg.badge}
+                      </span>
+                    ) : null}
 
-                  <h3 className="mt-4 font-display text-4xl font-bold leading-tight">{pkg.name}</h3>
-
-                  <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
-                    <span className={`text-2xl font-bold ${pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"}`}>
-                      {pkg.price}
-                    </span>
-
-                    <span className={`text-sm font-bold line-through ${pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"}`}>
-                      {pkg.originalPrice}
-                    </span>
-
-                    <span
-                      className={`rounded-md px-2 py-1 text-xs font-bold ${
-                        pkg.highlight ? "bg-white/10 text-[#D4A843]" : "bg-[#FFF1EC] text-[#F04A2A]"
+                    <p
+                      className={`text-xs font-bold uppercase tracking-[0.2em] ${
+                        pkg.highlight ? "text-[#C4ADDF]" : "text-[#8A6FC2]"
                       }`}
                     >
-                      {pkg.discount}
-                    </span>
+                      {pkg.subtitle}
+                    </p>
+
+                    <h3 className="mt-4 font-display text-4xl font-bold leading-tight">
+                      {pkg.name}
+                    </h3>
+
+                    <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+                      <span
+                        className={`text-2xl font-bold ${
+                          pkg.highlight ? "text-[#D4A843]" : "text-[#6B4FA0]"
+                        }`}
+                      >
+                        {pkg.price}
+                      </span>
+
+                      <span
+                        className={`text-sm font-bold line-through ${
+                          pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"
+                        }`}
+                      >
+                        {pkg.originalPrice}
+                      </span>
+
+                      <span
+                        className={`rounded-md px-2 py-1 text-xs font-bold ${
+                          pkg.highlight
+                            ? "bg-white/10 text-[#D4A843]"
+                            : "bg-[#FFF1EC] text-[#F04A2A]"
+                        }`}
+                      >
+                        {pkg.discount}
+                      </span>
+                    </div>
+
+                    {/* Desktop details: unchanged */}
+                    <ul className="mt-7 hidden space-y-4 md:block">
+                      {pkg.perks.map((perk) => (
+                        <li key={perk} className="flex gap-3 text-sm leading-6">
+                          <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[#D4A843]" />
+                          <span className={pkg.highlight ? "text-white/78" : "text-[#594878]"}>
+                            {perk}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {/* Mobile CTA comes before details */}
+                    <a
+                      href={pkg.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`mt-6 inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] active:scale-95 md:mt-auto ${
+                        pkg.highlight
+                          ? "bg-[#D4A843] text-[#241256] hover:bg-[#e3ba5c]"
+                          : "bg-[#2D1B6B] text-white hover:bg-[#6B4FA0]"
+                      }`}
+                    >
+                      {pkg.cta}
+                    </a>
+
+                    {/* Mobile dropdown only */}
+                    <button
+                      type="button"
+                      onClick={() => setOpenPackage(isPackageOpen ? null : index)}
+                      className={`mt-4 flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.14em] transition-all duration-300 md:hidden ${
+                        pkg.highlight
+                          ? "border-white/15 bg-white/[0.08] text-white/75 hover:border-[#D4A843]/50 hover:text-white"
+                          : "border-[#E6DDF6] bg-[#F8F4FF] text-[#6B4FA0] hover:border-[#D4A843]/60 hover:text-[#2D1B6B]"
+                      }`}
+                    >
+                      <span>Lihat detail paket</span>
+                      <span
+                        className={`text-base leading-none transition-transform duration-300 ${
+                          isPackageOpen ? "rotate-180" : ""
+                        }`}
+                      >
+                        ↓
+                      </span>
+                    </button>
+
+                    <div
+                      className={`grid transition-all duration-300 ease-out md:hidden ${
+                        isPackageOpen
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <ul className="mt-4 space-y-3">
+                          {pkg.perks.map((perk) => (
+                            <li key={perk} className="flex gap-3 text-sm leading-6">
+                              <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[#D4A843]" />
+                              <span className={pkg.highlight ? "text-white/78" : "text-[#594878]"}>
+                                {perk}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
-
-                  <ul className="mt-7 space-y-4">
-                    {pkg.perks.map((perk) => (
-                      <li key={perk} className="flex gap-3 text-sm leading-6">
-                        <CheckIcon className="mt-1 h-4 w-4 shrink-0 text-[#D4A843]" />
-                        <span className={pkg.highlight ? "text-white/78" : "text-[#594878]"}>
-                          {perk}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <a
-                    href={pkg.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`mt-auto inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] active:scale-95 ${
-                      pkg.highlight
-                        ? "bg-[#D4A843] text-[#241256] hover:bg-[#e3ba5c]"
-                        : "bg-[#2D1B6B] text-white hover:bg-[#6B4FA0]"
-                    }`}
-                  >
-                    {pkg.cta}
-                  </a>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-7 text-[#594878]">
@@ -910,7 +1289,7 @@ export default function App() {
                 Cerita Pengguna
               </p>
 
-              <h2 className="mx-auto mt-4 max-w-5xl font-display text-[2.5rem] font-semibold leading-[1.16] text-[#2D1B6B] md:text-[3.5rem] lg:text-[4.3rem]">
+              <h2 className="mx-auto mt-4 max-w-5xl font-display text-[2.4rem] font-semibold leading-[1.16] text-[#2D1B6B] md:text-[3.5rem] lg:text-[4.3rem]">
                 Malam yang lebih <span className="inline-block text-[#D4A843]">tenang</span>
                 <span className="block">
                   dimulai dengan satu ritual{" "}
@@ -923,7 +1302,36 @@ export default function App() {
               </p>
             </div>
 
-            <div className="mt-12 relative">
+            <div className="mt-8 grid gap-4 md:hidden">
+              {testimonials.slice(0, 3).map((item) => (
+                <figure
+                  key={item.name}
+                  className="rounded-[1.5rem] border border-[#EDE6F7] bg-white/95 p-5 shadow-[0_14px_38px_rgba(45,27,107,0.07)]"
+                >
+                  <div className="mb-4 flex gap-1 text-[#D4A843]" aria-label="5 bintang">
+                    {Array.from({ length: 5 }).map((_, starIndex) => (
+                      <SparkleIcon key={starIndex} className="h-4 w-4" />
+                    ))}
+                  </div>
+
+                  <blockquote className="text-left text-[0.95rem] italic leading-7 text-[#594878]">
+                    "{item.quote}"
+                  </blockquote>
+
+                  <figcaption className="mt-5 flex items-center gap-3">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#6B4FA0] font-display text-lg font-bold text-white">
+                      {item.name.charAt(0)}
+                    </span>
+
+                    <span className="text-left">
+                      <span className="block font-bold text-[#2D1B6B]">{item.name}</span>
+                    </span>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="relative mt-12 hidden md:block">
               <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[var(--calmee-cream)] to-transparent" />
               <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[var(--calmee-cream)] to-transparent" />
 
@@ -1043,7 +1451,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="relative isolate flex min-h-[78svh] items-center overflow-hidden bg-[#2D1B6B] px-5 py-24 text-center text-white lg:min-h-screen lg:px-8">
+        <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-20 text-center text-white lg:flex lg:min-h-screen lg:items-center lg:px-8">
           <img
             src={bgCalmeeLast}
             alt=""
@@ -1078,7 +1486,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="bg-[#12092E] px-5 py-10 text-white lg:snap-start lg:px-8">
+      <footer className="bg-[#12092E] px-5 pb-28 pt-10 text-white lg:snap-start lg:px-8 lg:pb-10">
         <div className="mx-auto flex max-w-7xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
           <a href="#home" className="flex items-center gap-3">
             <img src={logoCalmeeWhite} alt="Calmee" className="h-8 w-auto opacity-90" />
@@ -1119,6 +1527,44 @@ export default function App() {
           </div>
         </div>
       </footer>
+      <div
+        className={`fixed inset-x-0 bottom-0 z-40 border-t border-[#E6DDF6] bg-white/95 px-3 py-3 shadow-[0_-12px_30px_rgba(45,27,107,0.15)] backdrop-blur transition-transform duration-300 lg:hidden ${
+          showStickyCta && !mobileNavOpen ? "translate-y-0" : "translate-y-full"
+        }`}
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      >
+        <div className="flex items-center gap-2">
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Tanya via WhatsApp"
+            className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#2D1B6B]/15 bg-white text-[#2D1B6B] transition active:scale-95"
+          >
+            <img
+              src={whatsapp}
+              alt="WhatsApp"
+              className="h-5 w-5 object-contain"
+            />
+          </a>
+
+          <a
+            href={paketLink}
+            className="flex flex-1 items-center justify-center rounded-full border border-[#2D1B6B]/20 bg-white px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] transition active:scale-[0.98]"
+          >
+            Lihat Paket
+          </a>
+
+          <a
+            href={shopeeLink}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-1 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_10px_22px_rgba(212,168,67,0.32)] transition active:scale-[0.98]"
+          >
+            Beli
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

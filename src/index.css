@@ -55,12 +55,14 @@ body {
         display: flex;
         align-items: flex-start;
     }
+    .hero-dot {
+        display: none;
+    }
 }
 
 .hero-dot {
     position: absolute;
     z-index: 15;
-    display: block;
     border-radius: 9999px;
     opacity: 0.82;
     animation: calmee-float 5.5s ease-in-out infinite;
@@ -255,13 +257,13 @@ body {
     width: 24rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .reviews-card {
         width: min(19.5rem, calc(100vw - 3rem));
     }
 
     .reviews-track {
-        animation-duration: 42s;
+        animation: none;
     }
 }
 
