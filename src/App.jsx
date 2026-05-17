@@ -18,6 +18,7 @@ import gmp from "./assets/gmp.png";
 import haccp from "./assets/logo-haccp.png";
 import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
+import saranDokter from "./assets/saran-dokter.png";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
@@ -1464,23 +1465,50 @@ export default function App() {
           <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/12 blur-2xl" />
           <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
 
-          <div className="relative z-10 mx-auto max-w-4xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
-              Mulai Malam Ini
-            </p>
+          <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:text-left">
+            <a
+              href="https://www.instagram.com/reel/DXT1T1JD_6I/?igsh=MWl0c2MzY2Z6YTFwaw=="
+              target="_blank"
+              rel="noreferrer"
+              className="group mx-auto block w-full max-w-[32rem] overflow-hidden rounded-[2rem] border border-white/15 bg-white p-3 text-left text-[#2D1B6B] shadow-[0_28px_80px_rgba(0,0,0,0.28)] transition-all duration-300  hover:border-[#D4A843]/50 hover:shadow-[0_34px_90px_rgba(212,168,67,0.10)] lg:mx-0"
+            >
+              <div className="relative overflow-hidden rounded-[1.55rem] bg-[#FDF9F0]">
+                <img
+                  src={saranDokter}
+                  alt="Saran dokter tentang susah tidur"
+                  className="aspect-[16/10] w-full object-cover object-top transition duration-500 group-hover:scale-105"
+                />
 
-            <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-6xl">
-              Satu sachet kecil,
-              <span className="block text-[#D4A843]">buat tidur terasa lebih nyenyak.</span>
-            </h2>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#2D1B6B]/65 via-[#2D1B6B]/25 to-transparent px-5 pb-5 pt-24">
+                  
+                </div>
 
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
-              Calmee dibuat untuk menemani rutinitas sebelum tidur. Hangat, creamy, dan nyaman
-              diminum saat tubuh mulai minta istirahat.
-            </p>
+                <div className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-sm font-bold text-[#2D1B6B] shadow-[0_12px_30px_rgba(0,0,0,0.20)] transition duration-300 group-hover:scale-110">
+                  ▶
+                </div>
+              </div>
+            </a>
 
-            <div className="mt-8">
-              <CtaButtons align="center" light />
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
+                Mulai Malam Ini
+              </p>
+
+              <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-5xl">
+                Satu sachet kecil,
+                <span className="block text-[#D4A843]">
+                  buat tidur terasa lebih nyenyak.
+                </span>
+              </h2>
+
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg lg:mx-0">
+                Calmee dibuat untuk menemani rutinitas sebelum tidur. Hangat, creamy, dan nyaman
+                diminum saat tubuh mulai minta istirahat.
+              </p>
+
+              <div className="mt-8">
+                <CtaButtons align="left" light />
+              </div>
             </div>
           </div>
         </section>
@@ -1527,6 +1555,7 @@ export default function App() {
           </div>
         </div>
       </footer>
+
       <div
         className={`fixed inset-x-0 bottom-0 z-40 border-t border-[#E6DDF6] bg-white/95 px-3 py-3 shadow-[0_-12px_30px_rgba(45,27,107,0.15)] backdrop-blur transition-transform duration-300 lg:hidden ${
           showStickyCta && !mobileNavOpen ? "translate-y-0" : "translate-y-full"
