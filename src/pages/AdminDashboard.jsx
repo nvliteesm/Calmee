@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentSession, signOutAdmin } from "../services/authService";
 import { getAllPackages, updatePackage } from "../services/packageService";
+import { getCtaEvents } from "../services/analyticsService";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ export default function AdminDashboard() {
   const [savingPackage, setSavingPackage] = useState(false);
   const [packageMessage, setPackageMessage] = useState("");
   const [packageError, setPackageError] = useState("");
+  const [ctaEvents, setCtaEvents] = useState([]);
+  const [loadingCtaEvents, setLoadingCtaEvents] = useState(true);
+  const [ctaError, setCtaError] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -51,35 +55,74 @@ export default function AdminDashboard() {
   useEffect(() => {
     let isMounted = true;
 
-    async function loadPackages() {
-      try {
+    async function loadAdminData() {
+        try {
         setLoadingPackages(true);
-        const data = await getAllPackages();
+        setLoadingCtaEvents(true);
+        setCtaError("");
 
+        const [packagesData, ctaData] = await Promise.all([
+            getAllPackages(),
+            getCtaEvents(100),
+        ]);
+
+        if (!isMounted) return;
+
+        setPackages(packagesData || []);
+        setCtaEvents(ctaData || []);
+        } catch (error) {
+        console.error("Failed to load admin data:", error);
+
+        if (!isMounted) return;
+
+        setCtaError(error.message || "Failed to load CTA analytics.");
+    } finally {
         if (isMounted) {
-          setPackages(data || []);
-        }
-      } catch (error) {
-        console.error("Failed to load admin packages:", error);
-      } finally {
-        if (isMounted) {
-          setLoadingPackages(false);
+            setLoadingPackages(false);
+            setLoadingCtaEvents(false);
         }
       }
     }
 
     if (session) {
-      loadPackages();
+        loadAdminData();
     }
 
     return () => {
-      isMounted = false;
+        isMounted = false;
     };
   }, [session]);
 
   async function handleLogout() {
     await signOutAdmin();
     navigate("/admin/login");
+  }
+
+  function getEventCountByName(keyword) {
+    return ctaEvents.filter((event) =>
+        event.event_name.toLowerCase().includes(keyword.toLowerCase())
+    ).length;
+  }
+
+  function getMostClickedTarget() {
+    if (!ctaEvents.length) return "-";
+
+    const counts = ctaEvents.reduce((acc, event) => {
+        const target = event.target || "unknown";
+        acc[target] = (acc[target] || 0) + 1;
+        return acc;
+    }, {});
+
+    return Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  }
+
+  function formatEventTime(value) {
+    if (!value) return "-";
+
+    return new Intl.DateTimeFormat("id-ID", {
+        dateStyle: "medium",
+        timeStyle: "short",
+    }).format(new Date(value));
   }
 
   function startEditingPackage(pkg) {
@@ -199,27 +242,135 @@ export default function AdminDashboard() {
           </button>
         </header>
 
-        <section className="mt-6 grid gap-5 md:grid-cols-3">
-          <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-            <p className="text-sm font-bold text-[#8A6FC2]">Active Packages</p>
-            <p className="mt-3 font-display text-4xl font-bold">
-              {loadingPackages ? "..." : packages.length}
-            </p>
-          </div>
+        <section className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
+                <p className="text-sm font-bold text-[#8A6FC2]">Active Packages</p>
+                <p className="mt-3 font-display text-4xl font-bold">
+                    {loadingPackages ? "..." : packages.filter((pkg) => pkg.is_active).length}
+                </p>
+            </div>
 
-          <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-            <p className="text-sm font-bold text-[#8A6FC2]">Next Feature</p>
-            <p className="mt-3 font-display text-2xl font-bold">
-              Package Editor
-            </p>
-          </div>
+            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
+                <p className="text-sm font-bold text-[#8A6FC2]">Total CTA Clicks</p>
+                <p className="mt-3 font-display text-4xl font-bold">
+                    {loadingCtaEvents ? "..." : ctaEvents.length}
+                </p>
+            </div>
 
-          <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-            <p className="text-sm font-bold text-[#8A6FC2]">Status</p>
-            <p className="mt-3 font-display text-2xl font-bold">
-              Admin Ready
-            </p>
-          </div>
+            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
+                <p className="text-sm font-bold text-[#8A6FC2]">Shopee Clicks</p>
+                <p className="mt-3 font-display text-4xl font-bold">
+                    {loadingCtaEvents ? "..." : getEventCountByName("shopee")}
+                </p>
+            </div>
+
+            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-5 shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
+                <p className="text-sm font-bold text-[#8A6FC2]">WhatsApp Clicks</p>
+                <p className="mt-3 font-display text-4xl font-bold">
+                    {loadingCtaEvents ? "..." : getEventCountByName("whatsapp")}
+                </p>
+            </div>
+        </section>
+
+        <section className="mt-6 rounded-[2rem] border border-[#E6DDF6] bg-white p-6 shadow-[0_18px_55px_rgba(45,27,107,0.08)]">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                <h2 className="font-display text-3xl font-bold">
+                    CTA Analytics
+                </h2>
+                <p className="mt-2 text-sm text-[#594878]">
+                    Tracks business-intent clicks such as Shopee, WhatsApp, package buttons, and sticky mobile CTAs.
+                </p>
+                </div>
+
+                <div className="rounded-full bg-[#F0EAFF] px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-[#6B4FA0]">
+                Last 100 events
+                </div>
+            </div>
+
+            {ctaError ? (
+                <p className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+                {ctaError}
+                </p>
+            ) : null}
+
+            <div className="mt-6 grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+                <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-[#FDF9F0] p-5">
+                <p className="text-sm font-bold text-[#8A6FC2]">
+                    Most Clicked Target
+                </p>
+
+                <p className="mt-3 font-display text-3xl font-bold text-[#2D1B6B]">
+                    {loadingCtaEvents ? "..." : getMostClickedTarget()}
+                </p>
+
+                <div className="mt-5 grid gap-3 text-sm text-[#594878]">
+                    <p>
+                    <span className="font-bold text-[#2D1B6B]">Package clicks:</span>{" "}
+                    {loadingCtaEvents ? "..." : getEventCountByName("package")}
+                    </p>
+                    <p>
+                    <span className="font-bold text-[#2D1B6B]">Navbar clicks:</span>{" "}
+                    {loadingCtaEvents ? "..." : getEventCountByName("navbar")}
+                    </p>
+                    <p>
+                    <span className="font-bold text-[#2D1B6B]">Sticky mobile clicks:</span>{" "}
+                    {loadingCtaEvents ? "..." : getEventCountByName("sticky")}
+                    </p>
+                </div>
+                </div>
+
+                <div className="overflow-hidden rounded-[1.5rem] border border-[#E6DDF6]">
+                <div className="max-h-[24rem] overflow-auto">
+                    <table className="w-full min-w-[680px] text-left text-sm">
+                    <thead className="sticky top-0 bg-[#F0EAFF] text-[#6B4FA0]">
+                        <tr>
+                        <th className="px-4 py-3">Event</th>
+                        <th className="px-4 py-3">Target</th>
+                        <th className="px-4 py-3">Package</th>
+                        <th className="px-4 py-3">Time</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="bg-white">
+                        {loadingCtaEvents ? (
+                        <tr>
+                            <td colSpan="4" className="px-4 py-5 text-center font-semibold text-[#594878]">
+                            Loading CTA events...
+                            </td>
+                        </tr>
+                        ) : null}
+
+                        {!loadingCtaEvents && ctaEvents.length === 0 ? (
+                        <tr>
+                            <td colSpan="4" className="px-4 py-5 text-center font-semibold text-[#594878]">
+                            No CTA events yet.
+                            </td>
+                        </tr>
+                        ) : null}
+
+                        {!loadingCtaEvents &&
+                        ctaEvents.map((event) => (
+                            <tr key={event.id} className="border-t border-[#F0EAFF]">
+                            <td className="px-4 py-3 font-bold text-[#2D1B6B]">
+                                {event.event_name}
+                            </td>
+                            <td className="px-4 py-3 text-[#594878]">
+                                {event.target || "-"}
+                            </td>
+                            <td className="px-4 py-3 text-[#594878]">
+                                {event.packages?.name || "-"}
+                            </td>
+                            <td className="px-4 py-3 text-[#594878]">
+                                {formatEventTime(event.created_at)}
+                            </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                    </table>
+                </div>
+                </div>
+            </div>
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#E6DDF6] bg-white p-6 shadow-[0_18px_55px_rgba(45,27,107,0.08)]">
