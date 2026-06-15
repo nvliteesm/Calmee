@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCurrentSession, signOutAdmin } from "../services/authService";
-import { getActivePackages } from "../services/packageService";
+import { getAllPackages, updatePackage } from "../services/packageService";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -9,7 +9,12 @@ export default function AdminDashboard() {
   const [session, setSession] = useState(null);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [packages, setPackages] = useState([]);
+  const [editingPackageId, setEditingPackageId] = useState(null);
+  const [editForm, setEditForm] = useState(null);
   const [loadingPackages, setLoadingPackages] = useState(true);
+  const [savingPackage, setSavingPackage] = useState(false);
+  const [packageMessage, setPackageMessage] = useState("");
+  const [packageError, setPackageError] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -49,7 +54,7 @@ export default function AdminDashboard() {
     async function loadPackages() {
       try {
         setLoadingPackages(true);
-        const data = await getActivePackages();
+        const data = await getAllPackages();
 
         if (isMounted) {
           setPackages(data || []);
@@ -76,6 +81,90 @@ export default function AdminDashboard() {
     await signOutAdmin();
     navigate("/admin/login");
   }
+
+  function startEditingPackage(pkg) {
+    setEditingPackageId(pkg.id);
+    setEditForm({
+        name: pkg.name || "",
+        description: pkg.description || "",
+        quantity: pkg.quantity || "",
+        normal_price: pkg.normal_price ?? "",
+        discount_price: pkg.discount_price ?? "",
+        badge: pkg.badge || "",
+        shopee_url: pkg.shopee_url || "",
+        whatsapp_message: pkg.whatsapp_message || "",
+        is_active: Boolean(pkg.is_active),
+        sort_order: pkg.sort_order ?? 0,
+    });
+    setPackageMessage("");
+    setPackageError("");
+    }
+
+    function cancelEditingPackage() {
+    setEditingPackageId(null);
+    setEditForm(null);
+    setPackageMessage("");
+    setPackageError("");
+    }
+
+    function updateEditField(field, value) {
+    setEditForm((current) => ({
+        ...current,
+        [field]: value,
+    }));
+    }
+
+    async function savePackageChanges(packageId) {
+    try {
+        setSavingPackage(true);
+        setPackageMessage("");
+        setPackageError("");
+
+        const updates = {
+        name: editForm.name.trim(),
+        description: editForm.description.trim(),
+        quantity: editForm.quantity.trim(),
+        normal_price:
+            editForm.normal_price === "" ? null : Number(editForm.normal_price),
+        discount_price:
+            editForm.discount_price === "" ? null : Number(editForm.discount_price),
+        badge: editForm.badge.trim() || null,
+        shopee_url: editForm.shopee_url.trim(),
+        whatsapp_message: editForm.whatsapp_message.trim(),
+        is_active: Boolean(editForm.is_active),
+        sort_order: Number(editForm.sort_order || 0),
+        };
+
+        if (!updates.name) {
+        throw new Error("Package name cannot be empty.");
+        }
+
+        if (updates.normal_price !== null && updates.normal_price < 0) {
+        throw new Error("Normal price cannot be negative.");
+        }
+
+        if (updates.discount_price !== null && updates.discount_price < 0) {
+        throw new Error("Discount price cannot be negative.");
+        }
+
+        const updatedPackage = await updatePackage(packageId, updates);
+
+        setPackages((current) =>
+        current
+            .map((pkg) => (pkg.id === packageId ? updatedPackage : pkg))
+            .sort((a, b) => a.sort_order - b.sort_order)
+        );
+
+        setEditingPackageId(null);
+        setEditForm(null);
+        setPackageMessage("Package updated successfully.");
+    } catch (error) {
+        console.error(error);
+        setPackageError(error.message || "Failed to update package.");
+    } finally {
+        setSavingPackage(false);
+    }
+    }
 
   if (checkingAuth) {
     return (
@@ -134,35 +223,272 @@ export default function AdminDashboard() {
         </section>
 
         <section className="mt-6 rounded-[2rem] border border-[#E6DDF6] bg-white p-6 shadow-[0_18px_55px_rgba(45,27,107,0.08)]">
-          <h2 className="font-display text-3xl font-bold">
-            Package Data Preview
-          </h2>
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div>
+                <h2 className="font-display text-3xl font-bold">
+                    Package Editor
+                </h2>
+                <p className="mt-2 text-sm text-[#594878]">
+                    Edit package prices, badges, Shopee links, and visibility without touching code.
+                </p>
+                </div>
 
-          <div className="mt-5 overflow-x-auto">
-            <table className="w-full min-w-[720px] text-left text-sm">
-              <thead>
-                <tr className="border-b border-[#E6DDF6] text-[#8A6FC2]">
-                  <th className="py-3 pr-4">Name</th>
-                  <th className="py-3 pr-4">Quantity</th>
-                  <th className="py-3 pr-4">Normal Price</th>
-                  <th className="py-3 pr-4">Discount Price</th>
-                  <th className="py-3 pr-4">Badge</th>
-                </tr>
-              </thead>
+                <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="rounded-full border border-[#2D1B6B]/20 bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition hover:bg-[#F0EAFF]"
+                >
+                Refresh
+                </button>
+            </div>
 
-              <tbody>
-                {packages.map((pkg) => (
-                  <tr key={pkg.id} className="border-b border-[#F0EAFF]">
-                    <td className="py-3 pr-4 font-bold">{pkg.name}</td>
-                    <td className="py-3 pr-4">{pkg.quantity}</td>
-                    <td className="py-3 pr-4">{pkg.normal_price}</td>
-                    <td className="py-3 pr-4">{pkg.discount_price}</td>
-                    <td className="py-3 pr-4">{pkg.badge || "-"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+            {packageMessage ? (
+                <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
+                {packageMessage}
+                </p>
+            ) : null}
+
+            {packageError ? (
+                <p className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+                {packageError}
+                </p>
+            ) : null}
+
+            <div className="mt-6 space-y-5">
+                {loadingPackages ? (
+                <p className="text-sm font-semibold text-[#594878]">
+                    Loading packages...
+                </p>
+                ) : null}
+
+                {!loadingPackages && packages.length === 0 ? (
+                <p className="text-sm font-semibold text-[#594878]">
+                    No packages found.
+                </p>
+                ) : null}
+
+                {packages.map((pkg) => {
+                const isEditing = editingPackageId === pkg.id;
+
+                return (
+                    <article
+                    key={pkg.id}
+                    className="rounded-[1.5rem] border border-[#E6DDF6] bg-[#FDF9F0] p-5"
+                    >
+                    {!isEditing ? (
+                        <div className="grid gap-5 lg:grid-cols-[1.3fr_0.7fr] lg:items-start">
+                        <div>
+                            <div className="flex flex-wrap items-center gap-3">
+                            <h3 className="font-display text-2xl font-bold text-[#2D1B6B]">
+                                {pkg.name}
+                            </h3>
+
+                            <span
+                                className={`rounded-full px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] ${
+                                pkg.is_active
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-red-100 text-red-700"
+                                }`}
+                            >
+                                {pkg.is_active ? "Active" : "Inactive"}
+                            </span>
+
+                            {pkg.badge ? (
+                                <span className="rounded-full bg-[#D4A843] px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#241256]">
+                                {pkg.badge}
+                                </span>
+                            ) : null}
+                            </div>
+
+                            <p className="mt-2 text-sm leading-6 text-[#594878]">
+                            {pkg.description || "No description"}
+                            </p>
+
+                            <div className="mt-4 grid gap-3 text-sm text-[#594878] md:grid-cols-2">
+                            <p>
+                                <span className="font-bold text-[#2D1B6B]">Quantity:</span>{" "}
+                                {pkg.quantity || "-"}
+                            </p>
+                            <p>
+                                <span className="font-bold text-[#2D1B6B]">Sort order:</span>{" "}
+                                {pkg.sort_order}
+                            </p>
+                            <p>
+                                <span className="font-bold text-[#2D1B6B]">Normal price:</span>{" "}
+                                Rp {Number(pkg.normal_price || 0).toLocaleString("id-ID")}
+                            </p>
+                            <p>
+                                <span className="font-bold text-[#2D1B6B]">Discount price:</span>{" "}
+                                Rp {Number(pkg.discount_price || 0).toLocaleString("id-ID")}
+                            </p>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-3">
+                            <a
+                            href={pkg.shopee_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="rounded-full bg-[#2D1B6B] px-5 py-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-white transition hover:bg-[#6B4FA0]"
+                            >
+                            Open Shopee Link
+                            </a>
+
+                            <button
+                            type="button"
+                            onClick={() => startEditingPackage(pkg)}
+                            className="rounded-full border border-[#2D1B6B]/20 bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition hover:bg-[#F0EAFF]"
+                            >
+                            Edit Package
+                            </button>
+                        </div>
+                        </div>
+                    ) : (
+                        <div>
+                        <div className="grid gap-4 md:grid-cols-2">
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Package Name
+                            </span>
+                            <input
+                                value={editForm.name}
+                                onChange={(event) => updateEditField("name", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Quantity / Subtitle
+                            </span>
+                            <input
+                                value={editForm.quantity}
+                                onChange={(event) => updateEditField("quantity", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Normal Price
+                            </span>
+                            <input
+                                type="number"
+                                value={editForm.normal_price}
+                                onChange={(event) => updateEditField("normal_price", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Discount Price
+                            </span>
+                            <input
+                                type="number"
+                                value={editForm.discount_price}
+                                onChange={(event) => updateEditField("discount_price", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Badge
+                            </span>
+                            <input
+                                value={editForm.badge}
+                                onChange={(event) => updateEditField("badge", event.target.value)}
+                                placeholder="Best Seller / Direkomendasikan"
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Sort Order
+                            </span>
+                            <input
+                                type="number"
+                                value={editForm.sort_order}
+                                onChange={(event) => updateEditField("sort_order", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block md:col-span-2">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Description
+                            </span>
+                            <textarea
+                                value={editForm.description}
+                                onChange={(event) => updateEditField("description", event.target.value)}
+                                rows={3}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block md:col-span-2">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                Shopee URL
+                            </span>
+                            <input
+                                value={editForm.shopee_url}
+                                onChange={(event) => updateEditField("shopee_url", event.target.value)}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="block md:col-span-2">
+                            <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                                WhatsApp Message
+                            </span>
+                            <textarea
+                                value={editForm.whatsapp_message}
+                                onChange={(event) => updateEditField("whatsapp_message", event.target.value)}
+                                rows={2}
+                                className="w-full rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                            />
+                            </label>
+
+                            <label className="flex items-center gap-3 rounded-2xl border border-[#E6DDF6] bg-white px-4 py-3">
+                            <input
+                                type="checkbox"
+                                checked={editForm.is_active}
+                                onChange={(event) => updateEditField("is_active", event.target.checked)}
+                                className="h-4 w-4"
+                            />
+                            <span className="text-sm font-bold text-[#2D1B6B]">
+                                Active package
+                            </span>
+                            </label>
+                        </div>
+
+                        <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
+                            <button
+                            type="button"
+                            onClick={cancelEditingPackage}
+                            disabled={savingPackage}
+                            className="rounded-full border border-[#2D1B6B]/20 bg-white px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition hover:bg-[#F0EAFF] disabled:opacity-60"
+                            >
+                            Cancel
+                            </button>
+
+                            <button
+                            type="button"
+                            onClick={() => savePackageChanges(pkg.id)}
+                            disabled={savingPackage}
+                            className="rounded-full bg-[#D4A843] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#241256] transition hover:bg-[#e3ba5c] disabled:opacity-60"
+                            >
+                            {savingPackage ? "Saving..." : "Save Changes"}
+                            </button>
+                        </div>
+                        </div>
+                    )}
+                    </article>
+                );
+                })}
+            </div>
         </section>
       </div>
     </main>
