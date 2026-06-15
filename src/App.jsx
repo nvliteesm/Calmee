@@ -20,6 +20,7 @@ import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
 import saranDokter from "./assets/saran-dokter.png";
 import { getActivePackages } from "./services/packageService";
+import { trackCtaClick } from "./services/trackingService";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
@@ -426,6 +427,14 @@ export default function App() {
   const [dynamicPackages, setDynamicPackages] = useState(fallbackPackages);
   const [packagesLoading, setPackagesLoading] = useState(true);
   const [packagesError, setPackagesError] = useState("");
+
+  function handleCtaClick(eventName, target, packageId = null) {
+    trackCtaClick({
+      eventName,
+      target,
+      packageId,
+    });
+  }
 
   useEffect(() => {
     if (mobileNavOpen) {
@@ -1323,6 +1332,9 @@ export default function App() {
                       href={pkg.href}
                       target="_blank"
                       rel="noreferrer"
+                      onClick={() =>
+                        handleCtaClick("package_shopee_click", pkg.name, pkg.id || null)
+                      }
                       className={`mt-6 inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] active:scale-95 md:mt-auto ${
                         pkg.highlight
                           ? "bg-[#D4A843] text-[#241256] hover:bg-[#e3ba5c]"
