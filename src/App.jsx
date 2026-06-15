@@ -237,7 +237,6 @@ function mapDatabasePackage(pkg) {
         : null,
     discount: calculateDiscount(pkg.normal_price, pkg.discount_price),
     highlight:
-      isRoutinePackage ||
       ["best seller", "direkomendasikan", "recommended"].includes(
         String(pkg.badge || "").toLowerCase()
       ),
@@ -1325,11 +1324,11 @@ export default function App() {
               {dynamicPackages.map((pkg, index) => {
                 const isPackageOpen = openPackage === index;
                 const packageLayoutClass =
-                  pkg.name === "Starter Pack"
+                  index === 0
                     ? "md:order-1 lg:order-1"
-                    : pkg.name === "Monthly Ritual"
+                    : index === 2
                       ? "md:order-2 lg:order-3"
-                      : pkg.name === "Calmee Routine"
+                      : index === 1
                         ? "md:order-3 md:col-span-2 md:mx-auto md:w-[calc(50%-0.625rem)] lg:order-2 lg:col-span-1 lg:mx-0 lg:w-auto"
                         : "";
                 return (
