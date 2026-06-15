@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getCurrentSession, signOutAdmin } from "../services/authService";
 import { getAllPackages, updatePackage } from "../services/packageService";
 import { getCtaEvents } from "../services/analyticsService";
+import { getSiteSettings, updateSiteSettings } from "../services/siteSettingsService";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -19,6 +20,16 @@ export default function AdminDashboard() {
   const [ctaEvents, setCtaEvents] = useState([]);
   const [loadingCtaEvents, setLoadingCtaEvents] = useState(true);
   const [ctaError, setCtaError] = useState("");
+  const [settingsForm, setSettingsForm] = useState({
+    main_shopee_url: "",
+    whatsapp_phone: "",
+    whatsapp_default_message: "",
+    hero_badge_text: "",
+    promo_banner_text: "",
+    });
+  const [savingSettings, setSavingSettings] = useState(false);
+  const [settingsMessage, setSettingsMessage] = useState("");
+  const [settingsError, setSettingsError] = useState("");
 
   useEffect(() => {
     let isMounted = true;
@@ -61,15 +72,23 @@ export default function AdminDashboard() {
         setLoadingCtaEvents(true);
         setCtaError("");
 
-        const [packagesData, ctaData] = await Promise.all([
+        const [packagesData, ctaData, settingsData] = await Promise.all([
             getAllPackages(),
             getCtaEvents(100),
+            getSiteSettings(),
         ]);
 
         if (!isMounted) return;
 
         setPackages(packagesData || []);
         setCtaEvents(ctaData || []);
+        setSettingsForm({
+            main_shopee_url: settingsData.main_shopee_url || "",
+            whatsapp_phone: settingsData.whatsapp_phone || "",
+            whatsapp_default_message: settingsData.whatsapp_default_message || "",
+            hero_badge_text: settingsData.hero_badge_text || "",
+            promo_banner_text: settingsData.promo_banner_text || "",
+        });
         } catch (error) {
         console.error("Failed to load admin data:", error);
 
@@ -208,6 +227,44 @@ export default function AdminDashboard() {
         setSavingPackage(false);
     }
     }
+
+  function updateSettingsField(field, value) {
+    setSettingsForm((current) => ({
+        ...current,
+        [field]: value,
+    }));
+    }
+
+    async function saveSiteSettings() {
+    try {
+        setSavingSettings(true);
+        setSettingsMessage("");
+        setSettingsError("");
+
+        if (!settingsForm.main_shopee_url.trim()) {
+        throw new Error("Main Shopee URL cannot be empty.");
+        }
+
+        if (!settingsForm.whatsapp_phone.trim()) {
+        throw new Error("WhatsApp phone cannot be empty.");
+        }
+
+        await updateSiteSettings({
+        main_shopee_url: settingsForm.main_shopee_url.trim(),
+        whatsapp_phone: settingsForm.whatsapp_phone.trim(),
+        whatsapp_default_message: settingsForm.whatsapp_default_message.trim(),
+        hero_badge_text: settingsForm.hero_badge_text.trim(),
+        promo_banner_text: settingsForm.promo_banner_text.trim(),
+        });
+
+        setSettingsMessage("Site settings updated successfully.");
+    } catch (error) {
+        console.error(error);
+        setSettingsError(error.message || "Failed to update site settings.");
+    } finally {
+        setSavingSettings(false);
+    }
+ }
 
   if (checkingAuth) {
     return (
@@ -370,6 +427,110 @@ export default function AdminDashboard() {
                     </table>
                 </div>
                 </div>
+            </div>
+        </section>
+
+        <section className="mt-6 rounded-[2rem] border border-[#E6DDF6] bg-white p-6 shadow-[0_18px_55px_rgba(45,27,107,0.08)]">
+            <div>
+                <h2 className="font-display text-3xl font-bold">
+                Site Settings
+                </h2>
+                <p className="mt-2 text-sm text-[#594878]">
+                Manage global Shopee, WhatsApp, and homepage settings without editing code.
+                </p>
+            </div>
+
+            {settingsMessage ? (
+                <p className="mt-5 rounded-2xl bg-green-50 px-4 py-3 text-sm font-semibold text-green-700">
+                {settingsMessage}
+                </p>
+            ) : null}
+
+            {settingsError ? (
+                <p className="mt-5 rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-600">
+                {settingsError}
+                </p>
+            ) : null}
+
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+                <label className="block md:col-span-2">
+                <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                    Main Shopee URL
+                </span>
+                <input
+                    value={settingsForm.main_shopee_url}
+                    onChange={(event) =>
+                    updateSettingsField("main_shopee_url", event.target.value)
+                    }
+                    className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                />
+                </label>
+
+                <label className="block">
+                <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                    WhatsApp Phone
+                </span>
+                <input
+                    value={settingsForm.whatsapp_phone}
+                    onChange={(event) =>
+                    updateSettingsField("whatsapp_phone", event.target.value)
+                    }
+                    placeholder="6285880877355"
+                    className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                />
+                </label>
+
+                <label className="block">
+                <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                    Hero Badge Text
+                </span>
+                <input
+                    value={settingsForm.hero_badge_text}
+                    onChange={(event) =>
+                    updateSettingsField("hero_badge_text", event.target.value)
+                    }
+                    className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                />
+                </label>
+
+                <label className="block md:col-span-2">
+                <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                    WhatsApp Default Message
+                </span>
+                <textarea
+                    rows={3}
+                    value={settingsForm.whatsapp_default_message}
+                    onChange={(event) =>
+                    updateSettingsField("whatsapp_default_message", event.target.value)
+                    }
+                    className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                />
+                </label>
+
+                <label className="block md:col-span-2">
+                <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
+                    Promo Banner Text
+                </span>
+                <textarea
+                    rows={2}
+                    value={settingsForm.promo_banner_text}
+                    onChange={(event) =>
+                    updateSettingsField("promo_banner_text", event.target.value)
+                    }
+                    className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+                />
+                </label>
+            </div>
+
+            <div className="mt-5 flex justify-end">
+                <button
+                type="button"
+                onClick={saveSiteSettings}
+                disabled={savingSettings}
+                className="rounded-full bg-[#D4A843] px-6 py-3 text-xs font-bold uppercase tracking-[0.14em] text-[#241256] transition hover:bg-[#e3ba5c] disabled:opacity-60"
+                >
+                {savingSettings ? "Saving..." : "Save Site Settings"}
+                </button>
             </div>
         </section>
 

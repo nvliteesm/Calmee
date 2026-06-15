@@ -20,6 +20,7 @@ import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
 import saranDokter from "./assets/saran-dokter.png";
 import { getActivePackages } from "./services/packageService";
+import { getSiteSettings } from "./services/siteSettingsService";
 import { trackCtaClick } from "./services/trackingService";
 import "./index.css";
 
@@ -30,6 +31,10 @@ const shopeeLinkPaket3 = "https://id.shp.ee/fAsj3RfL";
 const whatsappLink =
   "https://wa.me/6285880877355?text=Halo%20Admin%20Calmee!%2C%20Saya%20ingin%20bertanya%20tentang%20produk%20Calmee.";
 const paketLink = "#paket";
+const fallbackHeroBadgeText = "SUSU HERBAL UNTUK RITUAL MALAM";
+const fallbackWhatsAppPhone = "6285880877355";
+const fallbackWhatsAppMessage =
+  "Halo Admin Calmee!, Saya ingin bertanya tentang produk Calmee.";
 
 const navItems = [
   { label: "Produk", href: "#produk" },
@@ -247,6 +252,13 @@ function mapDatabasePackage(pkg) {
   };
 }
 
+function buildWhatsAppLink(phone, message) {
+  const phoneNumber = String(phone || "").replace(/\D/g, "") || fallbackWhatsAppPhone;
+  const defaultMessage = String(message || "").trim() || fallbackWhatsAppMessage;
+
+  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
+}
+
 const testimonials = [
   {
     name: "Kelvin, 28, Jakarta",
@@ -336,13 +348,19 @@ function CheckIcon({ className = "h-4 w-4" }) {
   );
 }
 
-function CtaButtons({ align = "start", light = false, onTrack }) {
+function CtaButtons({
+  align = "start",
+  light = false,
+  onTrack,
+  activeShopeeLink = shopeeLink,
+  activeWhatsAppLink = whatsappLink,
+}) {
   const justify = align === "center" ? "justify-center" : "justify-start";
 
   return (
     <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
       <a
-        href={shopeeLink}
+        href={activeShopeeLink}
         target="_blank"
         rel="noreferrer"
         onClick={() => onTrack?.("general_shopee_click", "cta_buttons")}
@@ -350,8 +368,9 @@ function CtaButtons({ align = "start", light = false, onTrack }) {
       >
         Beli Sekarang
       </a>
+
       <a
-        href={whatsappLink}
+        href={activeWhatsAppLink}
         target="_blank"
         rel="noreferrer"
         onClick={() => onTrack?.("general_whatsapp_click", "cta_buttons")}
@@ -367,7 +386,12 @@ function CtaButtons({ align = "start", light = false, onTrack }) {
   );
 }
 
-function CtaButtons1({ align = "start", light = false, onTrack }) {
+function CtaButtons1({
+  align = "start",
+  light = false,
+  onTrack,
+  activeWhatsAppLink = whatsappLink,
+}) {
   const justify = align === "center" ? "justify-center" : "justify-start";
 
   return (
@@ -379,8 +403,9 @@ function CtaButtons1({ align = "start", light = false, onTrack }) {
       >
         Lihat Paket
       </a>
+
       <a
-        href={whatsappLink}
+        href={activeWhatsAppLink}
         target="_blank"
         rel="noreferrer"
         onClick={() => onTrack?.("general_whatsapp_click", "hero_desktop")}
@@ -431,6 +456,14 @@ export default function App() {
   const [dynamicPackages, setDynamicPackages] = useState(fallbackPackages);
   const [packagesLoading, setPackagesLoading] = useState(true);
   const [packagesError, setPackagesError] = useState("");
+  const [siteSettings, setSiteSettings] = useState({});
+
+  const activeShopeeLink = siteSettings.main_shopee_url?.trim() || shopeeLink;
+  const activeWhatsAppLink = buildWhatsAppLink(
+    siteSettings.whatsapp_phone,
+    siteSettings.whatsapp_default_message
+  );
+  const heroBadgeText = siteSettings.hero_badge_text?.trim() || fallbackHeroBadgeText;
 
   function handleCtaClick(eventName, target, packageId = null) {
     trackCtaClick({
@@ -461,6 +494,32 @@ export default function App() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadSiteSettings() {
+      try {
+        const settings = await getSiteSettings();
+
+        if (isMounted) {
+          setSiteSettings(settings || {});
+        }
+      } catch (error) {
+        console.error("Failed to load site settings:", error);
+
+        if (isMounted) {
+          setSiteSettings({});
+        }
+      }
+    }
+
+    loadSiteSettings();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -523,7 +582,7 @@ export default function App() {
 
           <div className="flex items-center gap-2">
             <a
-              href={shopeeLink}
+              href={activeShopeeLink}
               target="_blank"
               rel="noreferrer"
               onClick={() => handleCtaClick("navbar_shopee_click", "navbar_desktop")}
@@ -533,10 +592,9 @@ export default function App() {
             </a>
 
             <a
-              href={shopeeLink}
+              href={activeShopeeLink}
               target="_blank"
               rel="noreferrer"
-              onClick={() => handleCtaClick("navbar_shopee_click", "navbar_mobile")}
               className="inline-flex items-center justify-center rounded-full bg-[#2D1B6B] px-4 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white shadow-[0_8px_20px_rgba(45,27,107,0.25)] transition active:scale-95 lg:hidden"
             >
               Beli
@@ -622,7 +680,7 @@ export default function App() {
 
               <div className="mt-auto space-y-3 px-6 pb-8">
                 <a
-                  href={shopeeLink}
+                  href={activeShopeeLink}
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => {
@@ -635,7 +693,7 @@ export default function App() {
                 </a>
 
                 <a
-                  href={whatsappLink}
+                  href={activeWhatsAppLink}
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => {
@@ -692,7 +750,7 @@ export default function App() {
           <div className="absolute inset-x-0 top-[calc(var(--nav-height)+1.5rem)] z-20 flex justify-center md:hidden">
             <div className="calmee-glass-pill inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/[0.08] px-3.5 py-1.5 text-[0.6rem] font-bold tracking-[0.15em] text-[#E8DEFF] backdrop-blur">
               <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
-              Solusi Insomnia Terbaik di Indonesia
+              {heroBadgeText}
             </div>
           </div>
 
@@ -734,14 +792,13 @@ export default function App() {
               <div className="mx-auto mt-6 grid max-w-sm grid-cols-2 gap-3">
                 <a
                   href={paketLink}
-                  onClick={() => handleCtaClick("view_packages_click", "hero_mobile")}
                   className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95"
                 >
                   Lihat Paket
                 </a>
 
                 <a
-                  href={whatsappLink}
+                  href={activeWhatsAppLink}
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => handleCtaClick("general_whatsapp_click", "hero_mobile")}
@@ -773,7 +830,7 @@ export default function App() {
             <div className="hidden w-full flex-col items-center text-center md:flex">
               <div className="calmee-glass-pill mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[0.08] px-4 py-2 text-xs font-bold tracking-[0.2em] text-[#E8DEFF] backdrop-blur transition-all duration-300 hover:border-white/45 hover:bg-white/[0.12]">
                 <SparkleIcon className="h-3.5 w-3.5 text-[#D4A843]" />
-                Solusi Insomnia Terbaik di Indonesia
+                {heroBadgeText}
               </div>
 
               <h1 className="mx-auto max-w-[86rem] text-center font-display text-[4.2rem] font-bold leading-[0.95] lg:text-[4.15rem] xl:text-[4.4rem]">
@@ -790,7 +847,12 @@ export default function App() {
               </p>
 
               <div className="mt-8">
-                <CtaButtons1 align="center" light onTrack={handleCtaClick} />
+                <CtaButtons1
+                  align="center"
+                  light
+                  onTrack={handleCtaClick}
+                  activeWhatsAppLink={activeWhatsAppLink}
+                />
               </div>
 
               <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
@@ -1406,7 +1468,7 @@ export default function App() {
             <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-7 text-[#594878]">
               Ingin coba satuan dulu? Produk satuan tetap tersedia di{" "}
               <a
-                href={shopeeLink}
+                href={activeShopeeLink}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => handleCtaClick("shopee_store_text_click", "package_section")}
@@ -1643,7 +1705,13 @@ export default function App() {
               </p>
 
               <div className="mt-8">
-                <CtaButtons align="left" light onTrack={handleCtaClick} />
+                <CtaButtons
+                  align="left"
+                  light
+                  onTrack={handleCtaClick}
+                  activeShopeeLink={activeShopeeLink}
+                  activeWhatsAppLink={activeWhatsAppLink}
+                />
               </div>
             </div>
           </div>
@@ -1700,11 +1768,10 @@ export default function App() {
       >
         <div className="flex items-center gap-2">
           <a
-            href={whatsappLink}
+            href={activeWhatsAppLink}
             target="_blank"
             rel="noreferrer"
             aria-label="Tanya via WhatsApp"
-            onClick={() => handleCtaClick("sticky_whatsapp_click", "sticky_mobile")}
             className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#2D1B6B]/15 bg-white text-[#2D1B6B] transition active:scale-95"
           >
             <img
@@ -1716,14 +1783,13 @@ export default function App() {
 
           <a
             href={paketLink}
-            onClick={() => handleCtaClick("sticky_view_packages_click", "sticky_mobile")}
             className="flex flex-1 items-center justify-center rounded-full border border-[#2D1B6B]/20 bg-white px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] transition active:scale-[0.98]"
           >
             Lihat Paket
           </a>
 
           <a
-            href={shopeeLink}
+            href={activeShopeeLink}
             target="_blank"
             rel="noreferrer"
             onClick={() => handleCtaClick("sticky_shopee_click", "sticky_mobile")}
