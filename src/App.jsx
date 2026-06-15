@@ -336,7 +336,7 @@ function CheckIcon({ className = "h-4 w-4" }) {
   );
 }
 
-function CtaButtons({ align = "start", light = false }) {
+function CtaButtons({ align = "start", light = false, onTrack }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
 
   return (
@@ -345,6 +345,7 @@ function CtaButtons({ align = "start", light = false }) {
         href={shopeeLink}
         target="_blank"
         rel="noreferrer"
+        onClick={() => onTrack?.("general_shopee_click", "cta_buttons")}
         className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
         Beli Sekarang
@@ -353,6 +354,7 @@ function CtaButtons({ align = "start", light = false }) {
         href={whatsappLink}
         target="_blank"
         rel="noreferrer"
+        onClick={() => onTrack?.("general_whatsapp_click", "cta_buttons")}
         className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
           light
             ? "border-white/35 text-white hover:bg-white/10"
@@ -365,13 +367,14 @@ function CtaButtons({ align = "start", light = false }) {
   );
 }
 
-function CtaButtons1({ align = "start", light = false }) {
+function CtaButtons1({ align = "start", light = false, onTrack }) {
   const justify = align === "center" ? "justify-center" : "justify-start";
 
   return (
     <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
       <a
         href={paketLink}
+        onClick={() => onTrack?.("view_packages_click", "hero_desktop")}
         className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
       >
         Lihat Paket
@@ -380,6 +383,7 @@ function CtaButtons1({ align = "start", light = false }) {
         href={whatsappLink}
         target="_blank"
         rel="noreferrer"
+        onClick={() => onTrack?.("general_whatsapp_click", "hero_desktop")}
         className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
           light
             ? "border-white/35 text-white hover:bg-white/10"
@@ -522,6 +526,7 @@ export default function App() {
               href={shopeeLink}
               target="_blank"
               rel="noreferrer"
+              onClick={() => handleCtaClick("navbar_shopee_click", "navbar_desktop")}
               className="hidden items-center justify-center rounded-full bg-[#2D1B6B] px-5 py-3 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_10px_30px_rgba(45,27,107,0.25)] transition-all duration-500 ease-out hover:scale-105 hover:bg-[var(--calmee-purple-light)] hover:text-[#2D1B6B] lg:inline-flex"
             >
               Beli Sekarang
@@ -531,6 +536,7 @@ export default function App() {
               href={shopeeLink}
               target="_blank"
               rel="noreferrer"
+              onClick={() => handleCtaClick("navbar_shopee_click", "navbar_mobile")}
               className="inline-flex items-center justify-center rounded-full bg-[#2D1B6B] px-4 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white shadow-[0_8px_20px_rgba(45,27,107,0.25)] transition active:scale-95 lg:hidden"
             >
               Beli
@@ -619,7 +625,10 @@ export default function App() {
                   href={shopeeLink}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => setMobileNavOpen(false)}
+                  onClick={() => {
+                    handleCtaClick("drawer_shopee_click", "mobile_drawer");
+                    setMobileNavOpen(false);
+                  }}
                   className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#D4A843] px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#241256] shadow-[0_10px_30px_rgba(212,168,67,0.32)] transition active:scale-[0.98]"
                 >
                   Beli di Shopee
@@ -629,7 +638,10 @@ export default function App() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={() => setMobileNavOpen(false)}
+                  onClick={() => {
+                    handleCtaClick("drawer_whatsapp_click", "mobile_drawer");
+                    setMobileNavOpen(false);
+                  }}
                   className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-[#2D1B6B]/20 bg-white px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition active:scale-[0.98]"
                 >
                   Chat WhatsApp
@@ -722,6 +734,7 @@ export default function App() {
               <div className="mx-auto mt-6 grid max-w-sm grid-cols-2 gap-3">
                 <a
                   href={paketLink}
+                  onClick={() => handleCtaClick("view_packages_click", "hero_mobile")}
                   className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95"
                 >
                   Lihat Paket
@@ -731,6 +744,7 @@ export default function App() {
                   href={whatsappLink}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={() => handleCtaClick("general_whatsapp_click", "hero_mobile")}
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-white transition active:scale-95"
                 >
                   Kontak Kami
@@ -776,7 +790,7 @@ export default function App() {
               </p>
 
               <div className="mt-8">
-                <CtaButtons1 align="center" light />
+                <CtaButtons1 align="center" light onTrack={handleCtaClick} />
               </div>
 
               <div className="mt-7 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
@@ -1395,6 +1409,7 @@ export default function App() {
                 href={shopeeLink}
                 target="_blank"
                 rel="noreferrer"
+                onClick={() => handleCtaClick("shopee_store_text_click", "package_section")}
                 className="font-bold text-[#2D1B6B] underline decoration-[#D4A843]/70 underline-offset-4 transition hover:text-[#6B4FA0]"
               >
                 Shopee Official Store
@@ -1628,7 +1643,7 @@ export default function App() {
               </p>
 
               <div className="mt-8">
-                <CtaButtons align="left" light />
+                <CtaButtons align="left" light onTrack={handleCtaClick} />
               </div>
             </div>
           </div>
@@ -1689,6 +1704,7 @@ export default function App() {
             target="_blank"
             rel="noreferrer"
             aria-label="Tanya via WhatsApp"
+            onClick={() => handleCtaClick("sticky_whatsapp_click", "sticky_mobile")}
             className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#2D1B6B]/15 bg-white text-[#2D1B6B] transition active:scale-95"
           >
             <img
@@ -1700,6 +1716,7 @@ export default function App() {
 
           <a
             href={paketLink}
+            onClick={() => handleCtaClick("sticky_view_packages_click", "sticky_mobile")}
             className="flex flex-1 items-center justify-center rounded-full border border-[#2D1B6B]/20 bg-white px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#2D1B6B] transition active:scale-[0.98]"
           >
             Lihat Paket
@@ -1709,6 +1726,7 @@ export default function App() {
             href={shopeeLink}
             target="_blank"
             rel="noreferrer"
+            onClick={() => handleCtaClick("sticky_shopee_click", "sticky_mobile")}
             className="flex flex-1 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_10px_22px_rgba(212,168,67,0.32)] transition active:scale-[0.98]"
           >
             Beli
