@@ -19,6 +19,7 @@ import haccp from "./assets/logo-haccp.png";
 import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
 import saranDokter from "./assets/saran-dokter.png";
+import { getActivePackages } from "./services/packageService";
 import "./index.css";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
@@ -143,7 +144,7 @@ const benefits = [
   },
 ];
 
-const packages = [
+const fallbackPackages = [
   {
     name: "Starter Pack",
     subtitle: "Paket 1 Minggu",
@@ -193,6 +194,57 @@ const packages = [
     ],
   },
 ];
+
+function formatRupiah(value) {
+  if (value === null || value === undefined) return "";
+
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  }).format(value);
+}
+
+function calculateDiscount(normalPrice, discountPrice) {
+  if (!normalPrice || !discountPrice || discountPrice >= normalPrice) {
+    return null;
+  }
+
+  const percentage = Math.round(((normalPrice - discountPrice) / normalPrice) * 100);
+  return `${percentage}%`;
+}
+
+function mapDatabasePackage(pkg) {
+  const packageName = pkg.name || "";
+  const isRoutinePackage =
+    packageName.toLowerCase().includes("routine") ||
+    packageName.toLowerCase().includes("better sleep");
+
+  return {
+    id: pkg.id,
+    name: packageName,
+    subtitle: pkg.quantity || "Paket Calmee",
+    price: formatRupiah(pkg.discount_price || pkg.normal_price),
+    originalPrice:
+      pkg.discount_price && pkg.normal_price && pkg.discount_price < pkg.normal_price
+        ? formatRupiah(pkg.normal_price)
+        : null,
+    discount: calculateDiscount(pkg.normal_price, pkg.discount_price),
+    highlight:
+      isRoutinePackage ||
+      ["best seller", "direkomendasikan", "recommended"].includes(
+        String(pkg.badge || "").toLowerCase()
+      ),
+    badge: pkg.badge,
+    cta: `Pilih ${packageName}`,
+    href: pkg.shopee_url || shopeeLink,
+    perks: [
+      pkg.description || "Paket Calmee untuk ritual malam yang lebih tenang.",
+      pkg.quantity ? `Isi ${pkg.quantity}` : "Tersedia melalui Shopee Official Store",
+      "Cocok untuk menemani rutinitas sebelum tidur",
+    ],
+  };
+}
 
 const testimonials = [
   {
@@ -371,6 +423,9 @@ export default function App() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [showStickyCta, setShowStickyCta] = useState(false);
   const [openPackage, setOpenPackage] = useState(null);
+  const [dynamicPackages, setDynamicPackages] = useState(fallbackPackages);
+  const [packagesLoading, setPackagesLoading] = useState(true);
+  const [packagesError, setPackagesError] = useState("");
 
   useEffect(() => {
     if (mobileNavOpen) {
@@ -393,6 +448,44 @@ export default function App() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadPackages() {
+      try {
+        setPackagesLoading(true);
+        setPackagesError("");
+
+        const data = await getActivePackages();
+
+        if (!isMounted) return;
+
+        if (data && data.length > 0) {
+          setDynamicPackages(data.map(mapDatabasePackage));
+        } else {
+          setDynamicPackages(fallbackPackages);
+        }
+      } catch (error) {
+        console.error("Failed to load packages:", error);
+
+        if (!isMounted) return;
+
+        setPackagesError("Harga paket sedang menggunakan data cadangan.");
+        setDynamicPackages(fallbackPackages);
+      } finally {
+        if (isMounted) {
+          setPackagesLoading(false);
+        }
+      }
+    }
+
+    loadPackages();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -1130,9 +1223,21 @@ export default function App() {
                 ))}
               </div>
             </div>
+            
+            {packagesLoading ? (
+              <p className="mt-8 text-center text-sm font-semibold text-[#6B4FA0]">
+                Memuat paket terbaru...
+              </p>
+            ) : null}
+
+            {packagesError ? (
+              <p className="mt-8 text-center text-sm font-semibold text-[#8A6FC2]">
+                {packagesError}
+              </p>
+            ) : null}
 
             <div className="mt-6 grid gap-5 md:mt-10 md:grid-cols-2 lg:grid-cols-3">
-              {packages.map((pkg, index) => {
+              {dynamicPackages.map((pkg, index) => {
                 const isPackageOpen = openPackage === index;
                 const packageLayoutClass =
                   pkg.name === "Starter Pack"
@@ -1178,23 +1283,27 @@ export default function App() {
                         {pkg.price}
                       </span>
 
-                      <span
-                        className={`text-sm font-bold line-through ${
-                          pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"
-                        }`}
-                      >
-                        {pkg.originalPrice}
-                      </span>
+                      {pkg.originalPrice ? (
+                        <span
+                          className={`text-sm font-bold line-through ${
+                            pkg.highlight ? "text-white/45" : "text-[#8A7AA8]"
+                          }`}
+                        >
+                          {pkg.originalPrice}
+                        </span>
+                      ) : null}
 
-                      <span
-                        className={`rounded-md px-2 py-1 text-xs font-bold ${
-                          pkg.highlight
-                            ? "bg-white/10 text-[#D4A843]"
-                            : "bg-[#FFF1EC] text-[#F04A2A]"
-                        }`}
-                      >
-                        {pkg.discount}
-                      </span>
+                      {pkg.discount ? (
+                        <span
+                          className={`rounded-md px-2 py-1 text-xs font-bold ${
+                            pkg.highlight
+                              ? "bg-white/10 text-[#D4A843]"
+                              : "bg-[#FFF1EC] text-[#F04A2A]"
+                          }`}
+                        >
+                          {pkg.discount}
+                        </span>
+                      ) : null}
                     </div>
 
                     {/* Desktop details: unchanged */}
