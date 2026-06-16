@@ -222,9 +222,6 @@ function calculateDiscount(normalPrice, discountPrice) {
 
 function mapDatabasePackage(pkg) {
   const packageName = pkg.name || "";
-  const isRoutinePackage =
-    packageName.toLowerCase().includes("routine") ||
-    packageName.toLowerCase().includes("better sleep");
 
   return {
     id: pkg.id,
@@ -265,7 +262,7 @@ const testimonials = [
       "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks dan tidur jadi lebih cepat. Rasanya juga enak dan tidak terlalu manis. Recommended buat yang punya masalah insomnia ringan.",
   },
   {
-    name: "Susilawati, 50, Pontianak",
+    name: "Freddy, 35, Pontianak",
     quote:
       "Lagi di fase stres kerjaan dan tidur berantakan banget. Sudah hampir seminggu rutin minum ini tiap malam. Biasanya aku bisa 1-2 jam baru ketiduran, sekarang jadi lebih cepat. Rasanya enak dan bikin badan jadi relax sebelum tidur. Ga langsung knockout, tapi tidurnya jadi lebih nyenyak dan ga kebangun terus.",
   },
@@ -344,44 +341,6 @@ function CheckIcon({ className = "h-4 w-4" }) {
         strokeLinejoin="round"
       />
     </svg>
-  );
-}
-
-function CtaButtons({
-  align = "start",
-  light = false,
-  onTrack,
-  activeShopeeLink = shopeeLink,
-  activeWhatsAppLink = whatsappLink,
-}) {
-  const justify = align === "center" ? "justify-center" : "justify-start";
-
-  return (
-    <div className={`flex flex-col gap-3 sm:flex-row ${justify}`}>
-      <a
-        href={activeShopeeLink}
-        target="_blank"
-        rel="noreferrer"
-        onClick={() => onTrack?.("general_shopee_click", "cta_buttons")}
-        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition-all duration-300 ease-out hover:scale-105 hover:bg-[#e3ba5c] active:scale-95"
-      >
-        Beli Sekarang
-      </a>
-
-      <a
-        href={activeWhatsAppLink}
-        target="_blank"
-        rel="noreferrer"
-        onClick={() => onTrack?.("general_whatsapp_click", "cta_buttons")}
-        className={`inline-flex min-h-12 items-center justify-center rounded-full border px-7 py-3 text-sm font-bold uppercase tracking-[0.12em] transition-all duration-300 ease-out hover:scale-105 active:scale-95 ${
-          light
-            ? "border-white/35 text-white hover:bg-white/10"
-            : "border-[#6B4FA0]/25 bg-white text-[#2D1B6B] hover:bg-[#F0EAFF]"
-        }`}
-      >
-        Kontak Kami
-      </a>
-    </div>
   );
 }
 
@@ -965,7 +924,7 @@ export default function App() {
               <div className="mt-8 border-l-4 border-[#D4A843] pl-5">
                 <p className="font-display text-xl italic leading-8 text-[#2D1B6B]">
                   “Kami percaya malam tidak perlu selalu dilawan. Kadang, tubuh hanya butuh
-                  tirual kecil yang memberi tanda bahwa hari ini sudah cukup.”
+                  ritual kecil yang memberi tanda bahwa hari ini sudah cukup.”
                 </p>
               </div>
             </div>
@@ -1703,14 +1662,26 @@ export default function App() {
                 diminum saat tubuh mulai minta istirahat.
               </p>
 
-              <div className="mt-8">
-                <CtaButtons
-                  align="left"
-                  light
-                  onTrack={handleCtaClick}
-                  activeShopeeLink={activeShopeeLink}
-                  activeWhatsAppLink={activeWhatsAppLink}
-                />
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                <a
+                  href={activeShopeeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleCtaClick("general_shopee_click", "final_cta")}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95"
+                >
+                  Beli Sekarang
+                </a>
+
+                <a
+                  href={activeWhatsAppLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleCtaClick("general_whatsapp_click", "final_cta")}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-white transition active:scale-95"
+                >
+                  Kontak Kami
+                </a>
               </div>
             </div>
           </div>

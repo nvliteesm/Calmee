@@ -507,7 +507,7 @@ export default function AdminDashboard() {
                 />
                 </label>
 
-                <label className="block md:col-span-2">
+                {/* <label className="block md:col-span-2">
                 <span className="mb-2 block text-sm font-bold text-[#2D1B6B]">
                     Promo Banner Text
                 </span>
@@ -519,7 +519,7 @@ export default function AdminDashboard() {
                     }
                     className="w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
                 />
-                </label>
+                </label> */}
             </div>
 
             <div className="mt-5 flex justify-end">
