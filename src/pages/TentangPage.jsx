@@ -1,6 +1,10 @@
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, useInView, animate } from "framer-motion";
 import Layout from "../components/Layout";
 import PageMeta from "../components/PageMeta";
+import Reveal from "../components/motion/Reveal";
+import FloatingOrbs from "../components/motion/FloatingOrbs";
 import calmeeIntro from "../assets/calmee-intro.png";
 import badanPom from "../assets/badan-pom.png";
 import gmp from "../assets/gmp.png";
@@ -20,20 +24,47 @@ const timeline = [
   {
     title: "Memahami Masalah",
     desc: "Insomnia di Indonesia diperkirakan mencapai prevalensi sekitar 67% (Jurnal Ilmiah Kesehatan, Universitas Syiah Kuala). Banyak orang bukan tidak ingin tidur — mereka sulit tenang.",
+    icon: "◐",
   },
   {
     title: "Riset Formula",
     desc: "Kami memilih empat kandungan utama: susu sebagai comfort base, chamomile untuk ketenangan, L-theanine untuk relaksasi pikiran, dan lemon untuk kesegaran ringan.",
+    icon: "✧",
   },
   {
     title: "Standar Produksi",
     desc: "Calmee diproduksi di fasilitas berstandar GMP dan HACCP, terdaftar di BPOM, dan bersertifikat Halal MUI.",
+    icon: "✓",
   },
   {
     title: "Hadir untuk Kamu",
     desc: "Calmee tersedia melalui Shopee Official Store dan WhatsApp, siap menemani malam-malam yang butuh ketenangan.",
+    icon: "☾",
   },
 ];
+
+function AnimatedNumber({ value, suffix = "", duration = 1.4 }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const [display, setDisplay] = useState(0);
+
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, value, {
+      duration,
+      ease: "easeOut",
+      onUpdate: (v) => setDisplay(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, value, duration]);
+
+  return (
+    <span ref={ref}>
+      {display}
+      {suffix}
+    </span>
+  );
+}
 
 export default function TentangPage() {
   return (
@@ -45,11 +76,26 @@ export default function TentangPage() {
 
       {/* Hero */}
       <section className="relative isolate overflow-hidden bg-[var(--calmee-cream)] px-5 py-20 lg:px-8 lg:py-28">
-        <div className="absolute left-[-12rem] top-[-10rem] -z-10 h-[30rem] w-[30rem] rounded-full bg-[#E8DEFF]/60 blur-3xl" />
-        <div className="absolute right-[-10rem] bottom-[-12rem] -z-10 h-[32rem] w-[32rem] rounded-full bg-[#C4ADDF]/35 blur-3xl" />
+        <FloatingOrbs variant="light" />
+
+        {/* Twinkling stars, matches homepage hero-dot language */}
+        <div className="pointer-events-none absolute inset-0 -z-10 hidden lg:block" aria-hidden="true">
+          {[
+            { top: "15%", left: "8%" }, { top: "28%", left: "22%" }, { top: "62%", left: "12%" },
+            { top: "40%", left: "5%" }, { top: "75%", left: "18%" },
+          ].map((pos, i) => (
+            <motion.span
+              key={i}
+              className="absolute h-1.5 w-1.5 rounded-full bg-[#D4A843]"
+              style={pos}
+              animate={{ opacity: [0.15, 0.7, 0.15], scale: [1, 1.4, 1] }}
+              transition={{ duration: 3 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+            />
+          ))}
+        </div>
 
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-          <div>
+          <Reveal>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-[#8A6FC2]">
               Tentang Kami
             </p>
@@ -67,23 +113,38 @@ export default function TentangPage() {
               Bukan sebagai solusi instan, melainkan sebagai teman ritual malam yang hangat, lembut,
               dan menenangkan.
             </p>
-          </div>
+          </Reveal>
 
-          <div className="overflow-hidden rounded-[2rem] border border-[#E6DDF6] bg-white shadow-[0_18px_45px_rgba(45,27,107,0.10)]">
-            <img
-              src={calmeeIntro}
-              alt="Calmee susu herbal untuk ritual malam"
-              loading="lazy"
-              decoding="async"
-              className="aspect-[4/3] w-full object-cover"
-            />
-          </div>
+          <Reveal delay={0.15}>
+            <motion.div
+              animate={{ y: [0, -14, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="overflow-hidden rounded-[2rem] border border-[#E6DDF6] bg-white shadow-[0_18px_45px_rgba(45,27,107,0.10)]"
+            >
+              <img
+                src={calmeeIntro}
+                alt="Calmee susu herbal untuk ritual malam"
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </motion.div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Quote */}
-      <section className="bg-[#2D1B6B] px-5 py-12 lg:px-8 lg:py-16">
-        <div className="mx-auto max-w-4xl text-center">
+      {/* Quote — glowing moon backdrop */}
+      <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-16 lg:px-8 lg:py-20">
+        <motion.div
+          aria-hidden="true"
+          className="absolute left-1/2 top-1/2 -z-10 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#D4A843]/10 blur-[100px]"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0.9, 0.6] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <Reveal className="mx-auto max-w-4xl text-center">
+          <span className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-white/10 text-2xl text-[#D4A843]">
+            ☾
+          </span>
           <blockquote className="font-display text-2xl italic leading-relaxed text-white md:text-3xl">
             "Kami percaya malam tidak perlu selalu dilawan. Kadang, tubuh hanya butuh ritual kecil
             yang memberi tanda bahwa hari ini sudah cukup."
@@ -91,13 +152,13 @@ export default function TentangPage() {
           <p className="mt-5 text-sm font-bold uppercase tracking-[0.18em] text-[#D4A843]">
             — Tim Calmee
           </p>
-        </div>
+        </Reveal>
       </section>
 
-      {/* Stats */}
+      {/* Stats — animated counters */}
       <section className="px-5 py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-6xl">
-          <div className="mx-auto max-w-3xl text-center">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-[#8A6FC2]">
               Latar Belakang
             </p>
@@ -112,54 +173,72 @@ export default function TentangPage() {
             <p className="mt-3 text-xs font-bold uppercase tracking-[0.14em] text-[#D4A843]">
               Sumber: Jurnal Ilmiah Kesehatan · Universitas Syiah Kuala
             </p>
-          </div>
+          </Reveal>
 
           <div className="mx-auto mt-12 grid max-w-4xl gap-6 md:grid-cols-3">
-            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-6 text-center shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-              <p className="font-display text-4xl font-bold text-[#2D1B6B]">~67%</p>
-              <p className="mt-2 text-sm text-[#594878]">Prevalensi insomnia di Indonesia</p>
-            </div>
-            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-6 text-center shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-              <p className="font-display text-4xl font-bold text-[#2D1B6B]">4</p>
-              <p className="mt-2 text-sm text-[#594878]">Kandungan alami yang saling melengkapi</p>
-            </div>
-            <div className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-6 text-center shadow-[0_14px_44px_rgba(45,27,107,0.06)]">
-              <p className="font-display text-4xl font-bold text-[#2D1B6B]">0%</p>
-              <p className="mt-2 text-sm text-[#594878]">Gula tambahan & pengawet</p>
-            </div>
+            {[
+              { value: 67, suffix: "%", label: "Prevalensi insomnia di Indonesia" },
+              { value: 4, suffix: "", label: "Kandungan alami yang saling melengkapi" },
+              { value: 0, suffix: "%", label: "Gula tambahan & pengawet" },
+            ].map((stat, index) => (
+              <Reveal key={stat.label} delay={index * 0.1}>
+                <motion.div
+                  whileHover={{ y: -6 }}
+                  className="rounded-[1.5rem] border border-[#E6DDF6] bg-white p-6 text-center shadow-[0_14px_44px_rgba(45,27,107,0.06)]"
+                >
+                  <p className="font-display text-4xl font-bold text-[#2D1B6B]">
+                    <AnimatedNumber value={stat.value} suffix={stat.suffix} />
+                  </p>
+                  <p className="mt-2 text-sm text-[#594878]">{stat.label}</p>
+                </motion.div>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Journey / Timeline */}
-      <section className="bg-[#F0EAFF] px-5 py-16 lg:px-8 lg:py-24">
+      {/* Journey / Timeline — animated connecting line */}
+      <section className="relative isolate overflow-hidden bg-[#F0EAFF] px-5 py-16 lg:px-8 lg:py-24">
+        <FloatingOrbs variant="light" />
+
         <div className="mx-auto max-w-4xl">
-          <div className="text-center">
+          <Reveal className="text-center">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-[#8A6FC2]">
               Perjalanan Kami
             </p>
             <h2 className="font-display text-3xl font-bold leading-tight text-[#2D1B6B] md:text-4xl">
               Dari pemahaman masalah menjadi solusi yang lembut
             </h2>
-          </div>
+          </Reveal>
 
-          <div className="mt-12 space-y-8">
-            {timeline.map((step, index) => (
-              <div key={step.title} className="flex gap-5">
-                <div className="flex flex-col items-center">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#2D1B6B] font-display text-lg font-bold text-white">
-                    {index + 1}
+          <div className="relative mt-12">
+            {/* Animated vertical line */}
+            <motion.div
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              style={{ transformOrigin: "top" }}
+              className="absolute left-5 top-2 h-[calc(100%-2rem)] w-0.5 bg-gradient-to-b from-[#D4A843] via-[#C4ADDF] to-transparent"
+              aria-hidden="true"
+            />
+
+            <div className="space-y-10">
+              {timeline.map((step, index) => (
+                <Reveal key={step.title} delay={index * 0.12} className="relative flex gap-6 pl-0">
+                  <motion.div
+                    whileHover={{ scale: 1.1, rotate: 8 }}
+                    className="relative z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#2D1B6B] text-lg text-[#D4A843] shadow-[0_10px_24px_rgba(45,27,107,0.25)]"
+                  >
+                    {step.icon}
+                  </motion.div>
+                  <div className="pb-2 pt-1">
+                    <h3 className="font-display text-xl font-bold text-[#2D1B6B]">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-7 text-[#594878]">{step.desc}</p>
                   </div>
-                  {index < timeline.length - 1 && (
-                    <div className="mt-2 h-full w-0.5 bg-[#C4ADDF]" />
-                  )}
-                </div>
-                <div className="pb-4">
-                  <h3 className="font-display text-xl font-bold text-[#2D1B6B]">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-[#594878]">{step.desc}</p>
-                </div>
-              </div>
-            ))}
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -167,37 +246,46 @@ export default function TentangPage() {
       {/* Certifications */}
       <section className="px-5 py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-6xl text-center">
-          <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-[#8A6FC2]">
-            Standar & Sertifikasi
-          </p>
-          <h2 className="font-display text-3xl font-bold leading-tight text-[#2D1B6B] md:text-4xl">
-            Diproduksi dengan standar yang kamu bisa percaya
-          </h2>
+          <Reveal>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-[#8A6FC2]">
+              Standar & Sertifikasi
+            </p>
+            <h2 className="font-display text-3xl font-bold leading-tight text-[#2D1B6B] md:text-4xl">
+              Diproduksi dengan standar yang kamu bisa percaya
+            </h2>
+          </Reveal>
 
           <div className="mx-auto mt-10 flex max-w-lg flex-wrap items-center justify-center gap-8">
-            {trustLogos.map((logo) => (
-              <div key={logo.name} className="flex flex-col items-center gap-2">
-                <div className="flex h-16 w-20 items-center justify-center rounded-2xl bg-white px-3 shadow-[0_10px_26px_rgba(0,0,0,0.08)]">
-                  <img
-                    src={logo.image}
-                    alt={`Sertifikasi ${logo.name}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="max-h-10 w-auto object-contain"
-                  />
-                </div>
-                <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#6B4FA0]">
-                  {logo.name}
-                </span>
-              </div>
+            {trustLogos.map((logo, index) => (
+              <Reveal key={logo.name} delay={index * 0.06} y={16}>
+                <motion.div
+                  whileHover={{ y: -8, rotate: index % 2 === 0 ? -3 : 3 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <div className="flex h-16 w-20 items-center justify-center rounded-2xl bg-white px-3 shadow-[0_10px_26px_rgba(0,0,0,0.08)]">
+                    <img
+                      src={logo.image}
+                      alt={`Sertifikasi ${logo.name}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="max-h-10 w-auto object-contain"
+                    />
+                  </div>
+                  <span className="text-[0.65rem] font-bold uppercase tracking-[0.14em] text-[#6B4FA0]">
+                    {logo.name}
+                  </span>
+                </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-[#2D1B6B] px-5 py-16 text-center text-white lg:px-8 lg:py-20">
-        <div className="mx-auto max-w-3xl">
+      <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-16 text-center text-white lg:px-8 lg:py-20">
+        <FloatingOrbs variant="dark" />
+        <Reveal className="mx-auto max-w-3xl">
           <h2 className="font-display text-3xl font-bold md:text-4xl">
             Siap memulai malam yang lebih tenang?
           </h2>
@@ -220,7 +308,7 @@ export default function TentangPage() {
               Lihat Produk
             </Link>
           </div>
-        </div>
+        </Reveal>
       </section>
     </Layout>
   );

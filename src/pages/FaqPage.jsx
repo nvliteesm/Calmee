@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Layout from "../components/Layout";
 import PageMeta from "../components/PageMeta";
+import Reveal from "../components/motion/Reveal";
+import FloatingOrbs from "../components/motion/FloatingOrbs";
 
 const shopeeLink = "https://id.shp.ee/uDja9WMf";
 const whatsappLink =
@@ -11,6 +13,7 @@ const whatsappLink =
 const faqs = [
   {
     category: "Tentang Produk",
+    icon: "✦",
     items: [
       {
         question: "Apa itu Calmee?",
@@ -41,6 +44,7 @@ const faqs = [
   },
   {
     category: "Cara Konsumsi",
+    icon: "☾",
     items: [
       {
         question: "Kapan waktu terbaik konsumsi Calmee?",
@@ -61,6 +65,7 @@ const faqs = [
   },
   {
     category: "Keamanan & Efek Samping",
+    icon: "✓",
     items: [
       {
         question: "Apakah aman dikonsumsi setiap hari?",
@@ -86,6 +91,7 @@ const faqs = [
   },
   {
     category: "Pembelian & Pengiriman",
+    icon: "◐",
     items: [
       {
         question: "Di mana bisa membeli Calmee?",
@@ -111,6 +117,7 @@ const faqs = [
   },
   {
     category: "Sertifikasi",
+    icon: "◍",
     items: [
       {
         question: "Apakah Calmee terdaftar di BPOM?",
@@ -128,6 +135,23 @@ const faqs = [
 
 export default function FaqPage() {
   const [openFaq, setOpenFaq] = useState(null);
+  const [query, setQuery] = useState("");
+
+  const filteredFaqs = useMemo(() => {
+    if (!query.trim()) return faqs;
+
+    const q = query.toLowerCase();
+    return faqs
+      .map((category) => ({
+        ...category,
+        items: category.items.filter(
+          (item) =>
+            item.question.toLowerCase().includes(q) ||
+            item.answer.toLowerCase().includes(q)
+        ),
+      }))
+      .filter((category) => category.items.length > 0);
+  }, [query]);
 
   return (
     <Layout>
@@ -136,9 +160,11 @@ export default function FaqPage() {
         description="Jawaban lengkap tentang Calmee: cara konsumsi, keamanan, efek samping, kandungan, pembelian. Susu herbal untuk insomnia ringan yang aman, non-adiktif, terdaftar BPOM dan Halal."
       />
 
-      {/* Hero */}
-      <section className="bg-[var(--calmee-cream)] px-5 py-16 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-4xl text-center">
+      {/* Hero with search */}
+      <section className="relative isolate overflow-hidden bg-[var(--calmee-cream)] px-5 py-16 lg:px-8 lg:py-24">
+        <FloatingOrbs variant="light" />
+
+        <Reveal className="mx-auto max-w-4xl text-center">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-[#8A6FC2]">
             Frequently Asked Questions
           </p>
@@ -148,77 +174,129 @@ export default function FaqPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-[#594878] md:text-lg">
             Kami kumpulkan pertanyaan yang paling sering ditanyakan seputar produk, cara konsumsi,
-            keamanan, dan pembelian. Jika belum terjawab, kamu bisa langsung chat kami via WhatsApp.
+            keamanan, dan pembelian.
           </p>
-        </div>
+
+          {/* Search box */}
+          <div className="mx-auto mt-8 max-w-lg">
+            <div className="relative">
+              <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#8A6FC2]">
+                ⌕
+              </span>
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Cari pertanyaan... misal: 'anak-anak', 'ketergantungan'"
+                className="w-full rounded-full border border-[#E6DDF6] bg-white px-12 py-4 text-sm text-[#2D1B6B] shadow-[0_14px_44px_rgba(45,27,107,0.08)] outline-none transition focus:border-[#D4A843] focus:shadow-[0_18px_50px_rgba(212,168,67,0.15)]"
+              />
+              {query ? (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  aria-label="Bersihkan pencarian"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#8A6FC2] transition hover:text-[#2D1B6B]"
+                >
+                  ✕
+                </button>
+              ) : null}
+            </div>
+          </div>
+        </Reveal>
       </section>
 
       {/* FAQ Sections */}
-      <section className="bg-[var(--calmee-cream-alt)] px-5 py-16 lg:px-8 lg:py-24">
+      <section className="relative isolate overflow-hidden bg-[var(--calmee-cream-alt)] px-5 py-16 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-4xl space-y-12">
-          {faqs.map((category) => (
-            <div key={category.category}>
-              <h2 className="mb-5 font-display text-2xl font-bold text-[#2D1B6B] md:text-3xl">
-                {category.category}
-              </h2>
+          {filteredFaqs.length === 0 ? (
+            <Reveal className="rounded-[1.5rem] border border-dashed border-[#C4ADDF] bg-white/60 px-6 py-12 text-center">
+              <p className="font-display text-xl font-bold text-[#2D1B6B]">
+                Tidak ada hasil untuk "{query}"
+              </p>
+              <p className="mt-2 text-sm text-[#594878]">
+                Coba kata kunci lain, atau tanyakan langsung via WhatsApp.
+              </p>
+            </Reveal>
+          ) : (
+            filteredFaqs.map((category, catIndex) => (
+              <Reveal key={category.category} delay={catIndex * 0.05}>
+                <div className="mb-5 flex items-center gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#2D1B6B] text-lg text-[#D4A843]">
+                    {category.icon}
+                  </span>
+                  <h2 className="font-display text-2xl font-bold text-[#2D1B6B] md:text-3xl">
+                    {category.category}
+                  </h2>
+                </div>
 
-              <div className="space-y-3">
-                {category.items.map((faq) => {
-                  const faqId = `${category.category}-${faq.question}`;
-                  const isOpen = openFaq === faqId;
+                <div className="space-y-3">
+                  {category.items.map((faq) => {
+                    const faqId = `${category.category}-${faq.question}`;
+                    const isOpen = openFaq === faqId;
 
-                  return (
-                    <div
-                      key={faqId}
-                      className={`overflow-hidden rounded-[1.5rem] border bg-white/90 shadow-[0_14px_44px_rgba(45,27,107,0.06)] backdrop-blur transition-all duration-300 ${
-                        isOpen
-                          ? "border-[#D4A843]/45 shadow-[0_20px_55px_rgba(212,168,67,0.12)]"
-                          : "border-[#E6DDF6] hover:border-[#C4ADDF]"
-                      }`}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => setOpenFaq(isOpen ? null : faqId)}
-                        className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
-                        aria-expanded={isOpen}
-                      >
-                        <span className="font-display text-lg font-bold leading-tight text-[#2D1B6B] md:text-xl">
-                          {faq.question}
-                        </span>
-                        <span
-                          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E6DDF6] text-lg font-bold text-[#D4A843] transition-all duration-300 ${
-                            isOpen ? "rotate-45 bg-[#FDF9F0]" : "rotate-0 bg-white"
-                          }`}
-                        >
-                          +
-                        </span>
-                      </button>
-
+                    return (
                       <motion.div
-                        initial={false}
-                        animate={{
-                          height: isOpen ? "auto" : 0,
-                          opacity: isOpen ? 1 : 0,
-                        }}
-                        transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="overflow-hidden"
+                        key={faqId}
+                        layout
+                        className={`overflow-hidden rounded-[1.5rem] border bg-white/90 shadow-[0_14px_44px_rgba(45,27,107,0.06)] backdrop-blur transition-colors duration-300 ${
+                          isOpen
+                            ? "border-[#D4A843]/45 shadow-[0_20px_55px_rgba(212,168,67,0.12)]"
+                            : "border-[#E6DDF6] hover:border-[#C4ADDF]"
+                        }`}
                       >
-                        <div className="border-t border-[#E6DDF6] px-6 pb-6 pt-5">
-                          <p className="text-base leading-8 text-[#594878]">{faq.answer}</p>
-                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setOpenFaq(isOpen ? null : faqId)}
+                          className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
+                          aria-expanded={isOpen}
+                        >
+                          <span className="font-display text-lg font-bold leading-tight text-[#2D1B6B] md:text-xl">
+                            {faq.question}
+                          </span>
+                          <motion.span
+                            animate={{ rotate: isOpen ? 45 : 0 }}
+                            transition={{ duration: 0.3 }}
+                            className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#E6DDF6] text-lg font-bold text-[#D4A843] ${
+                              isOpen ? "bg-[#FDF9F0]" : "bg-white"
+                            }`}
+                          >
+                            +
+                          </motion.span>
+                        </button>
+
+                        <motion.div
+                          initial={false}
+                          animate={{
+                            height: isOpen ? "auto" : 0,
+                            opacity: isOpen ? 1 : 0,
+                          }}
+                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="border-t border-[#E6DDF6] px-6 pb-6 pt-5">
+                            <p className="text-base leading-8 text-[#594878]">{faq.answer}</p>
+                          </div>
+                        </motion.div>
                       </motion.div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+                    );
+                  })}
+                </div>
+              </Reveal>
+            ))
+          )}
         </div>
       </section>
 
       {/* Still have questions CTA */}
-      <section className="px-5 py-16 lg:px-8 lg:py-20">
-        <div className="mx-auto max-w-3xl text-center">
+      <section className="relative isolate overflow-hidden px-5 py-16 lg:px-8 lg:py-20">
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <motion.span
+            animate={{ rotate: [0, -8, 8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#F0EAFF] text-2xl text-[#D4A843]"
+          >
+            💬
+          </motion.span>
           <h2 className="font-display text-3xl font-bold text-[#2D1B6B] md:text-4xl">
             Masih punya pertanyaan?
           </h2>
@@ -249,7 +327,7 @@ export default function FaqPage() {
           >
             ← Lihat detail produk Calmee
           </Link>
-        </div>
+        </Reveal>
       </section>
     </Layout>
   );
