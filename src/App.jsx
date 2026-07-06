@@ -18,6 +18,7 @@ import gmp from "./assets/gmp.png";
 import haccp from "./assets/logo-haccp.png";
 import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
+import saranDokter from "./assets/saran-dokter.png";
 import { getActivePackages } from "./services/packageService";
 import { getSiteSettings } from "./services/siteSettingsService";
 import { trackCtaClick } from "./services/trackingService";
@@ -844,13 +845,6 @@ export default function App() {
                     </div>
                   ))}
                 </div>
-
-                {/* Shopee Rating Badge */}
-                <div className="mt-4 flex items-center justify-center gap-2">
-                  <span className="text-[#D4A843]">★</span>
-                  <span className="text-sm font-bold text-white">5.0</span>
-                  <span className="text-[0.7rem] text-white/55">dari 23 penilaian di Shopee</span>
-                </div>
               </div>
             </div>
           </div>
@@ -1621,65 +1615,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Instagram Social Proof Section */}
-        <section className="relative isolate overflow-hidden bg-[var(--calmee-cream-alt)] px-5 py-16 lg:px-8 lg:py-24">
-          <div className="absolute left-[-10rem] top-[-8rem] -z-10 h-[28rem] w-[28rem] rounded-full bg-[#E8DEFF]/45 blur-3xl" />
-          <div className="absolute right-[-8rem] bottom-[-6rem] -z-10 h-[22rem] w-[22rem] rounded-full bg-[#D4A843]/10 blur-[100px]" />
-
-          <div className={sectionInnerClass}>
-            <div className="mx-auto max-w-4xl text-center">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#8A6FC2]">
-                @calmeeofficial
-              </p>
-
-              <h2 className="mx-auto mt-4 max-w-3xl font-display text-[2.2rem] font-bold leading-[1.1] text-[#2D1B6B] md:text-4xl lg:text-5xl">
-                Ikuti ritual malam bersama{" "}
-                <span className="text-[#D4A843]">Calmee</span>
-              </h2>
-
-              <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-[#594878]">
-                Lihat langsung bagaimana pengguna lain menjadikan Calmee bagian dari rutinitas malam mereka.
-              </p>
-            </div>
-
-            {/* Instagram Embeds */}
-            <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
-              {[
-                "https://www.instagram.com/p/DYeq4TxyPmd/",
-                "https://www.instagram.com/p/DYJpFE6kVkB/",
-                "https://www.instagram.com/p/DYReaQ1EUIv/",
-              ].map((url) => (
-                <div
-                  key={url}
-                  className="overflow-hidden rounded-[1.5rem] border border-[#E6DDF6] bg-white shadow-[0_14px_44px_rgba(45,27,107,0.06)] transition-all hover:border-[#D4A843]/50 hover:shadow-[0_20px_55px_rgba(212,168,67,0.12)]"
-                >
-                  <iframe
-                    src={`${url}embed`}
-                    title="Instagram post Calmee"
-                    loading="lazy"
-                    allowTransparency="true"
-                    className="h-[28rem] w-full border-0 md:h-[32rem]"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 text-center">
-              <a
-                href="https://www.instagram.com/calmeeofficial"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[#2D1B6B]/20 bg-white px-6 py-3 text-sm font-bold uppercase tracking-[0.14em] text-[#2D1B6B] transition hover:bg-[#F0EAFF]"
-              >
-                <span>📷</span>
-                Follow @calmeeofficial
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* Final CTA */}
-        <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-20 text-center text-white lg:flex lg:min-h-[70vh] lg:items-center lg:px-8">
+        <section className="relative isolate overflow-hidden bg-[#2D1B6B] px-5 py-20 text-center text-white lg:flex lg:min-h-screen lg:items-center lg:px-8">
           <img
             src={bgCalmeeLast}
             alt=""
@@ -1692,50 +1628,70 @@ export default function App() {
           <div className="absolute right-[18%] top-[20%] -z-10 h-24 w-24 rounded-full bg-[#D4A843]/12 blur-2xl" />
           <div className="absolute left-[18%] bottom-[18%] -z-10 h-24 w-24 rounded-full bg-[#C4ADDF]/14 blur-2xl" />
 
-          <div className="relative z-10 mx-auto max-w-4xl">
-            <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
-              Mulai Malam Ini
-            </p>
+          <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:text-left">
+            <a
+              href="https://www.instagram.com/reel/DXT1T1JD_6I/?igsh=MWl0c2MzY2Z6YTFwaw=="
+              target="_blank"
+              rel="noreferrer"
+              className="group mx-auto block w-full max-w-[32rem] overflow-hidden rounded-[2rem] border border-white/15 bg-white p-3 text-left text-[#2D1B6B] shadow-[0_28px_80px_rgba(0,0,0,0.28)] transition-all duration-300  hover:border-[#D4A843]/50 hover:shadow-[0_34px_90px_rgba(212,168,67,0.10)] lg:mx-0"
+            >
+              <div className="relative overflow-hidden rounded-[1.55rem] bg-[#FDF9F0]">
+                <img
+                  src={saranDokter}
+                  alt="Saran dokter tentang cara mengatasi susah tidur"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-[16/10] w-full object-cover object-top transition duration-500 group-hover:scale-105"
+                />
 
-            <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-6xl">
-              Satu sachet kecil,
-              <span className="block text-[#D4A843]">
-                buat tidur terasa lebih nyenyak.
-              </span>
-            </h2>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#2D1B6B]/65 via-[#2D1B6B]/25 to-transparent px-5 pb-5 pt-24">
+                  
+                </div>
 
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg">
-              Calmee dibuat untuk menemani rutinitas sebelum tidur. Hangat, creamy, dan nyaman
-              diminum saat tubuh mulai minta istirahat.
-            </p>
+                <div className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/95 text-sm font-bold text-[#2D1B6B] shadow-[0_12px_30px_rgba(0,0,0,0.20)] transition duration-300 group-hover:scale-110">
+                  ▶
+                </div>
+              </div>
+            </a>
 
-            {/* Shopee Trust Badge */}
-            <div className="mx-auto mt-6 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/[0.08] px-5 py-2.5 backdrop-blur">
-              <span className="text-[#D4A843]">★</span>
-              <span className="text-sm font-bold text-white">5.0</span>
-              <span className="text-sm text-white/60">dari 23 penilaian di Shopee</span>
-            </div>
+            <div>
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-[#C4ADDF]">
+                Mulai Malam Ini
+              </p>
 
-            <div className="mx-auto mt-8 grid max-w-sm grid-cols-2 gap-3">
-              <a
-                href={activeShopeeLink}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => handleCtaClick("general_shopee_click", "final_cta")}
-                className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95 hover:scale-105"
-              >
-                Beli Sekarang
-              </a>
+              <h2 className="font-display text-4xl font-bold leading-[1.05] md:text-5xl lg:text-5xl">
+                Satu sachet kecil,
+                <span className="block text-[#D4A843]">
+                  buat tidur terasa lebih nyenyak.
+                </span>
+              </h2>
 
-              <a
-                href={activeWhatsAppLink}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => handleCtaClick("general_whatsapp_click", "final_cta")}
-                className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-white transition active:scale-95 hover:scale-105"
-              >
-                Kontak Kami
-              </a>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-white/70 md:text-lg lg:mx-0">
+                Calmee dibuat untuk menemani rutinitas sebelum tidur. Hangat, creamy, dan nyaman
+                diminum saat tubuh mulai minta istirahat.
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                <a
+                  href={activeShopeeLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleCtaClick("general_shopee_click", "final_cta")}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#D4A843] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-[#241256] shadow-[0_0px_25px_rgba(212,168,67,0.28)] transition active:scale-95"
+                >
+                  Beli Sekarang
+                </a>
+
+                <a
+                  href={activeWhatsAppLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => handleCtaClick("general_whatsapp_click", "final_cta")}
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/30 px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.13em] text-white transition active:scale-95"
+                >
+                  Kontak Kami
+                </a>
+              </div>
             </div>
           </div>
         </section>
