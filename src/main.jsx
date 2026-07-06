@@ -14,10 +14,15 @@ const app = (
   </StrictMode>
 );
 
-// The landing page ("/") is prerendered to static HTML at build time.
-// Hydrate it in place to keep the SEO-friendly markup and avoid a flash.
+// These routes are prerendered to static HTML at build time.
+// Hydrate them in place to keep the SEO-friendly markup and avoid a flash.
 // Other routes (e.g. /admin) are client-only, so we mount fresh.
-if (rootElement.hasChildNodes() && window.location.pathname === "/") {
+const prerenderedRoutes = ["/", "/produk", "/tentang", "/faq"];
+
+if (
+  rootElement.hasChildNodes() &&
+  prerenderedRoutes.includes(window.location.pathname)
+) {
   hydrateRoot(rootElement, app);
 } else {
   createRoot(rootElement).render(app);

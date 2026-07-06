@@ -19,24 +19,30 @@ async function run() {
 
   const { render } = await import(pathToFileURL(ssrEntry).href);
 
-  const html = fs.readFileSync(template, "utf-8");
-  const appHtml = render("/");
+  const templateHtml = fs.readFileSync(template, "utf-8");
 
-  // Inject the rendered markup into the empty root container.
-  const output = html.replace(
-    '<div id="root"></div>',
-    `<div id="root">${appHtml}</div>`
-  );
+  // Routes to prerender — each gets its own index.html so crawlers
+  // receive full content without executing JavaScript.
+  const routes = ["/", "/produk", "/tentang", "/faq"];
 
-  if (output === html) {
-    console.warn(
-      '[prerender] Could not find <div id="root"></div> in index.html. ' +
-        "Markup was not injected."
+  for (const route of routes) {
+    const appHtml = render(route);
+
+    const output = templateHtml.replace(
+      '<div id="root"></div>',
+      `<div id="root">${appHtml}</div>`
     );
-  }
 
-  fs.writeFileSync(template, output);
-  console.log("[prerender] Landing page prerendered into dist/index.html");
+    if (route === "/") {
+      fs.writeFileSync(template, output);
+      console.log(`[prerender] ${route} → dist/index.html`);
+    } else {
+      const dir = path.join(distDir, route.slice(1));
+      fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(path.join(dir, "index.html"), output);
+      console.log(`[prerender] ${route} → dist${route}/index.html`);
+    }
+  }
 
   // The SSR bundle is only needed during build; remove it from output.
   fs.rmSync(path.resolve(__dirname, "dist-ssr"), {
