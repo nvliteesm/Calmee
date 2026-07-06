@@ -871,6 +871,7 @@ export default function App() {
               <img
                 src={calmeeIntro}
                 alt="Calmee dengan susu hangat"
+                loading="lazy"
                 className="aspect-[4/2] w-full object-cover"
               />
             </div>
@@ -1030,7 +1031,7 @@ export default function App() {
                           isActive ? "z-10 scale-110" : "scale-100"
                         }`}
                       >
-                        <img src={item.image} alt={item.title} className="h-full w-full object-cover" />
+                        <img src={item.image} alt={item.title} loading="lazy" className="h-full w-full object-cover" />
 
                         <div
                           className={`absolute inset-0 transition-all duration-500 ${
@@ -1046,7 +1047,9 @@ export default function App() {
               <div className="absolute z-20 flex h-[18rem] w-[18rem] items-center justify-center rounded-full bg-[var(--calmee-cream)] shadow-[0_20px_70px_rgba(18,9,46,0.35)]">
                 <img
                   src={productPreview}
-                  alt="Calmee product"
+                  alt="Kemasan produk susu herbal Calmee"
+                  loading="lazy"
+                  decoding="async"
                   className="h-[14.5rem] w-auto object-contain drop-shadow-[0_20px_40px_rgba(45,27,107,0.28)]"
                 />
               </div>
@@ -1081,7 +1084,9 @@ export default function App() {
                     <div className="flex items-center gap-3">
                       <img
                         src={item.image}
-                        alt={item.title}
+                        alt={`Kandungan Calmee: ${item.title}`}
+                        loading="lazy"
+                        decoding="async"
                         className="h-12 w-12 rounded-2xl object-cover"
                       />
 
@@ -1175,7 +1180,7 @@ export default function App() {
               <div className="absolute h-[22rem] w-[22rem] rounded-full bg-[#D4A843]/10 blur-[90px]" />
 
               <div className="relative h-[19rem] w-[19rem] overflow-hidden rounded-full border border-white/70 bg-[#E8DEFF] shadow-[0_30px_90px_rgba(45,27,107,0.18)] sm:h-[24rem] sm:w-[24rem] md:h-[27rem] md:w-[27rem]">
-                <img src={susuCalmee} alt="Calmee dengan susu hangat" className="h-full w-full object-cover" />
+                <img src={susuCalmee} alt="Manfaat Calmee untuk tidur lebih nyenyak" loading="lazy" decoding="async" className="h-full w-full object-cover" />
 
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,transparent_45%,rgba(45,27,107,0.12)_100%)]" />
               </div>
@@ -1259,7 +1264,9 @@ export default function App() {
                   <div key={logo.name}>
                     <img
                       src={logo.image}
-                      alt={logo.name}
+                      alt={`Sertifikasi ${logo.name}`}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-10 w-auto object-contain"
                     />
                   </div>
@@ -1631,7 +1638,9 @@ export default function App() {
               <div className="relative overflow-hidden rounded-[1.55rem] bg-[#FDF9F0]">
                 <img
                   src={saranDokter}
-                  alt="Saran dokter tentang susah tidur"
+                  alt="Saran dokter tentang cara mengatasi susah tidur"
+                  loading="lazy"
+                  decoding="async"
                   className="aspect-[16/10] w-full object-cover object-top transition duration-500 group-hover:scale-105"
                 />
 
@@ -1720,7 +1729,9 @@ export default function App() {
                   <img
                     key={logo.name}
                     src={logo.image}
-                    alt={logo.name}
+                    alt={`Sertifikasi ${logo.name}`}
+                    loading="lazy"
+                    decoding="async"
                     className="max-h-6 w-auto object-contain sm:max-h-7"
                   />
                 ))}
@@ -1746,7 +1757,9 @@ export default function App() {
           >
             <img
               src={whatsapp}
-              alt="WhatsApp"
+              alt="Chat WhatsApp Calmee"
+              loading="lazy"
+              decoding="async"
               className="h-5 w-5 object-contain"
             />
           </a>

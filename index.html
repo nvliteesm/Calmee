@@ -50,10 +50,31 @@
     />
     <meta name="twitter:image" content="https://www.calmeeofficial.com/og-image.png" />
 
+    <!-- Preload Fonts (eliminates render-blocking CSS @import) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap"
+      />
+    </noscript>
+
     <!-- Theme -->
     <meta name="theme-color" content="#2D1B6B" />
 
-    <!-- Structured Data: Organization + Website + Product -->
+    <!-- Structured Data: Organization + Website + Product + FAQ + Reviews -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -65,7 +86,8 @@
             "url": "https://www.calmeeofficial.com/",
             "logo": "https://www.calmeeofficial.com/favicon.png.png",
             "sameAs": [
-              "https://www.instagram.com/calmeeofficial"
+              "https://www.instagram.com/calmeeofficial",
+              "https://shopee.co.id/calmeeofficial"
             ]
           },
           {
@@ -81,24 +103,124 @@
           {
             "@type": "Product",
             "@id": "https://www.calmeeofficial.com/#product",
-            "name": "Calmee",
+            "name": "Calmee - Susu Herbal untuk Tidur Lebih Tenang",
             "brand": {
               "@type": "Brand",
               "name": "Calmee"
             },
-            "description": "Calmee adalah susu herbal hangat untuk menemani ritual malam sebelum tidur. Mengandung susu, chamomile, L-theanine, dan lemon.",
+            "description": "Calmee adalah susu herbal hangat untuk menemani ritual malam sebelum tidur. Mengandung susu, chamomile, L-theanine, dan lemon. Tanpa obat tidur, bebas gula, non-adiktif.",
             "image": "https://www.calmeeofficial.com/og-image.png",
             "category": "Susu herbal",
             "url": "https://www.calmeeofficial.com/",
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "4.9",
+              "reviewCount": "5",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "review": [
+              {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Kelvin" },
+                "datePublished": "2026-05-01",
+                "reviewBody": "Awalnya beli karena sering susah tidur, ternyata cukup membantu. Setelah minum sebelum tidur, badan terasa lebih rileks dan tidur jadi lebih cepat.",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+              },
+              {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Freddy" },
+                "datePublished": "2026-05-10",
+                "reviewBody": "Biasanya aku bisa 1-2 jam baru ketiduran, sekarang jadi lebih cepat. Rasanya enak dan bikin badan jadi relax sebelum tidur.",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+              },
+              {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Steven" },
+                "datePublished": "2026-05-15",
+                "reviewBody": "Setelah rutin minum sebelum tidur lumayan membantu, membuat tidur lebih cepat dan nyaman. Worth to try!",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+              },
+              {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Juli" },
+                "datePublished": "2026-05-20",
+                "reviewBody": "Produk sesuai deskripsi, rasanya enak seperti susu biasa tapi efeknya bikin badan lebih tenang sebelum tidur.",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+              },
+              {
+                "@type": "Review",
+                "author": { "@type": "Person", "name": "Cynthia" },
+                "datePublished": "2026-06-01",
+                "reviewBody": "Rasanya creamy ga semanis itu dan enak banget, ga maksain tidur tapi berasa lebih ngantuk secara alami.",
+                "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" }
+              }
+            ],
             "offers": {
-              "@type": "Offer",
+              "@type": "AggregateOffer",
               "url": "https://www.calmeeofficial.com/#paket",
               "priceCurrency": "IDR",
+              "lowPrice": "179999",
+              "highPrice": "369458",
+              "offerCount": "3",
               "availability": "https://schema.org/InStock",
               "seller": {
                 "@id": "https://www.calmeeofficial.com/#organization"
               }
             }
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Apakah itu Calmee?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Calmee adalah minuman yang membantu merilekskan tubuh dan mendukung tidur yang lebih tenang dan nyenyak."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Apakah Calmee obat tidur?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Bukan. Calmee adalah minuman susu herbal untuk mendukung rutinitas relaksasi sebelum tidur, bukan obat atau pengganti saran medis."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Kapan waktu terbaik konsumsi Calmee?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Disarankan untuk diminum sekitar 1-2 jam sebelum tidur agar tubuh lebih siap untuk beristirahat."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Apakah aman dikonsumsi setiap hari?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Ya, bisa diminum secara rutin sesuai anjuran untuk membantu kualitas tidur. Jika sedang hamil, menyusui, punya kondisi medis, alergi susu, atau sedang mengonsumsi obat, konsultasikan dulu dengan tenaga kesehatan."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Apakah Calmee dapat membuat ketergantungan?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Tidak. Calmee dibuat untuk membantu tubuh menjadi lebih rileks secara alami."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Di mana bisa membeli Calmee?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Kamu bisa klik tombol Beli Sekarang untuk menuju Shopee, atau chat WhatsApp untuk bertanya stok, harga, dan promo terbaru."
+                }
+              }
+            ]
           }
         ]
       }
