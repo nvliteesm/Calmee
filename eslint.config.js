@@ -20,7 +20,7 @@ export default defineConfig([
   },
   {
     // Node-based build scripts
-    files: ['prerender.js', 'vite.config.js', 'eslint.config.js'],
+    files: ['prerender.js', 'vite.config.js', 'eslint.config.js', 'backend/**/*.js'],
     languageOptions: {
       globals: globals.node,
     },

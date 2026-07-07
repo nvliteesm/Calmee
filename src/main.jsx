@@ -16,7 +16,7 @@ const app = (
 
 // These routes are prerendered to static HTML at build time.
 // Hydrate them in place to keep the SEO-friendly markup and avoid a flash.
-// Other routes (e.g. /admin) are client-only, so we mount fresh.
+// Other routes (e.g. /admin and payment return) are client-only, so we mount fresh.
 const prerenderedRoutes = ["/", "/produk", "/tentang", "/faq"];
 
 if (

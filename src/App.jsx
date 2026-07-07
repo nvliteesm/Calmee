@@ -20,6 +20,7 @@ import halalIndo from "./assets/halal-indo.png";
 import whatsapp from "./assets/whatsapp.png";
 import { getActivePackages } from "./services/packageService";
 import { getSiteSettings } from "./services/siteSettingsService";
+import { createPayment } from "./services/paymentService";
 import { trackCtaClick } from "./services/trackingService";
 import "./index.css";
 
@@ -151,6 +152,7 @@ const benefits = [
 
 const fallbackPackages = [
   {
+    id: "calmee-7",
     name: "Starter Pack",
     subtitle: "Paket 1 Minggu",
     price: "Rp 179.999",
@@ -167,6 +169,7 @@ const fallbackPackages = [
     ],
   },
   {
+    id: "calmee-14",
     name: "Calmee Routine",
     subtitle: "Paket 2 Minggu",
     price: "Rp 199.450",
@@ -183,6 +186,7 @@ const fallbackPackages = [
     ],
   },
   {
+    id: "calmee-28",
     name: "Monthly Ritual",
     subtitle: "Paket 1 Bulan",
     price: "Rp 369.458",
@@ -219,11 +223,26 @@ function calculateDiscount(normalPrice, discountPrice) {
   return `${percentage}%`;
 }
 
+function resolvePaymentPackageId(pkg) {
+  const haystack = `${pkg.name || ""} ${pkg.quantity || ""} ${pkg.description || ""}`.toLowerCase();
+
+  if (haystack.includes("28") || haystack.includes("monthly") || haystack.includes("bulan")) {
+    return "calmee-28";
+  }
+
+  if (haystack.includes("14") || haystack.includes("routine") || haystack.includes("2 minggu")) {
+    return "calmee-14";
+  }
+
+  return "calmee-7";
+}
+
 function mapDatabasePackage(pkg) {
   const packageName = pkg.name || "";
 
   return {
-    id: pkg.id,
+    id: resolvePaymentPackageId(pkg),
+    sourcePackageId: pkg.id,
     name: packageName,
     subtitle: pkg.quantity || "Paket Calmee",
     price: formatRupiah(pkg.discount_price || pkg.normal_price),
@@ -404,6 +423,141 @@ function SectionHeading({ eyebrow, title, children, light = false, center = fals
   );
 }
 
+function CheckoutModal({ selectedPackage, onClose, onTrack }) {
+  const [form, setForm] = useState({
+    customerName: "",
+    email: "",
+    phone: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  if (!selectedPackage) return null;
+
+  function updateField(field, value) {
+    setForm((current) => ({
+      ...current,
+      [field]: value,
+    }));
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    try {
+      setSubmitting(true);
+      setError("");
+      onTrack?.("package_duitku_checkout_submit", selectedPackage.name, selectedPackage.id);
+
+      const result = await createPayment({
+        packageId: selectedPackage.id,
+        customerName: form.customerName,
+        email: form.email,
+        phone: form.phone,
+      });
+
+      if (!result.paymentUrl) {
+        throw new Error("Duitku tidak mengembalikan payment URL.");
+      }
+
+      window.location.href = result.paymentUrl;
+    } catch (err) {
+      setError(err.message || "Checkout belum bisa diproses.");
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-[80] flex items-end justify-center bg-[#12092E]/70 px-4 py-5 backdrop-blur-sm sm:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="checkout-title"
+    >
+      <div className="w-full max-w-lg rounded-[1.5rem] border border-[#E6DDF6] bg-white p-6 text-[#2D1B6B] shadow-[0_28px_90px_rgba(18,9,46,0.28)]">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#8A6FC2]">
+              Checkout Sandbox
+            </p>
+            <h2 id="checkout-title" className="mt-2 font-display text-3xl font-bold">
+              {selectedPackage.name}
+            </h2>
+            <p className="mt-1 text-sm font-bold text-[#6B4FA0]">{selectedPackage.price}</p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#E6DDF6] bg-[#F8F4FF] text-xl leading-none text-[#2D1B6B] transition hover:border-[#D4A843]"
+            aria-label="Tutup checkout"
+          >
+            x
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#8A6FC2]">
+              Nama
+            </span>
+            <input
+              type="text"
+              required
+              value={form.customerName}
+              onChange={(event) => updateField("customerName", event.target.value)}
+              className="mt-2 w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+              placeholder="Test Customer"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#8A6FC2]">
+              Email
+            </span>
+            <input
+              type="email"
+              required
+              value={form.email}
+              onChange={(event) => updateField("email", event.target.value)}
+              className="mt-2 w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+              placeholder="test@example.com"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-xs font-bold uppercase tracking-[0.14em] text-[#8A6FC2]">
+              WhatsApp
+            </span>
+            <input
+              type="tel"
+              required
+              value={form.phone}
+              onChange={(event) => updateField("phone", event.target.value)}
+              className="mt-2 w-full rounded-2xl border border-[#E6DDF6] bg-[#FDF9F0] px-4 py-3 text-sm outline-none transition focus:border-[#D4A843]"
+              placeholder="08123456789"
+            />
+          </label>
+
+          {error ? (
+            <p className="rounded-2xl border border-[#F04A2A]/20 bg-[#FFF1EC] px-4 py-3 text-sm font-semibold text-[#A4341E]">
+              {error}
+            </p>
+          ) : null}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#D4A843] px-6 py-3 text-sm font-bold uppercase tracking-[0.12em] text-[#241256] transition hover:bg-[#e3ba5c] disabled:cursor-not-allowed disabled:opacity-65"
+          >
+            {submitting ? "Membuat pembayaran..." : "Lanjut ke Duitku"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [hoveredIngredient, setHoveredIngredient] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
@@ -414,6 +568,7 @@ export default function App() {
   const [packagesLoading, setPackagesLoading] = useState(true);
   const [packagesError, setPackagesError] = useState("");
   const [siteSettings, setSiteSettings] = useState({});
+  const [selectedCheckoutPackage, setSelectedCheckoutPackage] = useState(null);
 
   const activeShopeeLink = siteSettings.main_shopee_url?.trim() || shopeeLink;
   const activeWhatsAppLink = buildWhatsAppLink(
@@ -430,8 +585,13 @@ export default function App() {
     });
   }
 
+  function handlePackageCheckout(pkg) {
+    handleCtaClick("package_duitku_checkout_click", pkg.name, pkg.id || null);
+    setSelectedCheckoutPackage(pkg);
+  }
+
   useEffect(() => {
-    if (mobileNavOpen) {
+    if (mobileNavOpen || selectedCheckoutPackage) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -440,7 +600,7 @@ export default function App() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [mobileNavOpen]);
+  }, [mobileNavOpen, selectedCheckoutPackage]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -1375,13 +1535,9 @@ export default function App() {
                     </ul>
 
                     {/* Mobile CTA comes before details */}
-                    <a
-                      href={pkg.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() =>
-                        handleCtaClick("package_shopee_click", pkg.name, pkg.id || null)
-                      }
+                    <button
+                      type="button"
+                      onClick={() => handlePackageCheckout(pkg)}
                       className={`mt-6 inline-flex w-full justify-center rounded-full px-5 py-3 text-sm font-bold uppercase tracking-[0.14em] transition-all duration-300 hover:scale-[1.02] active:scale-95 md:mt-auto ${
                         pkg.highlight
                           ? "bg-[#D4A843] text-[#241256] hover:bg-[#e3ba5c]"
@@ -1389,7 +1545,7 @@ export default function App() {
                       }`}
                     >
                       {pkg.cta}
-                    </a>
+                    </button>
 
                     {/* Mobile dropdown only */}
                     <button
@@ -1826,6 +1982,16 @@ export default function App() {
           </a>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedCheckoutPackage ? (
+          <CheckoutModal
+            selectedPackage={selectedCheckoutPackage}
+            onClose={() => setSelectedCheckoutPackage(null)}
+            onTrack={handleCtaClick}
+          />
+        ) : null}
+      </AnimatePresence>
     </div>
   );
 }
